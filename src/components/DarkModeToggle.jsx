@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 const DarkModeToggle = () => {
-  // Sjekk for eksisterende innstilling i localStorage
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedMode = localStorage.getItem('darkMode');
@@ -10,12 +10,10 @@ const DarkModeToggle = () => {
     return false;
   });
 
-  // Bruker useEffect for å sette body-klassen ved initialisering
   useEffect(() => {
     document.body.classList.toggle('dark', isDarkMode);
   }, [isDarkMode]);
 
-  // Funksjon for å toggles dark mode og lagre det i localStorage
   const toggleDarkMode = () => {
     setIsDarkMode(prevMode => {
       const newMode = !prevMode;
@@ -26,14 +24,14 @@ const DarkModeToggle = () => {
 
   return (
     <button
-      onClick={toggleDarkMode}
-      className="p-2 rounded-full border-2 border-gray-300 dark:border-gray-700">
-      {isDarkMode ? (
-        <span className="text-gray-900 dark:text-white">🌙</span> // Måneikon for mørk modus
-      ) : (
-        <span className="text-yellow-500 dark:text-gray-300">🌞</span> // Solikon for lys modus
-      )}
-    </button>
+  onClick={toggleDarkMode}
+  className="p-2 rounded-full border-2 border-gray-400 dark:border-gray-300">
+  {isDarkMode ? (
+    <FaMoon className="text-gray-900 dark:text-white" /> // Måneikon for mørk modus
+  ) : (
+    <FaSun className="text-yellow-600 dark:text-gray-300" /> // Solikon for lys modus
+  )}
+</button>
   );
 };
 
