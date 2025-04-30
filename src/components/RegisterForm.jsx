@@ -1,0 +1,91 @@
+import { useState } from "react";
+import { handleRegister } from "../api/handleRegister";
+import { FaUser, FaHotel } from "react-icons/fa";
+
+export default function RegisterForm({ onSuccess }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("guest");
+  const [error, setError] = useState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const result = await handleRegister({ name, email, password, role });
+
+    if (result.success) {
+      onSuccess?.(result.user);
+    } else {
+      setError(result.message || "Noe gikk galt under registreringen.");
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="space-y-4">
+      <h2 className="text-xl font-semibold text-center">Opprett konto</h2>
+
+      <div className="flex justify-center">
+        <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
+          <button
+            type="button"
+            onClick={() => setRole("guest")}
+            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+              role === "guest"
+                ? "bg-blue-500 text-white"
+                : "text-gray-700 dark:text-gray-200"
+            }`}
+          >
+            <FaUser /> Guest
+          </button>
+          <button
+            type="button"
+            onClick={() => setRole("manager")}
+            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+              role === "manager"
+                ? "bg-blue-500 text-white"
+                : "text-gray-700 dark:text-gray-200"
+            }`}
+          >
+            <FaHotel /> Venue Manager
+          </button>
+        </div>
+      </div>
+
+      <input
+        type="text"
+        placeholder="Navn"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full p-2 border rounded"
+        required
+      />
+      <input
+        type="email"
+        placeholder="E-post"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full p-2 border rounded"
+        required
+      />
+      <input
+        type="password"
+        placeholder="Passord"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full p-2 border rounded"
+        required
+      />
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      <button
+        type="submit"
+        className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
+      >
+        Registrer deg
+      </button>
+    </form>
+  );
+}

@@ -14,7 +14,7 @@ const VenueGrid = () => {
     totalPages,
   } = useFetch(API_HOLIDAZE.VENUES, {
     paginate: true,
-    itemsPerPage: 24, // frontend paginering
+    itemsPerPage: 24, 
   });
 
   if (loading) return <p className="text-center">Loading venues...</p>;
