@@ -3,34 +3,39 @@ import { API_AUTH } from "./constant";
 import { doFetch } from "./doFetch";
 
 export async function handleLogin({ email, password, role }) {
-  const url = API_AUTH.LOGIN;
+  const isManager = role === "manager";
+  const loginUrl = `${API_AUTH.LOGIN}${isManager ? "?_holidaze=true" : ""}`;
 
   try {
-    const response = await doFetch(url, {
+    const response = await doFetch(loginUrl, {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
 
-    if (response && response.accessToken) {
-      const isVenueManager = response.data?.venueManager;
-      if (
-        (role === "manager" && !isVenueManager) ||
-        (role === "guest" && isVenueManager)
-      ) {
-        throw new Error(
-          "Brukerrollen stemmer ikke overens med kontoinnstillingene.",
-        );
-      }
+    const { accessToken, name, avatar, banner, venueManager } = response.data;
 
-      // Du kan lagre brukerdata/token her (eks. localStorage)
-      localStorage.setItem("accessToken", response.accessToken);
-      localStorage.setItem("user", JSON.stringify(response.data));
-      return { success: true, user: response.data };
+    // Sjekk: prøver å logge inn som manager, men er ikke det
+    if (isManager && !venueManager) {
+      return {
+        success: false,
+        message:
+          "Denne brukeren er ikke registrert som Venue Manager. Registrer deg som det for å få tilgang.",
+      };
     }
 
-    throw new Error("Ugyldig respons fra serveren.");
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify({ name, email, avatar, banner, venueManager }),
+    );
+
+    return { success: true, user: response.data };
   } catch (error) {
-    console.error("Login error:", error.message);
-    return { success: false, message: error.message };
+    console.error("Login failed:", error);
+    return {
+      success: false,
+      message: error.message || "Ukjent feil under innlogging",
+    };
   }
 }

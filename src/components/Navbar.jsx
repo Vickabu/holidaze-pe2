@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle'; 
 import Modal from './Modal';
 import LoginForm from './LoginForm';
@@ -12,6 +12,7 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -134,22 +135,31 @@ export default function Navbar() {
       </nav>
 
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <div className="flex mb-4 space-x-4 justify-center">
-          <button
-            onClick={() => setActiveTab("login")}
-            className={`p-2 ${activeTab === "login" ? "border-b-2 border-blue-500 font-bold" : ""}`}
-          >
-            Login
-          </button>
-          <button
-            onClick={() => setActiveTab("register")}
-            className={`p-2 ${activeTab === "register" ? "border-b-2 border-blue-500 font-bold" : ""}`}
-          >
-            Register
-          </button>
-        </div>
-        {activeTab === "login" ? <LoginForm /> : <RegisterForm />}
-      </Modal>
+  <div className="flex mb-4 space-x-4 justify-center">
+    <button
+      onClick={() => setActiveTab("login")}
+      className={`p-2 ${activeTab === "login" ? "border-b-2 border-blue-500 font-bold" : ""}`}
+    >
+      Login
+    </button>
+    <button
+      onClick={() => setActiveTab("register")}
+      className={`p-2 ${activeTab === "register" ? "border-b-2 border-blue-500 font-bold" : ""}`}
+    >
+      Register
+    </button>
+  </div>
+
+  {activeTab === "login" ? (
+    <LoginForm
+    onSuccess={() => {
+      setShowModal(false);     // Lukk modalen
+      navigate("/profile");    // Naviger til profilsiden
+    }} />
+  ) : (
+    <RegisterForm />
+  )}
+</Modal>
     </>
   );
 }

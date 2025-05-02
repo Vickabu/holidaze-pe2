@@ -10,11 +10,11 @@ export default function LoginForm({ onSuccess }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError("");  // Reset error on new submit attempt
 
     const result = await handleLogin({ email, password, role });
     if (result.success) {
-      onSuccess?.(result.user);
+      onSuccess?.(result.user);  // Callback to handle success
     } else {
       setError(result.message || "Noe gikk galt.");
     }
