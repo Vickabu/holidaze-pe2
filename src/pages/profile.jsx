@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import VenueDashboard from "./VenueDashboard";
+import BookingDashboard from "./BookingDashbord";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -33,30 +35,30 @@ export default function Profile() {
       {user.venueManager ? (
         <VenueDashboard user={user} />
       ) : (
-        <CustomerDashboard user={user} />
+        <BookingDashboard user={user} />
       )}
     </div>
   );
 }
 
-// Venue Manager Dashboard
-function VenueDashboard() {
-  return (
-    <div className="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-2">Ditt venue dashboard</h2>
-      <p>Her kan du administrere dine venues, se bookinger osv.</p>
-      {/* TODO: List venues, bookings etc. */}
-    </div>
-  );
-}
+// // Venue Manager Dashboard
+// function VenueDashboard() {
+//   return (
+//     <div className="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg shadow">
+//       <h2 className="text-xl font-semibold mb-2">Ditt venue dashboard</h2>
+//       <p>Her kan du administrere dine venues, se bookinger osv.</p>
+//       {/* TODO: List venues, bookings etc. */}
+//     </div>
+//   );
+// }
 
-// Customer Dashboard
-function CustomerDashboard() {
-  return (
-    <div className="bg-green-50 dark:bg-gray-800 p-4 rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-2">Dine bookinger</h2>
-      <p>Her vises kommende og tidligere bookinger.</p>
-      {/* TODO: List bookings */}
-    </div>
-  );
-}
+// // Customer Dashboard
+// function CustomerDashboard() {
+//   return (
+//     <div className="bg-green-50 dark:bg-gray-800 p-4 rounded-lg shadow">
+//       <h2 className="text-xl font-semibold mb-2">Dine bookinger</h2>
+//       <p>Her vises kommende og tidligere bookinger.</p>
+//       {/* TODO: List bookings */}
+//     </div>
+//   );
+// }
