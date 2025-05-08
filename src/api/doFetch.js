@@ -1,19 +1,24 @@
+import { API_KEY } from "./constant";
+
 export const doFetch = async (url, options = {}) => {
   try {
+    const mergedHeaders = {
+      "Content-Type": "application/json",
+      "X-Noroff-API-Key": API_KEY,
+      ...(options.headers || {}),
+    };
+
     const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
       ...options,
+      headers: mergedHeaders,
     });
 
     if (!response.ok) {
-      throw new Error(`Fetch error: ${response.status} ${response.statusText}`);
+      throw await response.json();
     }
 
     const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
+    if (contentType?.includes("application/json")) {
       return await response.json();
     }
 
