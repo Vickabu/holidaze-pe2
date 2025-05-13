@@ -1,14 +1,18 @@
 import { useState } from "react";
 import useFetch from "../api/useFetch";
 import { API_HOLIDAZE } from "../api/constant";
-import { doFetch } from "../api/doFetch";
 import BookingCard from "./BookingCard";
+import Pagination from "./Pagination"; // Husk å importere den!
 
 export default function BookingDashboard() {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const accessToken = localStorage.getItem("accessToken");
 
-  const [refreshKey, setRefreshKey] = useState(0); 
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [pastPage, setPastPage] = useState(1);
+
+  const itemsPerPage = 6;
 
   const url = `${API_HOLIDAZE.PROFILES}/${user.name}/bookings?_venue=true`;
 
@@ -18,65 +22,68 @@ export default function BookingDashboard() {
         Authorization: `Bearer ${accessToken}`,
       },
     },
-    dependencies: [refreshKey], 
+    dependencies: [refreshKey],
   });
 
-
-
-  const cancelBooking = async (bookingId) => {
-    const confirmCancel = window.confirm("Er du sikker på at du vil avbestille?");
-    if (!confirmCancel) return;
-
-    try {
-      await doFetch(`${API_HOLIDAZE.BOOKINGS}/${bookingId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      alert("Booking avbestilt!");
-      setRefreshKey((prev) => prev + 1); 
-    } catch (err) {
-      alert("Kunne ikke avbestille: " + (err.errors?.[0]?.message || err.message));
-    }
-  };
+  const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   if (loading) return <p>Laster bookinger...</p>;
-  if (error) return <p>Kunne ikke hente bookinger: {error.errors?.[0]?.message || error.message}</p>;
+  if (error)
+    return (
+      <p>
+        Kunne ikke hente bookinger:{" "}
+        {error.errors?.[0]?.message || error.message}
+      </p>
+    );
 
   const now = new Date();
-
   const upcoming = bookings.filter((b) => new Date(b.dateFrom) > now);
   const past = bookings.filter((b) => new Date(b.dateFrom) <= now);
 
-  const renderBookings = (list, isUpcoming = true) =>
-    list.length === 0 ? (
-      <p>{isUpcoming ? "Ingen kommende bookinger." : "Ingen tidligere bookinger."}</p>
-    ) : (
-      <ul className="space-y-6">
-        {list.map((booking) => (
-          <BookingCard
-            key={booking.id}
-            booking={booking}
-            isUpcoming={isUpcoming}
-            onCancel={cancelBooking}
-          />
-        ))}
-      </ul>
+  const paginateList = (list, page) =>
+    list.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+  const renderBookings = (list, page, onPageChange, isUpcoming = true) => {
+    if (list.length === 0) {
+      return <p>{isUpcoming ? "Ingen kommende bookinger." : "Ingen tidligere bookinger."}</p>;
+    }
+
+    const pageCount = Math.ceil(list.length / itemsPerPage);
+    const paginated = paginateList(list, page);
+
+    return (
+      <>
+        <ul className="space-y-6">
+          {paginated.map((booking) => (
+            <BookingCard
+              key={booking.id}
+              booking={booking}
+              isUpcoming={isUpcoming}
+              onRefresh={triggerRefresh}
+            />
+          ))}
+        </ul>
+        <Pagination
+          currentPage={page}
+          totalPages={pageCount}
+          onPageChange={onPageChange}
+        />
+      </>
     );
-  
+  };
+
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-2xl font-bold">Mine Bestillinger</h1>
 
       <section>
         <h2 className="text-xl font-semibold mb-2">Kommende</h2>
-        {renderBookings(upcoming, true)}
+        {renderBookings(upcoming, upcomingPage, setUpcomingPage, true)}
       </section>
 
       <section>
         <h2 className="text-xl font-semibold mb-2">Tidligere</h2>
-        {renderBookings(past, false)}
+        {renderBookings(past, pastPage, setPastPage, false)}
       </section>
     </div>
   );

@@ -2,6 +2,8 @@ import { useState } from "react";
 import useFetch from "../api/useFetch";
 import { API_HOLIDAZE } from "../api/constant";
 import VenueDashCard from "./VenueDashCard";
+import Pagination from "./Pagination";
+
 
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -27,7 +29,6 @@ export default function VenueDashboard() {
   if (error) return <p>Kunne ikke hente venues: {error.errors?.[0]?.message || error.message}</p>;
   if (!venues || venues.length === 0) return <p>Du har ingen venues enda.</p>;
 
-  // Frontend-paginering:
   const pageCount = Math.ceil(venues.length / itemsPerPage);
   const paginatedVenues = venues.slice(
     (currentPage - 1) * itemsPerPage,
@@ -42,25 +43,12 @@ export default function VenueDashboard() {
           <VenueDashCard key={venue.id} venue={venue} onDelete={triggerRefresh} />
         ))}
       </ul>
-
-      {/* Pagination */}
-      <div className="flex justify-center mt-4 space-x-2">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Forrige
-        </button>
-        <span className="px-3 py-1">{currentPage} / {pageCount}</span>
-        <button
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, pageCount))}
-          disabled={currentPage === pageCount}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Neste
-        </button>
-      </div>
+  
+      <Pagination
+        currentPage={currentPage}
+        totalPages={pageCount}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

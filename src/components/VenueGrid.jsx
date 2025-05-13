@@ -2,6 +2,7 @@ import React from "react";
 import useFetch from "../api/useFetch";
 import VenueCard from "./VenueCard";
 import { API_HOLIDAZE } from "../api/constant";
+import Pagination from "./Pagination";
 
 const VenueGrid = () => {
   const {
@@ -14,11 +15,11 @@ const VenueGrid = () => {
     totalPages,
   } = useFetch(API_HOLIDAZE.VENUES, {
     paginate: true,
-    itemsPerPage: 24, 
+    itemsPerPage: 16, 
   });
 
-  if (loading) return <p className="text-center">Loading venues...</p>;
-  if (error) return <p className="text-center text-red-500">Error: {error.message}</p>;
+  if (loading) return <p className="text-center">Laster steder...</p>;
+  if (error) return <p className="text-center text-red-500">Feil: {error.message}</p>;
 
   return (
     <div className="p-6">
@@ -28,26 +29,14 @@ const VenueGrid = () => {
         ))}
       </div>
 
-      {/* Pagination controls */}
-      <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          onClick={prevPage}
-          disabled={page === 1}
-          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="font-medium">
-          Page {page} of {totalPages}
-        </span>
-        <button
-          onClick={nextPage}
-          disabled={page === totalPages}
-          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={(newPage) => {
+          if (newPage > page) nextPage();
+          else if (newPage < page) prevPage();
+        }}
+      />
     </div>
   );
 };

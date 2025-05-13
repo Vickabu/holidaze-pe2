@@ -8,7 +8,7 @@ export default function VenueDashCard({ venue, onDelete }) {
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
-      `Er du sikker på at du vil slette "${venue.name}"?`
+      `Are you sure you want to delete "${venue.name}"?`
     );
     if (!confirmDelete) return;
 
@@ -20,10 +20,10 @@ export default function VenueDashCard({ venue, onDelete }) {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      alert("Venue slettet.");
-      onDelete?.(); // Trigger refresh
+      alert("Venue deleted.");
+      onDelete?.(); 
     } catch (err) {
-      alert("Kunne ikke slette venue: " + (err.errors?.[0]?.message || err.message));
+      alert("Could not delete venue: " + (err.errors?.[0]?.message || err.message));
     }
   };
 
