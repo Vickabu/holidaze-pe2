@@ -39,7 +39,6 @@ export default function VenueDashboard() {
   return (
     <div className="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">Dine venues</h2>
-      {/* Knapp for å åpne modal */}
       <button
         onClick={() => setShowCreateModal(true)}
         className="bg-blue-500 text-white py-2 px-4 rounded mb-4"
@@ -59,7 +58,6 @@ export default function VenueDashboard() {
         onPageChange={setCurrentPage}
       />
 
-      {/* Modal for å opprette ny venue */}
       {showCreateModal && (
         <CreateVenue
           onClose={() => setShowCreateModal(false)}
