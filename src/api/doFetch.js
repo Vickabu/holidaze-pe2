@@ -2,9 +2,11 @@ import { API_KEY } from "./constant";
 
 export const doFetch = async (url, options = {}) => {
   try {
+    const token = localStorage.getItem("accessToken"); // eller sessionStorage
     const mergedHeaders = {
       "Content-Type": "application/json",
       "X-Noroff-API-Key": API_KEY,
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...(options.headers || {}),
     };
 
