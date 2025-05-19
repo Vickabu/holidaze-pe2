@@ -1,9 +1,11 @@
-import { API_HOLIDAZE } from "../api/constant";
-import { doFetch } from "../api/doFetch";
+import { API_HOLIDAZE } from "../../api/constant";
+import { useDelete } from "../../hooks/useDelete";
 
 export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   const venue = booking.venue;
   const accessToken = localStorage.getItem("accessToken");
+  const { remove, loading, error } = useDelete();
+
   const image =
     venue?.media?.[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
@@ -12,14 +14,11 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
     if (!confirmCancel) return;
 
     try {
-      await doFetch(`${API_HOLIDAZE.BOOKINGS}/${booking.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+      await remove(`${API_HOLIDAZE.BOOKINGS}/${booking.id}`, {
+        Authorization: `Bearer ${accessToken}`,
       });
       alert("Booking avbestilt!");
-      onRefresh(); 
+      onRefresh();
     } catch (err) {
       alert("Kunne ikke avbestille: " + (err.errors?.[0]?.message || err.message));
     }
@@ -44,10 +43,18 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
         {isUpcoming && (
           <button
             onClick={handleCancel}
-            className="mt-4 inline-block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+            disabled={loading}
+            className={`mt-4 inline-block px-4 py-2 rounded text-white ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-600"
+            }`}
           >
-            Avbestill
+            {loading ? "Avbestiller..." : "Avbestill"}
           </button>
+        )}
+        {error && (
+          <p className="mt-2 text-red-500 text-sm">
+            Feil ved avbestilling: {error.message || String(error)}
+          </p>
         )}
       </div>
     </li>

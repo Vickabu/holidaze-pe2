@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { doFetch } from "./doFetch";
+import { doFetch } from "../api/doFetch";
 
 const useFetch = (
   url,

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import DarkModeToggle from './DarkModeToggle'; 
-import Modal from './Modal';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import DarkModeToggle from '../common/DarkModeToggle'; 
+import Modal from '../common/Modal';
+import LoginForm from '../LoginForm';
+import RegisterForm from '../RegisterForm';
 import { FaBars, FaTimes, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt } from 'react-icons/fa';
 
 export default function Navbar() {

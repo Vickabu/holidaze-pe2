@@ -1,7 +1,8 @@
-import { doFetch } from "../api/doFetch";
-import { API_HOLIDAZE } from "../api/constant";
+import { API_HOLIDAZE } from "../../api/constant";
+import { useDelete } from "../../hooks/useDelete";
 
 export default function VenueDashCard({ venue, onDelete }) {
+  const { remove, loading, error } = useDelete();
   const image =
     venue.media?.[0]?.url ||
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
@@ -14,14 +15,11 @@ export default function VenueDashCard({ venue, onDelete }) {
 
     try {
       const accessToken = localStorage.getItem("accessToken");
-      await doFetch(`${API_HOLIDAZE.VENUES}/${venue.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+      await remove(`${API_HOLIDAZE.VENUES}/${venue.id}`, {
+        Authorization: `Bearer ${accessToken}`,
       });
       alert("Venue deleted.");
-      onDelete?.(); 
+      onDelete?.();
     } catch (err) {
       alert("Could not delete venue: " + (err.errors?.[0]?.message || err.message));
     }
@@ -51,10 +49,18 @@ export default function VenueDashCard({ venue, onDelete }) {
         )}
         <button
           onClick={handleDelete}
-          className="mt-4 inline-block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+          disabled={loading}
+          className={`mt-4 inline-block text-white px-4 py-2 rounded ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-600"
+          }`}
         >
-          Slett venue
+          {loading ? "Sletter..." : "Slett venue"}
         </button>
+        {error && (
+          <p className="mt-2 text-red-600 text-sm">
+            Feil ved sletting: {error.message || String(error)}
+          </p>
+        )}
       </div>
     </li>
   );

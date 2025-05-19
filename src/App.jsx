@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/layout/MainLayout";
 import HomePage from "./pages/home";
 import Profile from "./pages/profile";
-import VenueDetail from "./components/VenueDetail";
+import VenueDetail from "./pages/VenueDetail";
 
 function App() {
   return (

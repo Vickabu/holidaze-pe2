@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { handleLogin } from "../api/handleLogin";
+import { handleLogin } from "../api/auth/handleLogin";
 import { FaUser, FaHotel } from "react-icons/fa";
 
 export default function LoginForm({ onSuccess }) {
@@ -10,11 +10,11 @@ export default function LoginForm({ onSuccess }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError("");  // Reset error on new submit attempt
+    setError("");  
 
     const result = await handleLogin({ email, password, role });
     if (result.success) {
-      onSuccess?.(result.user);  // Callback to handle success
+      onSuccess?.(result.user);  
     } else {
       setError(result.message || "Noe gikk galt.");
     }

@@ -1,6 +1,7 @@
 // utils/handleLogin.js
-import { API_AUTH } from "./constant";
-import { doFetch } from "./doFetch";
+import { API_AUTH } from "../constant";
+import { doFetch } from "../doFetch";
+import { saveUserToStorage } from "../../utils/localStorageHelpers";
 
 export async function handleLogin({ email, password, role }) {
   const isManager = role === "manager";
@@ -12,10 +13,9 @@ export async function handleLogin({ email, password, role }) {
       body: JSON.stringify({ email, password }),
     });
 
-    const { accessToken, name, avatar, banner, venueManager } = response.data;
+    const data = response.data;
 
-    // Sjekk: prøver å logge inn som manager, men er ikke det
-    if (isManager && !venueManager) {
+    if (isManager && !data.venueManager) {
       return {
         success: false,
         message:
@@ -23,14 +23,9 @@ export async function handleLogin({ email, password, role }) {
       };
     }
 
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem(
-      "userInfo",
-      JSON.stringify({ name, email, avatar, banner, venueManager }),
-    );
+    saveUserToStorage(data);
 
-    return { success: true, user: response.data };
+    return { success: true, user: data };
   } catch (error) {
     console.error("Login failed:", error);
     return {

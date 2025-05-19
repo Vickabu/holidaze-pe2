@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { handleRegister } from "../api/handleRegister";
+import { handleRegister } from "../api/auth/handleRegister";
 import { FaUser, FaHotel } from "react-icons/fa";
 
 export default function RegisterForm({ onSuccess }) {

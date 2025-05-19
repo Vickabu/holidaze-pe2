@@ -1,8 +1,8 @@
 import { useState } from "react";
-import useFetch from "../api/useFetch";
+import useFetch from "../hooks/useFetch";
 import { API_HOLIDAZE } from "../api/constant";
-import BookingCard from "./BookingCard";
-import Pagination from "./Pagination"; // Husk å importere den!
+import BookingCard from "./bookings/BookingCard";
+import Pagination from "./common/Pagination"; // Husk å importere den!
 
 export default function BookingDashboard() {
   const user = JSON.parse(localStorage.getItem("userInfo"));

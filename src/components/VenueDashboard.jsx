@@ -1,9 +1,9 @@
 import { useState } from "react";
-import useFetch from "../api/useFetch";
+import useFetch from "../hooks/useFetch";
 import { API_HOLIDAZE } from "../api/constant";
-import VenueDashCard from "./VenueDashCard";
-import Pagination from "./Pagination";
-import CreateVenue from "./CreateVenue"; // Importer den nye komponenten
+import VenueDashCard from "./venues/VenueDashCard";
+import Pagination from "./common/Pagination";
+import CreateVenue from "./venues/CreateVenue"; // Importer den nye komponenten
 
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);

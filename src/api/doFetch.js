@@ -1,18 +1,22 @@
 import { API_KEY } from "./constant";
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("accessToken");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 export const doFetch = async (url, options = {}) => {
   try {
-    const token = localStorage.getItem("accessToken"); // eller sessionStorage
-    const mergedHeaders = {
+    const headers = {
       "Content-Type": "application/json",
       "X-Noroff-API-Key": API_KEY,
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...getAuthHeaders(),
       ...(options.headers || {}),
     };
 
     const response = await fetch(url, {
       ...options,
-      headers: mergedHeaders,
+      headers,
     });
 
     if (!response.ok) {

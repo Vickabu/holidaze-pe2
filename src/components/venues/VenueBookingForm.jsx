@@ -1,7 +1,6 @@
-// components/VenueBookingForm.jsx
 import React, { useState } from "react";
-import { doFetch } from "../api/doFetch";
-import { API_HOLIDAZE } from "../api/constant";
+import { API_HOLIDAZE } from "../../api/constant";
+import { usePost } from "../../hooks/usePost";
 
 const VenueBookingForm = ({ venue }) => {
   const [bookingData, setBookingData] = useState({
@@ -9,6 +8,7 @@ const VenueBookingForm = ({ venue }) => {
     dateTo: "",
     guests: 1,
   });
+  const { post, loading, error } = usePost();
   const [bookingMessage, setBookingMessage] = useState(null);
 
   const handleChange = (e) => {
@@ -21,11 +21,10 @@ const VenueBookingForm = ({ venue }) => {
     setBookingMessage(null);
 
     try {
-      await doFetch(`${API_HOLIDAZE.BOOKINGS}`, {
-        method: "POST",
-        body: JSON.stringify({ ...bookingData, venueId: venue.id }),
+      await post(API_HOLIDAZE.BOOKINGS, {
+        ...bookingData,
+        venueId: venue.id,
       });
-
       setBookingMessage({ type: "success", text: "Booking registrert!" });
     } catch (error) {
       setBookingMessage({
@@ -77,9 +76,10 @@ const VenueBookingForm = ({ venue }) => {
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          disabled={loading}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          Send booking
+          {loading ? "Sender..." : "Send booking"}
         </button>
       </form>
 
@@ -92,6 +92,12 @@ const VenueBookingForm = ({ venue }) => {
           }`}
         >
           {bookingMessage.text}
+        </p>
+      )}
+
+      {error && !bookingMessage && (
+        <p className="mt-4 p-2 rounded bg-red-100 text-red-700">
+          {error.message || "Noe gikk galt."}
         </p>
       )}
     </div>
