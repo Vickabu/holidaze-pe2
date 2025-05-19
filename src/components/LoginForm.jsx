@@ -1,20 +1,21 @@
-import { useState } from "react";
+import React from "react";
 import { handleLogin } from "../api/auth/handleLogin";
 import { FaUser, FaHotel } from "react-icons/fa";
 
-export default function LoginForm({ onSuccess }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("guest");
-  const [error, setError] = useState("");
+
+
+export default function LoginForm({ role, toggleRole, onSuccess }) {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError("");  
+    setError("");
 
     const result = await handleLogin({ email, password, role });
     if (result.success) {
-      onSuccess?.(result.user);  
+      onSuccess?.(result.user);
     } else {
       setError(result.message || "Noe gikk galt.");
     }
@@ -28,7 +29,7 @@ export default function LoginForm({ onSuccess }) {
         <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
           <button
             type="button"
-            onClick={() => setRole("guest")}
+            onClick={() => toggleRole("guest")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "guest"
                 ? "bg-blue-500 text-white"
@@ -39,7 +40,7 @@ export default function LoginForm({ onSuccess }) {
           </button>
           <button
             type="button"
-            onClick={() => setRole("manager")}
+            onClick={() => toggleRole("manager")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"

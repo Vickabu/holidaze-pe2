@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { handleRegister } from "../api/auth/handleRegister";
+import React from "react";
 import { FaUser, FaHotel } from "react-icons/fa";
+import { handleRegister } from "../api/auth/handleRegister";
 
-export default function RegisterForm({ onSuccess }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("guest");
-  const [error, setError] = useState("");
+export default function RegisterForm({ role, toggleRole, onSuccess }) {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     const result = await handleRegister({ name, email, password, role });
-
     if (result.success) {
       onSuccess?.(result.user);
     } else {
@@ -30,7 +28,7 @@ export default function RegisterForm({ onSuccess }) {
         <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
           <button
             type="button"
-            onClick={() => setRole("guest")}
+            onClick={() => toggleRole("guest")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "guest"
                 ? "bg-blue-500 text-white"
@@ -41,7 +39,7 @@ export default function RegisterForm({ onSuccess }) {
           </button>
           <button
             type="button"
-            onClick={() => setRole("manager")}
+            onClick={() => toggleRole("manager")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"
