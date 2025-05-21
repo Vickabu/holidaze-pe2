@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DarkModeToggle from '../common/DarkModeToggle'; 
 import Modal from '../common/Modal';
-import LoginForm from '../LoginForm';
-import RegisterForm from '../RegisterForm';
+import LoginForm from '../auth/LoginForm';
+import RegisterForm from '../auth/RegisterForm';
 import { FaBars, FaTimes, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt } from 'react-icons/fa';
 import { useAuthToggle } from '../../hooks/useAuthToggle';
 

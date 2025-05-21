@@ -1,5 +1,5 @@
 import React from "react";
-import VenueGrid from "../components/VenueGrid"; 
+import VenueGrid from "../components/venues/VenueGrid"; 
 
 const HomePage = () => {
   return (

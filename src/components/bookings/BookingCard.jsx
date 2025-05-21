@@ -1,26 +1,27 @@
 import { API_HOLIDAZE } from "../../api/constant";
 import { useDelete } from "../../hooks/useDelete";
+import { confirmAndDelete } from "../../utils/confirmAndDelete";
 
 export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   const venue = booking.venue;
   const accessToken = localStorage.getItem("accessToken");
-  const { remove, loading, error } = useDelete();
+  const { remove, loading } = useDelete();
 
   const image =
-    venue?.media?.[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
+    venue?.media?.[0]?.url ||
+    "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
   const handleCancel = async () => {
-    const confirmCancel = window.confirm("Er du sikker på at du vil avbestille?");
-    if (!confirmCancel) return;
+    const success = await confirmAndDelete({
+      message: "Er du sikker på at du vil avbestille?",
+      url: `${API_HOLIDAZE.BOOKINGS}/${booking.id}`,
+      accessToken,
+      remove,
+    });
 
-    try {
-      await remove(`${API_HOLIDAZE.BOOKINGS}/${booking.id}`, {
-        Authorization: `Bearer ${accessToken}`,
-      });
+    if (success) {
       alert("Booking avbestilt!");
       onRefresh();
-    } catch (err) {
-      alert("Kunne ikke avbestille: " + (err.errors?.[0]?.message || err.message));
     }
   };
 
@@ -50,11 +51,6 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
           >
             {loading ? "Avbestiller..." : "Avbestill"}
           </button>
-        )}
-        {error && (
-          <p className="mt-2 text-red-500 text-sm">
-            Feil ved avbestilling: {error.message || String(error)}
-          </p>
         )}
       </div>
     </li>

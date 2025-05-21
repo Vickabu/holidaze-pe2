@@ -1,8 +1,8 @@
 import React from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import VenueCard from "./VenueCard";
-import { API_HOLIDAZE } from "../api/constant";
-import Pagination from "./common/Pagination";
+import { API_HOLIDAZE } from "../../api/constant";
+import Pagination from "../common/Pagination";
 
 const VenueGrid = () => {
   const {

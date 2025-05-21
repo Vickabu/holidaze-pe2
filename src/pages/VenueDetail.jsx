@@ -2,9 +2,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch.js";
 import { API_HOLIDAZE } from "../api/constant.js";
-import VenueImages from "../components/VenueImages.jsx";
-import VenueInfo from "../components/VenueInfo.jsx";
-import VenueOwner from "../components/VenueOwner.jsx";
+import VenueImages from "../components/venues/VenueImages.jsx";
+import VenueInfo from "../components/venues/VenueInfo.jsx";
+import VenueOwner from "../components/venues/VenueOwner.jsx";
 import VenueBookingForm from "../components/venues/VenueBookingForm.jsx";
 
 const VenueDetail = () => {

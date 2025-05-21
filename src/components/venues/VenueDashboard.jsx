@@ -1,34 +1,21 @@
 import { useState } from "react";
-import useFetch from "../hooks/useFetch";
-import { API_HOLIDAZE } from "../api/constant";
-import VenueDashCard from "./venues/VenueDashCard";
-import Pagination from "./common/Pagination";
-import CreateVenue from "./venues/CreateVenue"; // Importer den nye komponenten
+import { useUserVenues } from "../../hooks/data/useUserVenues";
+import VenueDashCard from "./VenueDashCard";
+import Pagination from "../common/Pagination";
+import CreateVenue from "./CreateVenue";
 
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showCreateModal, setShowCreateModal] = useState(false); // State for å vise modal
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const itemsPerPage = 12;
 
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-  const accessToken = localStorage.getItem("accessToken");
-
-  const url = `${API_HOLIDAZE.PROFILES}/${user.name}/venues`;
-  const { data: venues, loading, error } = useFetch(url, {
-    options: {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-    dependencies: [refreshKey],
-  });
-
+  const { venues = [], loading, error } = useUserVenues(refreshKey);
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   if (loading) return <p>Laster venues...</p>;
   if (error) return <p>Kunne ikke hente venues: {error.errors?.[0]?.message || error.message}</p>;
-  if (!venues || venues.length === 0) return <p>Du har ingen venues enda.</p>;
+  if (venues.length === 0) return <p>Du har ingen venues enda.</p>;
 
   const pageCount = Math.ceil(venues.length / itemsPerPage);
   const paginatedVenues = venues.slice(

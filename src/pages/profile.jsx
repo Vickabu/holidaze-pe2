@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import VenueDashboard from "../components/VenueDashboard";
-import BookingDashboard from "../components/BookingDashbord";
-import UserInfoCard from "../components/UserInfoCard";
+import VenueDashboard from "../components/venues/VenueDashboard";
+import BookingDashboard from "../components/bookings/BookingDashbord";
+import UserInfoCard from "../user/UserInfoCard";
 
 export default function Profile() {
   const [user, setUser] = useState(null);

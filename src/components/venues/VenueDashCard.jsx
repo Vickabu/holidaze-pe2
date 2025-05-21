@@ -1,27 +1,25 @@
 import { API_HOLIDAZE } from "../../api/constant";
 import { useDelete } from "../../hooks/useDelete";
+import { confirmAndDelete } from "../../utils/confirmAndDelete";
 
 export default function VenueDashCard({ venue, onDelete }) {
-  const { remove, loading, error } = useDelete();
+  const { remove, loading } = useDelete();
+  const accessToken = localStorage.getItem("accessToken");
   const image =
     venue.media?.[0]?.url ||
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete "${venue.name}"?`
-    );
-    if (!confirmDelete) return;
+    const success = await confirmAndDelete({
+      message: `Er du sikker på at du vil slette "${venue.name}"?`,
+      url: `${API_HOLIDAZE.VENUES}/${venue.id}`,
+      accessToken,
+      remove,
+    });
 
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      await remove(`${API_HOLIDAZE.VENUES}/${venue.id}`, {
-        Authorization: `Bearer ${accessToken}`,
-      });
-      alert("Venue deleted.");
+    if (success) {
+      alert("Venue slettet.");
       onDelete?.();
-    } catch (err) {
-      alert("Could not delete venue: " + (err.errors?.[0]?.message || err.message));
     }
   };
 
@@ -56,11 +54,6 @@ export default function VenueDashCard({ venue, onDelete }) {
         >
           {loading ? "Sletter..." : "Slett venue"}
         </button>
-        {error && (
-          <p className="mt-2 text-red-600 text-sm">
-            Feil ved sletting: {error.message || String(error)}
-          </p>
-        )}
       </div>
     </li>
   );

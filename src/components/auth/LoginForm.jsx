@@ -1,9 +1,10 @@
 import React from "react";
+import { handleLogin } from "../../api/auth/handleLogin";
 import { FaUser, FaHotel } from "react-icons/fa";
-import { handleRegister } from "../api/auth/handleRegister";
 
-export default function RegisterForm({ role, toggleRole, onSuccess }) {
-  const [name, setName] = React.useState("");
+
+
+export default function LoginForm({ role, toggleRole, onSuccess }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
@@ -12,17 +13,17 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
     e.preventDefault();
     setError("");
 
-    const result = await handleRegister({ name, email, password, role });
+    const result = await handleLogin({ email, password, role });
     if (result.success) {
       onSuccess?.(result.user);
     } else {
-      setError(result.message || "Noe gikk galt under registreringen.");
+      setError(result.message || "Noe gikk galt.");
     }
   };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-center">Opprett konto</h2>
+      <h2 className="text-xl font-semibold text-center">Logg inn</h2>
 
       <div className="flex justify-center">
         <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
@@ -52,14 +53,6 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
       </div>
 
       <input
-        type="text"
-        placeholder="Navn"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full p-2 border rounded"
-        required
-      />
-      <input
         type="email"
         placeholder="E-post"
         value={email}
@@ -82,7 +75,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
         type="submit"
         className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
       >
-        Registrer deg
+        Logg inn
       </button>
     </form>
   );
