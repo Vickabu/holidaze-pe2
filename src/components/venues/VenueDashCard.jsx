@@ -1,6 +1,7 @@
 import { API_HOLIDAZE } from "../../api/constant";
 import { useDelete } from "../../hooks/useDelete";
 import { confirmAndDelete } from "../../utils/confirmAndDelete";
+import { Link } from "react-router-dom";
 
 export default function VenueDashCard({ venue, onDelete }) {
   const { remove, loading } = useDelete();
@@ -24,6 +25,7 @@ export default function VenueDashCard({ venue, onDelete }) {
   };
 
   return (
+    <Link to={`/venues/${venue.id}`} className="block">
     <li className="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col md:flex-row">
       <img
         src={image}
@@ -56,5 +58,6 @@ export default function VenueDashCard({ venue, onDelete }) {
         </button>
       </div>
     </li>
+    </Link>
   );
 }

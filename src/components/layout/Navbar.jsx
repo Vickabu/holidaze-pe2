@@ -41,6 +41,7 @@ export default function Navbar() {
     setShowModal(true);
   };
 
+
   return (
     <>
       <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white dark:bg-gray-900 shadow-md' : 'bg-white/70 dark:bg-gray-900/70 backdrop-blur'}`}>
