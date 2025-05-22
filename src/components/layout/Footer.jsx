@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaTwitter, FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa';
-import DarkModeToggle from './DarkModeToggle';
+import DarkModeToggle from '../common/DarkModeToggle';
 
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(false);

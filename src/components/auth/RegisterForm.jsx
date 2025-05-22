@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { handleLogin } from "../api/handleLogin";
+import React from "react";
 import { FaUser, FaHotel } from "react-icons/fa";
+import { handleRegister } from "../../api/auth/handleRegister";
 
-export default function LoginForm({ onSuccess }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("guest");
-  const [error, setError] = useState("");
+export default function RegisterForm({ role, toggleRole, onSuccess }) {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    setError("");  // Reset error on new submit attempt
+  e.preventDefault();
+  setError("");
 
-    const result = await handleLogin({ email, password, role });
-    if (result.success) {
-      onSuccess?.(result.user);  // Callback to handle success
-    } else {
-      setError(result.message || "Noe gikk galt.");
-    }
-  };
+  const result = await handleRegister({ name, email, password, role });
+  if (result.success) {
+    onSuccess?.();  
+  } else {
+    setError(result.message || "Noe gikk galt under registreringen.");
+  }
+};
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-center">Logg inn</h2>
+      <h2 className="text-xl font-semibold text-center">Opprett konto</h2>
 
       <div className="flex justify-center">
         <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
           <button
             type="button"
-            onClick={() => setRole("guest")}
+            onClick={() => toggleRole("guest")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "guest"
                 ? "bg-blue-500 text-white"
@@ -39,7 +39,7 @@ export default function LoginForm({ onSuccess }) {
           </button>
           <button
             type="button"
-            onClick={() => setRole("manager")}
+            onClick={() => toggleRole("manager")}
             className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"
@@ -51,6 +51,14 @@ export default function LoginForm({ onSuccess }) {
         </div>
       </div>
 
+      <input
+        type="text"
+        placeholder="Navn"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full p-2 border rounded"
+        required
+      />
       <input
         type="email"
         placeholder="E-post"
@@ -74,7 +82,7 @@ export default function LoginForm({ onSuccess }) {
         type="submit"
         className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
       >
-        Logg inn
+        Registrer deg
       </button>
     </form>
   );

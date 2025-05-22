@@ -1,33 +1,31 @@
-import { doFetch } from "../api/doFetch";
-import { API_HOLIDAZE } from "../api/constant";
+import { API_HOLIDAZE } from "../../api/constant";
+import { useDelete } from "../../hooks/useDelete";
+import { confirmAndDelete } from "../../utils/confirmAndDelete";
+import { Link } from "react-router-dom";
 
 export default function VenueDashCard({ venue, onDelete }) {
+  const { remove, loading } = useDelete();
+  const accessToken = localStorage.getItem("accessToken");
   const image =
     venue.media?.[0]?.url ||
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete "${venue.name}"?`
-    );
-    if (!confirmDelete) return;
+    const success = await confirmAndDelete({
+      message: `Er du sikker på at du vil slette "${venue.name}"?`,
+      url: `${API_HOLIDAZE.VENUES}/${venue.id}`,
+      accessToken,
+      remove,
+    });
 
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      await doFetch(`${API_HOLIDAZE.VENUES}/${venue.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      alert("Venue deleted.");
-      onDelete?.(); 
-    } catch (err) {
-      alert("Could not delete venue: " + (err.errors?.[0]?.message || err.message));
+    if (success) {
+      alert("Venue slettet.");
+      onDelete?.();
     }
   };
 
   return (
+    <Link to={`/venues/${venue.id}`} className="block">
     <li className="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col md:flex-row">
       <img
         src={image}
@@ -51,11 +49,15 @@ export default function VenueDashCard({ venue, onDelete }) {
         )}
         <button
           onClick={handleDelete}
-          className="mt-4 inline-block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+          disabled={loading}
+          className={`mt-4 inline-block text-white px-4 py-2 rounded ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-600"
+          }`}
         >
-          Slett venue
+          {loading ? "Sletter..." : "Slett venue"}
         </button>
       </div>
     </li>
+    </Link>
   );
 }
