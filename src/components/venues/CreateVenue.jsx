@@ -2,6 +2,8 @@ import { useState } from "react";
 import { API_HOLIDAZE } from "../../api/constant";
 import { usePost } from "../../hooks/usePost";
 import VenueForm from "./VenueForm";
+import { validateVenue } from "../../utils/validation";
+
 
 const CreateVenue = ({ onClose, onCreate }) => {
   const [name, setName] = useState("");
@@ -14,6 +16,8 @@ const CreateVenue = ({ onClose, onCreate }) => {
     country: "",
   });
   const [media, setMedia] = useState([""]);
+  const [errors, setErrors] = useState({});
+
 
   const { post, loading, error } = usePost();
 
@@ -28,32 +32,41 @@ const CreateVenue = ({ onClose, onCreate }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  setErrors({}); // nullstill tidligere feil
 
-    const filteredMedia = media.filter((url) => url.trim() !== "");
+  const transformedMedia = media
+    .filter((url) => url.trim() !== "")
+    .map((url) => ({
+      url: url.trim(),
+      alt: "", // evt. legg til felt i skjema senere
+    }));
 
-    const venueData = {
-      name,
-      description,
-      price: parseFloat(price),
-      maxGuests: parseInt(maxGuests, 10),
-      location,
-      media: filteredMedia.map((url) => ({ url })),
-    };
-
-    if (isNaN(venueData.price) || isNaN(venueData.maxGuests)) {
-      alert("Pris og antall gjester må være gyldige tall!");
-      return;
-    }
-
-    try {
-      await post(API_HOLIDAZE.VENUES, venueData);
-      onCreate();
-      onClose();
-    } catch (e) {
-      alert("Kunne ikke opprette venue: " + (e.message || e));
-    }
+  const parsedVenue = {
+    name: name.trim(),
+    description: description.trim(),
+    media: transformedMedia,
+    price: parseFloat(price),
+    maxGuests: parseInt(maxGuests, 10),
+    location: {
+      ...location,
+    },
   };
+
+  const validationErrors = validateVenue(parsedVenue);
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
+  try {
+    await post(API_HOLIDAZE.VENUES, parsedVenue);
+    onCreate();
+    onClose();
+  } catch (e) {
+    alert("Kunne ikke opprette venue: " + (e.message || e));
+  }
+};
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500/50 bg-opacity-50 z-50">
@@ -63,6 +76,7 @@ const CreateVenue = ({ onClose, onCreate }) => {
       >
         <h2 className="text-xl font-semibold mb-4">Legg til Venue</h2>
         <VenueForm
+        
           name={name}
           setName={setName}
           description={description}
@@ -78,6 +92,7 @@ const CreateVenue = ({ onClose, onCreate }) => {
           addMediaField={addMediaField}
           loading={loading}
           error={error}
+          errors={errors}
           onClose={onClose}
           onSubmit={handleSubmit}
         />
