@@ -1,4 +1,3 @@
-// components/VenueImages.jsx
 import React, { useState } from "react";
 
 const VenueImages = ({ media = [] }) => {

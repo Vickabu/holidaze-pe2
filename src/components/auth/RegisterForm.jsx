@@ -9,16 +9,16 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [error, setError] = React.useState("");
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    const result = await handleRegister({ name, email, password, role });
-    if (result.success) {
-      onSuccess?.(result.user);
-    } else {
-      setError(result.message || "Noe gikk galt under registreringen.");
-    }
-  };
+  const result = await handleRegister({ name, email, password, role });
+  if (result.success) {
+    onSuccess?.();  
+  } else {
+    setError(result.message || "Noe gikk galt under registreringen.");
+  }
+};
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">

@@ -1,4 +1,3 @@
-// components/VenueInfo.jsx
 import React from "react";
 
 const VenueInfo = ({ venue }) => {

@@ -5,7 +5,7 @@ import BookingDashboard from "../components/bookings/BookingDashbord";
 import UserInfoCard from "../user/UserInfoCard";
 
 export default function Profile() {
-  const { username } = useParams(); // Hentes fra /profile/:username
+  const { username } = useParams(); 
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -18,9 +18,9 @@ export default function Profile() {
   if (!currentUser) return <p>Laster brukerdata...</p>;
 
   const isOwnProfile = !username || username === currentUser.name;
-  const profileUser = currentUser; // Vi støtter kun egen profil foreløpig
+  const profileUser = currentUser; 
 
-  // Hvis brukeren prøver å se en annen sin profil, redirect til egen
+
   if (!isOwnProfile) {
     return <Navigate to="/profile" replace />;
   }

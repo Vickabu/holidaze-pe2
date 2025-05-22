@@ -12,8 +12,8 @@ const VenueCard = ({ venue }) => {
           alt={media[0]?.alt || "Venue Image"}
           className="w-full h-48 object-cover rounded-lg mb-4"
         />
-        <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
-        <p className="text-gray-700 mt-2">{description}</p>
+        <h3 className="text-xl font-semibold text-gray-900 break-words">{name}</h3>
+        <p className="text-gray-700 mt-2 break-words">{description}</p>
         <p className="text-gray-900 font-semibold mt-2">Price: ${price}</p>
         <p className="text-yellow-500 mt-1">
           <span className="font-semibold">Rating:</span> {rating} ⭐

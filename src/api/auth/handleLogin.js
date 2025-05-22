@@ -1,7 +1,5 @@
-// utils/handleLogin.js
 import { API_AUTH } from "../constant";
 import { doFetch } from "../doFetch";
-import { saveUserToStorage } from "../../utils/localStorageHelpers";
 
 export async function handleLogin({ email, password, role }) {
   const isManager = role === "manager";
@@ -22,8 +20,6 @@ export async function handleLogin({ email, password, role }) {
           "Denne brukeren er ikke registrert som Venue Manager. Registrer deg som det for å få tilgang.",
       };
     }
-
-    saveUserToStorage(data);
 
     return { success: true, user: data };
   } catch (error) {

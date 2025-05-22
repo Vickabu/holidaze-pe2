@@ -21,7 +21,6 @@ const VenueForm = ({
 }) => {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      {/* Navn */}
       <div>
         <label className="block text-sm font-medium">Navn</label>
         <input
@@ -33,7 +32,6 @@ const VenueForm = ({
         />
       </div>
 
-      {/* Beskrivelse */}
       <div>
         <label className="block text-sm font-medium">Beskrivelse</label>
         <textarea
@@ -44,7 +42,6 @@ const VenueForm = ({
         />
       </div>
 
-      {/* Pris */}
       <div>
         <label className="block text-sm font-medium">Pris</label>
         <input
@@ -56,7 +53,6 @@ const VenueForm = ({
         />
       </div>
 
-      {/* Antall gjester */}
       <div>
         <label className="block text-sm font-medium">Antall Gjester</label>
         <input
@@ -68,7 +64,6 @@ const VenueForm = ({
         />
       </div>
 
-      {/* Adresse, By, Land */}
       <div>
         <label className="block text-sm font-medium">Adresse</label>
         <input
@@ -103,7 +98,6 @@ const VenueForm = ({
         />
       </div>
 
-      {/* Media */}
       <div>
         <label className="block text-sm font-medium">Bilder (URL-er)</label>
         {media.map((image, index) => (
@@ -126,7 +120,6 @@ const VenueForm = ({
         </button>
       </div>
 
-      {/* Forhåndsvisning av bilder */}
       {media.some((url) => url.trim() !== "") && (
         <div className="mt-4">
           <h3 className="font-semibold">Bilder Forhåndsvisning:</h3>
@@ -145,7 +138,6 @@ const VenueForm = ({
         </div>
       )}
 
-      {/* Knapper */}
       <div className="flex justify-end gap-4 mt-4">
         <button
           type="button"

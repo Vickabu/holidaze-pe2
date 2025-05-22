@@ -1,7 +1,5 @@
-// utils/handleRegister.js
 import { API_AUTH } from "../constant";
 import { doFetch } from "../doFetch";
-import { saveUserToStorage } from "../../utils/localStorageHelpers";
 
 export async function handleRegister({ name, email, password, role }) {
   const url = API_AUTH.REGISTER;
@@ -17,12 +15,11 @@ export async function handleRegister({ name, email, password, role }) {
       }),
     });
 
-    if (response?.accessToken) {
-      saveUserToStorage(response);
-      return { success: true, user: response.data };
+    if (response && !response.error) {
+      return { success: true, user: response };
     }
 
-    throw new Error("Registrering feilet.");
+    throw new Error(response.message || "Registrering feilet.");
   } catch (error) {
     console.error("Register error:", error.message);
     return {
