@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import VenueDashboard from "../components/venues/VenueDashboard";
 import BookingDashboard from "../components/bookings/BookingDashbord";
-import UserInfoCard from "../user/UserInfoCard";
+import UserInfoCard from "../components/user/UserInfoCard";
 
 export default function Profile() {
   const { username } = useParams(); 
@@ -29,7 +29,7 @@ export default function Profile() {
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Profil</h1>
 
-      <UserInfoCard user={profileUser} />
+      <UserInfoCard />
 
       {profileUser.venueManager ? (
         <VenueDashboard user={profileUser} />

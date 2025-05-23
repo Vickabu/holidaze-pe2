@@ -33,13 +33,13 @@ const CreateVenue = ({ onClose, onCreate }) => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  setErrors({}); // nullstill tidligere feil
+  setErrors({}); 
 
   const transformedMedia = media
     .filter((url) => url.trim() !== "")
     .map((url) => ({
       url: url.trim(),
-      alt: "", // evt. legg til felt i skjema senere
+      alt: "",
     }));
 
   const parsedVenue = {

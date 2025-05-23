@@ -7,10 +7,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalTab, setAuthModalTab] = useState("login");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("userInfo");
     if (storedUser) setUser(JSON.parse(storedUser));
+    setIsLoading(false);
   }, []);
 
   const login = (userData) => {
@@ -30,19 +32,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        login,
-        logout,
-        showAuthModal,
-        setShowAuthModal,
-        authModalTab,
-        setAuthModalTab,
-      }}
-    >
-      {children}
+    <AuthContext.Provider value={{ user, setUser, login, logout, showAuthModal, setShowAuthModal, authModalTab, setAuthModalTab, isLoading }}>
+      {!isLoading && children} 
     </AuthContext.Provider>
   );
 };
