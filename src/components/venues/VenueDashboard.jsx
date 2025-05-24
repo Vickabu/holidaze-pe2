@@ -4,12 +4,15 @@ import VenueDashCard from "./VenueDashCard";
 import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
 
+
+
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const itemsPerPage = 12;
 
+  
   const { venues = [], loading, error } = useUserVenues(refreshKey);
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
@@ -35,7 +38,7 @@ export default function VenueDashboard() {
 
       <ul className="space-y-4">
         {paginatedVenues.map((venue) => (
-          <VenueDashCard key={venue.id} venue={venue} onDelete={triggerRefresh} />
+          <VenueDashCard key={venue.id} venue={venue} onDelete={triggerRefresh} onUpdate={triggerRefresh} />
         ))}
       </ul>
 
