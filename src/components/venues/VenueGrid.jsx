@@ -9,7 +9,6 @@ import SearchBar from "../common/SearchBar";
 const ITEMS_PER_PAGE = 16;
 
 function buildQueryString(params) {
-  // Fjern falsy eller tomme parametre
   const query = Object.entries(params)
     .filter(([value]) => {
       if (typeof value === "boolean") return value === true;
@@ -53,7 +52,6 @@ const VenueGrid = () => {
       setSearchError(null);
 
       try {
-        // Legg til side og limit i parametre
         const params = { ...searchFilters, limit: ITEMS_PER_PAGE, page: searchPage };
         const queryString = buildQueryString(params);
         const url = `${API_HOLIDAZE.VENUES}/search${queryString}`;

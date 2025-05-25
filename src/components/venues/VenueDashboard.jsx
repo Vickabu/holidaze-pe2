@@ -3,8 +3,7 @@ import { useUserVenues } from "../../hooks/data/useUserVenues";
 import VenueDashCard from "./VenueDashCard";
 import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
-
-
+import Modal from "../common/Modal"; // 👈 sørg for at denne importeres
 
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -12,7 +11,6 @@ export default function VenueDashboard() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const itemsPerPage = 12;
 
-  
   const { venues = [], loading, error } = useUserVenues(refreshKey);
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
@@ -38,7 +36,12 @@ export default function VenueDashboard() {
 
       <ul className="space-y-4">
         {paginatedVenues.map((venue) => (
-          <VenueDashCard key={venue.id} venue={venue} onDelete={triggerRefresh} onUpdate={triggerRefresh} />
+          <VenueDashCard
+            key={venue.id}
+            venue={venue}
+            onDelete={triggerRefresh}
+            onUpdate={triggerRefresh}
+          />
         ))}
       </ul>
 
@@ -49,10 +52,12 @@ export default function VenueDashboard() {
       />
 
       {showCreateModal && (
-        <CreateVenue
-          onClose={() => setShowCreateModal(false)}
-          onCreate={triggerRefresh}
-        />
+        <Modal show={showCreateModal} onClose={() => setShowCreateModal(false)}>
+          <CreateVenue
+            onClose={() => setShowCreateModal(false)}
+            onCreate={triggerRefresh}
+          />
+        </Modal>
       )}
     </div>
   );

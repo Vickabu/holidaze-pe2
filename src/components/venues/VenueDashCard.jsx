@@ -4,7 +4,7 @@ import { useDelete } from "../../hooks/useDelete";
 import { confirmAndDelete } from "../../utils/confirmAndDelete";
 import { Link } from "react-router-dom";
 import Modal from "../common/Modal";
-import EditVenueForm from "./EditVenueForm";
+import EditVenue from "./EditVenue";
 
 export default function VenueDashCard({ venue, onDelete, onUpdate }) {
   const { remove, loading } = useDelete();
@@ -75,7 +75,7 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
       </li>
 
       <Modal show={isEditing} onClose={() => setIsEditing(false)}>
-        <EditVenueForm
+        <EditVenue
           venue={venue}
           onClose={() => setIsEditing(false)}
           onSuccess={onUpdate}

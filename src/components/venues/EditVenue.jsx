@@ -1,39 +1,39 @@
 import { useState } from "react";
 import { API_HOLIDAZE } from "../../api/constant";
-import { usePost } from "../../hooks/usePost";
+import { usePut } from "../../hooks/usePut";
 import { validateVenue } from "../../utils/validation";
 import VenueForm from "./VenueForm";
 
-export default function CreateVenue({ onClose, onCreate }) {
-  const { post, loading } = usePost();
+export default function EditVenue({ venue, onClose, onSuccess }) {
+  const { put, loading } = usePut();
   const [formError, setFormError] = useState(null);
 
-  const handleCreate = async (venueData) => {
-    const validationErrors = validateVenue(venueData);
+  const handleUpdate = async (updatedVenue) => {
+    const validationErrors = validateVenue(updatedVenue);
     if (Object.keys(validationErrors).length > 0) {
       setFormError("Vennligst fyll ut alle nødvendige felter riktig.");
       return;
     }
 
     try {
-      await post(API_HOLIDAZE.VENUES, venueData);
-      onCreate?.();
+      await put(`${API_HOLIDAZE.VENUES}/${venue.id}`, updatedVenue);
+      onSuccess?.();
       onClose?.();
-    } catch (e) {
-      setFormError("Kunne ikke opprette venue: " + (e.message || e));
+    } catch (err) {
+      setFormError("Feil ved oppdatering: " + (err.message || err));
     }
   };
 
   return (
     <div className="p-2 max-w-lg w-full">
-      <h2 className="text-xl font-semibold mb-4">Legg til Venue</h2>
+      <h2 className="text-xl font-semibold mb-4">Rediger Venue</h2>
       <VenueForm
-        initialValues={{}}
-        onSubmit={handleCreate}
+        initialValues={venue}
+        onSubmit={handleUpdate}
         onClose={onClose}
         loading={loading}
         error={formError && { message: formError }}
-        submitText="Opprett Venue"
+        submitText="Oppdater Venue"
       />
     </div>
   );
