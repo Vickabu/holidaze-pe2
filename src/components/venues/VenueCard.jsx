@@ -6,14 +6,14 @@ const VenueCard = ({ venue }) => {
 
   return (
     <Link to={`/venues/${id}`} className="block">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full max-w-xs hover:shadow-lg transition-shadow">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
         <img
-          src={media[0]?.url}
+          src={media[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg"}
           alt={media[0]?.alt || "Venue Image"}
           className="w-full h-48 object-cover rounded-lg mb-4"
         />
         <h3 className="text-xl font-semibold text-gray-900 break-words">{name}</h3>
-        <p className="text-gray-700 mt-2 break-words">{description}</p>
+        <p className="text-gray-700 mt-2 break-words line-clamp-3">{description}</p>
         <p className="text-gray-900 font-semibold mt-2">Price: ${price}</p>
         <p className="text-yellow-500 mt-1">
           <span className="font-semibold">Rating:</span> {rating} ⭐
@@ -21,7 +21,7 @@ const VenueCard = ({ venue }) => {
         <p className="text-gray-500 mt-1">
           <strong>Location:</strong> {location.city}, {location.country}
         </p>
-        <div className="mt-3 space-x-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {meta.wifi && (
             <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">Wi-Fi</span>
           )}

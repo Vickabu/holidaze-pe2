@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar({ onSearch }) {
   const [input, setInput] = useState("");
@@ -32,78 +33,27 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-      <input
-        type="text"
-        name="input"
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Søk etter venue..."
-        className="border p-2 rounded w-full"
-      />
-
-      
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Søk
-      </button>
+    <form onSubmit={handleSubmit} className="mb-8 bg-[#F4E9DC] dark:bg-[#1F3B3C] rounded-lg p-6 shadow-lg max-w-4xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative flex-grow">
+          <FaSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none" />
+          <input
+            type="text"
+            name="input"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Søk etter venue..."
+            className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 pl-10 p-3 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500 transition"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-purple-600 hover:bg-purple-700 active:bg-purple-800 transition-transform transform hover:scale-105 active:scale-95 text-white font-semibold py-3 px-8 rounded-md shadow-lg"
+        >
+          Søk
+        </button>
+      </div>
     </form>
+
   );
 }
-{/* <div className="flex gap-4 flex-wrap">
-        {["wifi", "pets", "parking", "breakfast"].map((feature) => (
-          <label key={feature} className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              name={feature}
-              checked={filters[feature]}
-              onChange={handleCheckboxChange}
-            />
-            {feature.charAt(0).toUpperCase() + feature.slice(1)}
-          </label>
-        ))}
-      </div>
-
-      <div className="flex gap-4 items-center flex-wrap">
-        <label>
-          Gjester:
-          <input
-            type="number"
-            name="guests"
-            min="1"
-            value={filters.guests}
-            onChange={handleInputChange}
-            className="w-20 ml-2 p-1 border rounded"
-          />
-        </label>
-
-        <label>
-          Fra:
-          <input
-            type="date"
-            name="dateFrom"
-            value={filters.dateFrom}
-            onChange={handleInputChange}
-            className="ml-2 p-1 border rounded"
-          />
-        </label>
-
-        <label>
-          Til:
-          <input
-            type="date"
-            name="dateTo"
-            value={filters.dateTo}
-            onChange={handleInputChange}
-            className="ml-2 p-1 border rounded"
-          />
-        </label>
-      </div> */}
-
-      
- // const handleCheckboxChange = (e) => {
-  //   const { name, checked } = e.target;
-  //   setFilters((prev) => ({ ...prev, [name]: checked }));
-  // };

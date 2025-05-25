@@ -23,12 +23,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  // Når du åpner modal fra navbar-knapp
   const openModal = (tab) => {
     switchTab(tab);
     setShowAuthModal(true);
@@ -39,15 +39,15 @@ export default function Navbar() {
       <nav
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white dark:bg-gray-900 shadow-md"
-            : "bg-white/70 dark:bg-gray-900/70 backdrop-blur"
+            ? "bg-[#F4E9DC]/70 dark:bg-[#1F3B3C]/80 shadow-md backdrop-blur"
+            : "bg-[#F4E9DC] dark:bg-[#1F3B3C] "
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
           <img
             src={"./Holidaze-logo.png"}
             alt="Holidaze logo"
-            className="w-32 cursor-pointer"
+            className="w-32 cursor-pointer dark:bg-[#F4E9DC] rounded"
             onClick={() => navigate("/")}
           />
 

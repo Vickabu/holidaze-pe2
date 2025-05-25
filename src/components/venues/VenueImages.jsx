@@ -19,7 +19,7 @@ const VenueImages = ({ media = [] }) => {
       <div className="relative w-full h-80">
         <button
           onClick={prevImage}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10"
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
           aria-label="Forrige bilde"
         >
           ‹
@@ -28,14 +28,14 @@ const VenueImages = ({ media = [] }) => {
         <img
           src={media[mainImageIndex]?.url}
           alt={media[mainImageIndex]?.alt || "Venue Image"}
-          className="w-full h-80 object-cover rounded-lg shadow cursor-pointer transition-opacity duration-300 ease-in-out"
+          className="w-full h-80 object-cover rounded shadow cursor-pointer transition-opacity duration-300 ease-in-out"
           onClick={() => setIsModalOpen(true)}
         />
 
         <button
           onClick={nextImage}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10"
-          aria-label="Neste bilde"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
+          aria-label="Next image"
         >
           ›
         </button>
@@ -43,17 +43,17 @@ const VenueImages = ({ media = [] }) => {
 
       {media.length > 1 && (
         <div className="mt-4">
-          <h2 className="text-lg font-semibold mb-2">Bildegalleri</h2>
-          <div className="flex gap-4 overflow-x-auto">
+          <h2 className="text-lg font-semibold mb-2">Gallery</h2>
+          <div className="flex gap-4">
             {media.map((img, index) => (
               <img
                 key={index}
                 src={img.url}
                 alt={img.alt || `Venue image ${index + 1}`}
                 onClick={() => setMainImageIndex(index)}
-                className={`w-24 h-16 object-cover rounded-md cursor-pointer border-2 transition duration-200 ${
+                className={`w-24 h-16 object-cover rounded cursor-pointer border-2 transition duration-200 ${
                   index === mainImageIndex
-                    ? "border-blue-500 scale-105"
+                    ? "border-blue-500 scale-110"
                     : "border-transparent hover:border-gray-300"
                 }`}
               />
@@ -72,7 +72,7 @@ const VenueImages = ({ media = [] }) => {
               e.stopPropagation();
               prevImage();
             }}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded-full p-4 text-4xl text-black"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
             aria-label="Forrige bilde"
           >
             ‹
@@ -90,7 +90,7 @@ const VenueImages = ({ media = [] }) => {
               e.stopPropagation();
               nextImage();
             }}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded-full p-4 text-4xl text-black"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
             aria-label="Neste bilde"
           >
             ›
