@@ -39,8 +39,8 @@ export default function Navbar() {
       <nav
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#F4E9DC]/70 dark:bg-[#1F3B3C]/90 shadow-md"
-            : "bg-[#F4E9DC] dark:bg-[#1F3B3C] backdrop-blur"
+            ? "bg-[#F4E9DC]/70 dark:bg-[#1F3B3C]/80 shadow-md backdrop-blur"
+            : "bg-[#F4E9DC] dark:bg-[#1F3B3C] "
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
