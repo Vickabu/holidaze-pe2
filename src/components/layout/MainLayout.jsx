@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function MainLayout() {
   return (
@@ -8,9 +9,9 @@ function MainLayout() {
         <main className="flex-grow">
           <Outlet />
         </main>
-          {/* Footer */}
-      <footer className="bg-gray-50 dark:bg-gray-900 p-4">
-        {/* Din Footer */}
+         
+      <footer>
+      <Footer />
       </footer>
       </div>
 

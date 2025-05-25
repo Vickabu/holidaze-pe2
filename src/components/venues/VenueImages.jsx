@@ -1,0 +1,115 @@
+import React, { useState } from "react";
+
+const VenueImages = ({ media = [] }) => {
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!media.length) return null;
+
+  const prevImage = () => {
+    setMainImageIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
+  };
+
+  const nextImage = () => {
+    setMainImageIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
+  };
+
+  return (
+    <>
+      <div className="relative w-full h-80">
+        <button
+          onClick={prevImage}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10"
+          aria-label="Forrige bilde"
+        >
+          ‹
+        </button>
+
+        <img
+          src={media[mainImageIndex]?.url}
+          alt={media[mainImageIndex]?.alt || "Venue Image"}
+          className="w-full h-80 object-cover rounded-lg shadow cursor-pointer transition-opacity duration-300 ease-in-out"
+          onClick={() => setIsModalOpen(true)}
+        />
+
+        <button
+          onClick={nextImage}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10"
+          aria-label="Neste bilde"
+        >
+          ›
+        </button>
+      </div>
+
+      {media.length > 1 && (
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold mb-2">Bildegalleri</h2>
+          <div className="flex gap-4 overflow-x-auto">
+            {media.map((img, index) => (
+              <img
+                key={index}
+                src={img.url}
+                alt={img.alt || `Venue image ${index + 1}`}
+                onClick={() => setMainImageIndex(index)}
+                className={`w-24 h-16 object-cover rounded-md cursor-pointer border-2 transition duration-200 ${
+                  index === mainImageIndex
+                    ? "border-blue-500 scale-105"
+                    : "border-transparent hover:border-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImage();
+            }}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded-full p-4 text-4xl text-black"
+            aria-label="Forrige bilde"
+          >
+            ‹
+          </button>
+
+          <img
+            src={media[mainImageIndex]?.url}
+            alt={media[mainImageIndex]?.alt || "Stort bilde"}
+            className="max-w-3xl max-h-[80vh] object-contain rounded shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImage();
+            }}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded-full p-4 text-4xl text-black"
+            aria-label="Neste bilde"
+          >
+            ›
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsModalOpen(false);
+            }}
+            className="absolute top-4 right-4 text-white text-4xl font-bold hover:text-gray-300"
+            aria-label="Lukk modal"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default VenueImages;
