@@ -1,6 +1,9 @@
 import React from "react";
 import { FaUser, FaHotel } from "react-icons/fa";
 import { handleRegister } from "../../api/auth/handleRegister";
+import { validateRegister } from "../../utils/validation";
+
+
 
 export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [name, setName] = React.useState("");
@@ -12,6 +15,13 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
   e.preventDefault();
   setError("");
 
+  const validationErrors = validateRegister({ name, email, password });
+  if (Object.keys(validationErrors).length > 0) {
+    const firstError = Object.values(validationErrors)[0];
+    setError(firstError);
+    return;
+  }
+
   const result = await handleRegister({ name, email, password, role });
   if (result.success) {
     onSuccess?.();  
@@ -22,14 +32,14 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-center">Opprett konto</h2>
+      {/* <h2 className="text-xl font-semibold text-center">Register an account at Holidaze</h2> */}
 
       <div className="flex justify-center">
-        <div className="inline-flex border rounded-full p-1 bg-gray-100 dark:bg-gray-700">
+        <div className="inline-flex border rounded p-1 bg-gray-100 dark:bg-gray-700">
           <button
             type="button"
             onClick={() => toggleRole("guest")}
-            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+            className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
               role === "guest"
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 dark:text-gray-200"
@@ -50,6 +60,8 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
           </button>
         </div>
       </div>
+
+      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
       <input
         type="text"
@@ -76,7 +88,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
         required
       />
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      
 
       <button
         type="submit"

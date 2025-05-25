@@ -11,4 +11,5 @@ export const API_HOLIDAZE = {
   PROFILES: `${API_BASE}/holidaze/profiles`,
   VENUES: `${API_BASE}/holidaze/venues`,
   BOOKINGS: `${API_BASE}/holidaze/bookings`,
+  SEARCH_VENUES: `${API_BASE}/holidaze/venues/search`,
 };

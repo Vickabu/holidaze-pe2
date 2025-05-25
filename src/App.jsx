@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
-import HomePage from "./pages/home";
-import Profile from "./pages/profile";
+import HomePage from "./pages/HomePage";
+import Profile from "./pages/Profile";
 import VenueDetail from "./pages/VenueDetail";
 import SellerPublicProfile from "./pages/SellerPublicProfile";
 import AuthGuard from "./components/auth/AuthGuard";

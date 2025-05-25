@@ -2,6 +2,17 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* :root {
+  --color-primary: #2F5D62;
+  --color-beige: #F4E9DC;
+  --color-text: #1A1A1A;
+}
+
+html.dark {
+  --color-primary: #1F3B3C;
+  --color-beige: #D3C6B8;
+  --color-text: #E0E0E0;
+} */
 /* html {
   background-color: white;
 } */
