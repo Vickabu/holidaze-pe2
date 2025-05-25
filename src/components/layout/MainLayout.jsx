@@ -4,17 +4,15 @@ import Footer from "./Footer";
 
 function MainLayout() {
   return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Outlet />
-        </main>
-         
+    <div className="flex flex-col min-h-screen bg-white dark:bg-[#101828] text-[#1F3B3C] dark:text-[#F4E9DC]">
+      <Navbar />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
       <footer>
-      <Footer />
+        <Footer />
       </footer>
-      </div>
-
+    </div>
   );
 }
 

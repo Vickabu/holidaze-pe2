@@ -1,8 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import { doFetch } from "../api/doFetch";
 
+function buildQueryString(params) {
+  const query = Object.entries(params)
+    .filter(([value]) => {
+      if (typeof value === "boolean") return value === true;
+      return value !== "" && value !== null && value !== undefined;
+    })
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    )
+    .join("&");
+  return query ? `?${query}` : "";
+}
+
 const useFetch = (
-  url,
+  baseUrl,
   { options = {}, paginate = false, itemsPerPage = 10 } = {},
 ) => {
   const [rawData, setRawData] = useState([]);
@@ -14,14 +28,20 @@ const useFetch = (
 
   const totalPages = paginate ? Math.ceil(rawData.length / itemsPerPage) : 1;
 
+  const optionsKey = JSON.stringify(options);
+
   useEffect(() => {
     const fetchData = async () => {
       if (fetchedOnce.current) return;
 
       setLoading(true);
       setError(null);
+
       try {
-        const response = await doFetch(url, options);
+        const queryString = buildQueryString(options);
+        const url = `${baseUrl}${queryString}`;
+
+        const response = await doFetch(url);
         const fullData = response.data || response;
 
         if (paginate) {
@@ -38,8 +58,9 @@ const useFetch = (
       }
     };
 
+    fetchedOnce.current = false; // Trigger re-fetch if options change
     fetchData();
-  }, [url, options, paginate]);
+  }, [baseUrl, optionsKey, paginate]);
 
   useEffect(() => {
     if (paginate) {

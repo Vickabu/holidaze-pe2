@@ -8,7 +8,7 @@ const VenueCard = ({ venue }) => {
     <Link to={`/venues/${id}`} className="block">
       <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full max-w-xs hover:shadow-lg transition-shadow">
         <img
-          src={media[0]?.url}
+          src={media[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg"}
           alt={media[0]?.alt || "Venue Image"}
           className="w-full h-48 object-cover rounded-lg mb-4"
         />

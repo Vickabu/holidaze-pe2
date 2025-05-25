@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { doFetch } from "../../api/doFetch";
 import { API_HOLIDAZE } from "../../api/constant";
@@ -14,12 +15,26 @@ function buildQueryString(params) {
       if (typeof value === "boolean") return value === true;
       return value !== "" && value !== null && value !== undefined;
     })
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
     .join("&");
   return query ? `?${query}` : "";
 }
 
 const VenueGrid = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // ⏳ Hent initial sortering fra URL (ellers fallback)
+  const initialSort = searchParams.get("sort") || "created";
+  const initialOrder = searchParams.get("sortOrder") || "desc";
+
+  const [sortOption, setSortOption] = useState({
+    sort: initialSort,
+    sortOrder: initialOrder,
+  });
+
   const [searchFilters, setSearchFilters] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
@@ -27,6 +42,7 @@ const VenueGrid = () => {
   const [searchPage, setSearchPage] = useState(1);
   const [totalSearchPages, setTotalSearchPages] = useState(1);
 
+  // 🧲 Default data med sortering i URL
   const {
     data: defaultData,
     loading,
@@ -35,11 +51,15 @@ const VenueGrid = () => {
     nextPage,
     prevPage,
     totalPages,
-  } = useFetch(API_HOLIDAZE.VENUES, {
-    paginate: true,
-    itemsPerPage: ITEMS_PER_PAGE,
-  });
+  } = useFetch(
+    `${API_HOLIDAZE.VENUES}?sort=${sortOption.sort}&sortOrder=${sortOption.sortOrder}`,
+    {
+      paginate: true,
+      itemsPerPage: ITEMS_PER_PAGE,
+    }
+  );
 
+  // 🔎 Hent søk hvis aktivt
   useEffect(() => {
     const fetchSearch = async () => {
       if (!searchFilters || Object.keys(searchFilters).length === 0) {
@@ -52,14 +72,20 @@ const VenueGrid = () => {
       setSearchError(null);
 
       try {
-        const params = { ...searchFilters, limit: ITEMS_PER_PAGE, page: searchPage };
+        const params = {
+          ...searchFilters,
+          limit: ITEMS_PER_PAGE,
+          page: searchPage,
+          sort: sortOption.sort,
+          sortOrder: sortOption.sortOrder,
+        };
         const queryString = buildQueryString(params);
         const url = `${API_HOLIDAZE.VENUES}/search${queryString}`;
 
         const response = await doFetch(url);
-
         setSearchResults(response.data);
-        const totalItems = response.meta?.totalCount || response.data.length;
+        const totalItems =
+          response.meta?.totalCount || response.data.length;
         setTotalSearchPages(Math.ceil(totalItems / ITEMS_PER_PAGE));
       } catch (err) {
         setSearchError(err);
@@ -69,7 +95,7 @@ const VenueGrid = () => {
     };
 
     fetchSearch();
-  }, [searchFilters, searchPage]);
+  }, [searchFilters, searchPage, sortOption]);
 
   const venues = searchFilters ? searchResults : defaultData;
   const isLoading = searchFilters ? searchLoading : loading;
@@ -91,13 +117,75 @@ const VenueGrid = () => {
     }
   };
 
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    let newSort, newOrder;
+
+    switch (value) {
+      case "newest":
+        newSort = "created";
+        newOrder = "desc";
+        break;
+      case "oldest":
+        newSort = "created";
+        newOrder = "asc";
+        break;
+      case "name":
+        newSort = "name";
+        newOrder = "asc";
+        break;
+      default:
+        newSort = "created";
+        newOrder = "desc";
+    }
+
+    setSortOption({ sort: newSort, sortOrder: newOrder });
+
+    // 💡 Oppdater URL
+    setSearchParams((prev) => {
+      const updated = new URLSearchParams(prev);
+      updated.set("sort", newSort);
+      updated.set("sortOrder", newOrder);
+      return updated;
+    });
+  };
+
+  const selectedSortValue =
+    sortOption.sort === "created" && sortOption.sortOrder === "desc"
+      ? "newest"
+      : sortOption.sort === "created" && sortOption.sortOrder === "asc"
+      ? "oldest"
+      : "name";
+
   return (
     <div className="p-6">
       <SearchBar onSearch={handleSearch} />
 
-      {isLoading && <p className="text-center">Laster steder...</p>}
-      {isError && <p className="text-center text-red-500">Feil: {isError.message}</p>}
+      {/* Sortering */}
+      <div className="max-w-4xl mx-auto mb-4">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+          Sorter etter:
+        </label>
+        <select
+          onChange={handleSortChange}
+          value={selectedSortValue}
+          className="w-full sm:w-64 p-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow"
+        >
+          <option value="newest">Nyeste først</option>
+          <option value="oldest">Eldste først</option>
+          <option value="name">Navn A–Å</option>
+        </select>
+      </div>
 
+      {/* Laster / feil */}
+      {isLoading && <p className="text-center">Laster steder...</p>}
+      {isError && (
+        <p className="text-center text-red-500">
+          Feil: {isError.message}
+        </p>
+      )}
+
+      {/* Resultat */}
       {!isLoading && !isError && (
         <>
           {venues.length === 0 ? (
