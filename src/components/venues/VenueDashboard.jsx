@@ -3,7 +3,7 @@ import { useUserVenues } from "../../hooks/data/useUserVenues";
 import VenueDashCard from "./VenueDashCard";
 import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
-import Modal from "../common/Modal"; // 👈 sørg for at denne importeres
+import Modal from "../common/Modal"; 
 
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);

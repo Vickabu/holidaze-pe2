@@ -9,7 +9,7 @@ export default function Modal({ show, onClose, children }) {
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white text-2xl"
-          aria-label="Lukk"
+          aria-label="Close"
         >
           <HiOutlineX   />
         </button>

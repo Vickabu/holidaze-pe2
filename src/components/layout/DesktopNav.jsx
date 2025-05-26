@@ -12,10 +12,10 @@ export default function DesktopNav({ isLoggedIn, openModal, handleLogout }) {
 
 <button
   onClick={handleLogout}
-  className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white font-semibold hover:bg-red-600 rounded hover:text-black transition-colors text-sm cursor-pointer"
+  className="flex items-center gap-2 px-4 py-2 rounded border border-black bg-red-300 text-black font-semibold hover:bg-red-400 hover:text-black transition-colors text-sm cursor-pointer hover:shadow-md"
 >
   <FaSignOutAlt />
-  Logg ut
+  Log Out
 </button>
         </>
       ) : (

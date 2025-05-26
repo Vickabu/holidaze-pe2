@@ -31,6 +31,7 @@ export default function Navbar() {
 
   const openModal = (tab) => {
     switchTab(tab);
+    setAuthModalTab(tab)
     setShowAuthModal(true);
   };
 
@@ -118,7 +119,7 @@ export default function Navbar() {
             />
             {registrationSuccess && (
               <p className="mt-4 text-green-600 text-center">
-                Registrering vellykket! Du kan nå logge inn.
+                Your account has been successfully created. Please log in to get started.
               </p>
             )}
           </>

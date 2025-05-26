@@ -1,4 +1,4 @@
-import { FaTimes, FaBars, FaSignOutAlt } from "react-icons/fa";
+import { FaTimes, FaBars, FaSignOutAlt, FaHome, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import DarkModeToggle from "../common/DarkModeToggle";
 import AvatarMenu from "./AvatarMenu";
 
@@ -37,9 +37,14 @@ export default function MobileNav({
 
         <ul className="flex flex-col mt-8 space-y-6 text-[#1F3B3C] dark:text-[#F4E9DC] font-semibold">
           <li>
-            <a href="/" onClick={() => setMenuOpen(false)}>
-              Home
-            </a>
+            <a
+    href="/"
+    onClick={() => setMenuOpen(false)}
+    className="flex items-center gap-2"
+  >
+    <FaHome />
+    Home
+  </a>
           </li>
 
           {isLoggedIn ? (
@@ -53,39 +58,48 @@ export default function MobileNav({
               <li>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white font-semibold hover:bg-red-600 rounded hover:text-black transition-colors text-sm cursor-pointer"
+                  className="flex items-center gap-2 px-4 py-2 rounded border border-black bg-red-300 text-black font-semibold hover:bg-red-400 hover:text-black transition-colors text-sm cursor-pointer hover:shadow-md"
                 >
                   <FaSignOutAlt />
-                  Logg ut
+                  Log Out
                 </button>
               </li>
             </>
           ) : (
             <>
               <li>
-                <button
-                  onClick={() => {
-                    openModal("login");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Sign in
-                </button>
-              </li>
+  <button
+    onClick={() => {
+      openModal("login");
+      setMenuOpen(false);
+    }}
+    className="flex items-center gap-2"
+  >
+    <FaSignInAlt />
+    Sign in
+  </button>
+</li>
               <li>
-                <button
-                  onClick={() => {
-                    openModal("register");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Register
-                </button>
+  <button
+    onClick={() => {
+      openModal("register");
+      setMenuOpen(false);
+    }}
+    className="flex items-center gap-2"
+  >
+    <FaUserPlus />
+    Register
+  </button>
+</li>
+              <li>
+                <DarkModeToggle />
               </li>
             </>
+            
           )}
         
         </ul>
+        
       </div>
     </>
   );

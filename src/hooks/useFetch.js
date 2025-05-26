@@ -58,7 +58,7 @@ const useFetch = (
       }
     };
 
-    fetchedOnce.current = false; // Trigger re-fetch if options change
+    fetchedOnce.current = false;
     fetchData();
   }, [baseUrl, optionsKey, paginate]);
 
