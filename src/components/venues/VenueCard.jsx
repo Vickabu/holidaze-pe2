@@ -6,7 +6,7 @@ const VenueCard = ({ venue }) => {
 
   return (
     <Link to={`/venues/${id}`} className="block">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
+      <div className="bg-[#f8f8f8] border border-gray-200 rounded-lg shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
         <img
           src={media[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg"}
           alt={media[0]?.alt || "Venue Image"}

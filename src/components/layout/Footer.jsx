@@ -30,7 +30,7 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <img
-            src={"./Holidaze-logo.png"}
+            src={"/Holidaze-logo.png"}
             alt="Holidaze logo"
             className="w-32 cursor-pointer dark:bg-[#F4E9DC] rounded"
             onClick={() => navigate("/")}

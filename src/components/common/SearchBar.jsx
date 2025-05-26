@@ -33,7 +33,7 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8 bg-[#F4E9DC] dark:bg-[#1F3B3C] rounded-lg p-6 shadow-lg max-w-4xl mx-auto">
+    <form onSubmit={handleSubmit} className="mb-8 bg-[#F4E9DC] dark:bg-[#1F3B3C] rounded p-6 shadow-lg max-w-4xl mx-auto border border-gray-200 dark:border-gray-700">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative flex-grow">
           <FaSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none" />
@@ -42,15 +42,15 @@ export default function SearchBar({ onSearch }) {
             name="input"
             value={input}
             onChange={handleInputChange}
-            placeholder="Søk etter venue..."
-            className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 pl-10 p-3 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500 transition"
+            placeholder="Find your next location..."
+            className="w-full rounded border border-gray-300 dark:border-gray-600 bg-white text-gray-900 pl-10 p-3 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition"
           />
         </div>
         <button
           type="submit"
-          className="bg-purple-600 hover:bg-purple-700 active:bg-purple-800 transition-transform transform hover:scale-105 active:scale-95 text-white font-semibold py-3 px-8 rounded-md shadow-lg"
+          className="bg-purple-700 hover:bg-purple-800 transition-transform transform hover:scale-105 text-white font-semibold py-3 px-8 rounded shadow-lg"
         >
-          Søk
+          Search
         </button>
       </div>
     </form>

@@ -3,7 +3,7 @@ import MainLayout from "./components/layout/MainLayout";
 import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import VenueDetail from "./pages/VenueDetail";
-import SellerPublicProfile from "./pages/SellerPublicProfile";
+import SellerProfile from "./pages/SellerProfile";
 import AuthGuard from "./components/auth/AuthGuard";
 import NotFound from "./pages/NotFound";
 
@@ -16,7 +16,7 @@ function App() {
         <Profile />
       </AuthGuard>} />
         <Route path="/venues/:id" element={<VenueDetail />} />
-        <Route path="/sellers/:username" element={<SellerPublicProfile />} />
+        <Route path="/sellers/:username" element={<AuthGuard><SellerProfile /></AuthGuard>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -46,7 +46,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
           <img
-            src={"./Holidaze-logo.png"}
+            src={"/Holidaze-logo.png"}
             alt="Holidaze logo"
             className="w-32 cursor-pointer dark:bg-[#F4E9DC] rounded"
             onClick={() => navigate("/")}

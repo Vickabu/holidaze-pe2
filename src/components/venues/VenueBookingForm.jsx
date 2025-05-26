@@ -25,79 +25,94 @@ const VenueBookingForm = ({ venue }) => {
         ...bookingData,
         venueId: venue.id,
       });
-      setBookingMessage({ type: "success", text: "Booking registrert!" });
+      setBookingMessage({ type: "success", text: "Booking successful!" });
+      setBookingData({ dateFrom: "", dateTo: "", guests: 1 }); 
     } catch (error) {
       setBookingMessage({
         type: "error",
-        text: error?.message || "Noe gikk galt. Vennligst prøv igjen.",
+        text: error?.message || "Something went wrong. Please try again.",
       });
     }
   };
 
   return (
-    <div className="bg-white border rounded-lg p-4 shadow mt-6">
-      <h2 className="text-xl font-semibold mb-4">Book dette stedet</h2>
+    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-lg mt-6 max-w-sm mx-auto">
+      <h2 className="text-2xl font-semibold mb-6 text-center text-blue-700">
+        Book this venue
+      </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-medium">Fra dato</label>
+          <label className="block font-medium mb-1" htmlFor="dateFrom">
+            From date
+          </label>
           <input
             type="date"
             name="dateFrom"
+            id="dateFrom"
             value={bookingData.dateFrom}
             onChange={handleChange}
             required
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
         </div>
+
         <div>
-          <label className="block font-medium">Til dato</label>
+          <label className="block font-medium mb-1" htmlFor="dateTo">
+            To date
+          </label>
           <input
             type="date"
             name="dateTo"
+            id="dateTo"
             value={bookingData.dateTo}
             onChange={handleChange}
             required
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
         </div>
+
         <div>
-          <label className="block font-medium">Antall gjester</label>
+          <label className="block font-medium mb-1" htmlFor="guests">
+            Number of guests
+          </label>
           <input
             type="number"
             name="guests"
+            id="guests"
             value={bookingData.guests}
             onChange={handleChange}
             min="1"
             max={venue.maxGuests}
             required
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
         </div>
+
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 disabled:opacity-50 transition"
         >
-          {loading ? "Sender..." : "Send booking"}
+          {loading ? "Sending..." : "Send booking"}
         </button>
       </form>
 
       {bookingMessage && (
         <p
-          className={`mt-4 p-2 rounded ${
+          className={`mt-6 p-3 rounded ${
             bookingMessage.type === "success"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          }`}
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          } text-center font-semibold`}
         >
           {bookingMessage.text}
         </p>
       )}
 
       {error && !bookingMessage && (
-        <p className="mt-4 p-2 rounded bg-red-100 text-red-700">
-          {error.message || "Noe gikk galt."}
+        <p className="mt-6 p-3 rounded bg-red-100 text-red-800 text-center font-semibold">
+          {error.message || "Something went wrong."}
         </p>
       )}
     </div>

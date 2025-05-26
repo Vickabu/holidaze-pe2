@@ -17,10 +17,10 @@ const VenueOwner = ({ owner }) => {
 
   return (
     <div
-      className="bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-200 transition"
+      className="bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-200 transition h-fit"
       onClick={handleClick}
     >
-      <h2 className="text-xl font-semibold mb-2">Eier</h2>
+      <h2 className="text-xl font-semibold mb-2">Owner</h2>
       <div className="flex items-center space-x-4">
         {owner?.avatar?.url && (
           <img

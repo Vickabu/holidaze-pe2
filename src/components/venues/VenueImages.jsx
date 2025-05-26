@@ -16,7 +16,7 @@ const VenueImages = ({ media = [] }) => {
 
   return (
     <>
-      <div className="relative w-full h-80">
+      <div className="relative w-full h-100">
         <button
           onClick={prevImage}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
@@ -28,7 +28,7 @@ const VenueImages = ({ media = [] }) => {
         <img
           src={media[mainImageIndex]?.url}
           alt={media[mainImageIndex]?.alt || "Venue Image"}
-          className="w-full h-80 object-cover rounded shadow cursor-pointer transition-opacity duration-300 ease-in-out"
+          className="w-full h-100 object-cover rounded shadow cursor-pointer transition-opacity duration-300 ease-in-out"
           onClick={() => setIsModalOpen(true)}
         />
 

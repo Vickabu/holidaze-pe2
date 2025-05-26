@@ -26,7 +26,6 @@ function buildQueryString(params) {
 const VenueGrid = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // ⏳ Hent initial sortering fra URL (ellers fallback)
   const initialSort = searchParams.get("sort") || "created";
   const initialOrder = searchParams.get("sortOrder") || "desc";
 
@@ -42,7 +41,6 @@ const VenueGrid = () => {
   const [searchPage, setSearchPage] = useState(1);
   const [totalSearchPages, setTotalSearchPages] = useState(1);
 
-  // 🧲 Default data med sortering i URL
   const {
     data: defaultData,
     loading,
@@ -59,7 +57,6 @@ const VenueGrid = () => {
     }
   );
 
-  // 🔎 Hent søk hvis aktivt
   useEffect(() => {
     const fetchSearch = async () => {
       if (!searchFilters || Object.keys(searchFilters).length === 0) {
@@ -141,7 +138,6 @@ const VenueGrid = () => {
 
     setSortOption({ sort: newSort, sortOrder: newOrder });
 
-    // 💡 Oppdater URL
     setSearchParams((prev) => {
       const updated = new URLSearchParams(prev);
       updated.set("sort", newSort);
@@ -161,35 +157,34 @@ const VenueGrid = () => {
     <div className="p-6">
       <SearchBar onSearch={handleSearch} />
 
-      {/* Sortering */}
-      <div className="max-w-4xl mx-auto mb-4">
+      <div className="mx-auto mb-4">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-          Sorter etter:
+          Sort order:
         </label>
         <select
           onChange={handleSortChange}
           value={selectedSortValue}
           className="w-full sm:w-64 p-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow"
         >
-          <option value="newest">Nyeste først</option>
-          <option value="oldest">Eldste først</option>
-          <option value="name">Navn A–Å</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Old-New</option>
+          <option value="name">Name A-Z</option>
         </select>
       </div>
 
-      {/* Laster / feil */}
-      {isLoading && <p className="text-center">Laster steder...</p>}
+  
+      {isLoading && <p className="text-center">Loading Venues...</p>}
       {isError && (
         <p className="text-center text-red-500">
-          Feil: {isError.message}
+          Something went wrong, try a new search or refresh the page.. {isError.message}
         </p>
       )}
 
-      {/* Resultat */}
+ 
       {!isLoading && !isError && (
         <>
           {venues.length === 0 ? (
-            <p className="text-center">Ingen treff.</p>
+            <p className="text-center">No search results</p>
           ) : (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
