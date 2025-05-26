@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="text-center text-sm text-gray-400 mt-6 dark:text-gray-400">
+        <div className="text-center text-sm text-gray-600 mt-6 dark:text-gray-400">
           &copy; {new Date().getFullYear()} Holidaze.
         </div>
       </div>
