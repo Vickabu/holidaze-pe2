@@ -25,7 +25,7 @@ const VenueOwner = ({ owner }) => {
         {owner?.avatar?.url && (
           <img
             src={owner.avatar.url}
-            alt={owner.avatar.alt || "Eierbilde"}
+            alt={owner.avatar.alt || "Owner image"}
             className="w-16 h-16 rounded-full object-cover"
           />
         )}

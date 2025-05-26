@@ -7,13 +7,18 @@ export default function BookingSection({ title, bookings, page, setPage, isUpcom
   const paginated = bookings.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <section>
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+    <section className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
+      <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 dark:border-gray-700 pb-2">
+        {title}
+      </h2>
+
       {bookings.length === 0 ? (
-        <p>{isUpcoming ? "Ingen kommende bookinger." : "Ingen tidligere bookinger."}</p>
+        <p className="text-center text-gray-500 dark:text-gray-400 italic">
+          {isUpcoming ? "No upcoming bookings yet." : "No past bookings."}
+        </p>
       ) : (
         <>
-          <ul className="space-y-6">
+          <ul className="space-y-6 mb-6">
             {paginated.map((booking) => (
               <BookingCard
                 key={booking.id}
@@ -23,7 +28,14 @@ export default function BookingSection({ title, bookings, page, setPage, isUpcom
               />
             ))}
           </ul>
-          <Pagination currentPage={page} totalPages={pageCount} onPageChange={setPage} />
+
+          <div className="flex justify-center">
+            <Pagination
+              currentPage={page}
+              totalPages={pageCount}
+              onPageChange={setPage}
+            />
+          </div>
         </>
       )}
     </section>

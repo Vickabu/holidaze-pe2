@@ -5,7 +5,7 @@ export function useUserBookings(refreshKey = 0) {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const accessToken = localStorage.getItem("accessToken");
 
-  const url = `${API_HOLIDAZE.PROFILES}/${user.name}/bookings?_venue=true`;
+  const url = `${API_HOLIDAZE.PROFILES}/${user.name}/bookings?_venue=true&_customer=true`;
 
   const {
     data: bookings = [],
@@ -15,6 +15,9 @@ export function useUserBookings(refreshKey = 0) {
     options: {
       headers: {
         Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        _venue: true,
       },
     },
     dependencies: [refreshKey],

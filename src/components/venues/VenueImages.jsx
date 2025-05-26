@@ -20,7 +20,7 @@ const VenueImages = ({ media = [] }) => {
         <button
           onClick={prevImage}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
-          aria-label="Forrige bilde"
+          aria-label="Last image"
         >
           ‹
         </button>
@@ -73,14 +73,14 @@ const VenueImages = ({ media = [] }) => {
               prevImage();
             }}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
-            aria-label="Forrige bilde"
+            aria-label="Last image"
           >
             ‹
           </button>
 
           <img
             src={media[mainImageIndex]?.url}
-            alt={media[mainImageIndex]?.alt || "Stort bilde"}
+            alt={media[mainImageIndex]?.alt || "Large image"}
             className="max-w-3xl max-h-[80vh] object-contain rounded shadow-lg"
             onClick={(e) => e.stopPropagation()}
           />
@@ -91,7 +91,7 @@ const VenueImages = ({ media = [] }) => {
               nextImage();
             }}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
-            aria-label="Neste bilde"
+            aria-label="Next image"
           >
             ›
           </button>
@@ -102,7 +102,7 @@ const VenueImages = ({ media = [] }) => {
               setIsModalOpen(false);
             }}
             className="absolute top-4 right-4 text-white text-4xl font-bold hover:text-gray-300"
-            aria-label="Lukk modal"
+            aria-label="Close modal"
           >
             &times;
           </button>

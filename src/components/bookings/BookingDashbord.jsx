@@ -11,20 +11,30 @@ export default function BookingDashboard() {
 
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
-  if (loading) return <p>Laster bookinger...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-64 ">
+        <p className="text-gray-500 text-lg animate-pulse">Loading bookings...</p>
+      </div>
+    );
+
   if (error)
     return (
-      <p>
-        Kunne ikke hente bookinger: {error.errors?.[0]?.message || error.message}
-      </p>
+      <div className="max-w-xl mx-auto p-6 bg-red-100 text-red-700 rounded-lg shadow-md">
+        <p className="font-semibold text-center">
+          Could not fetch bookings: {error.errors?.[0]?.message || error.message}
+        </p>
+      </div>
     );
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Mine Bestillinger</h1>
+    <div className="max-w-6xl mx-auto p-6 space-y-10 mt-6">
+      <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 border-b-4 border-indigo-600 pb-3">
+        Your Bookings
+      </h1>
 
       <BookingSection
-        title="Kommende"
+        title="Upcoming Bookings"
         bookings={upcoming}
         page={upcomingPage}
         setPage={setUpcomingPage}
@@ -33,7 +43,7 @@ export default function BookingDashboard() {
       />
 
       <BookingSection
-        title="Tidligere"
+        title="Past Bookings"
         bookings={past}
         page={pastPage}
         setPage={setPastPage}

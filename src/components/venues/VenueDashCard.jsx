@@ -2,9 +2,19 @@ import { useState } from "react";
 import { API_HOLIDAZE } from "../../api/constant";
 import { useDelete } from "../../hooks/useDelete";
 import { confirmAndDelete } from "../../utils/confirmAndDelete";
-import { Link } from "react-router-dom";
 import Modal from "../common/Modal";
 import EditVenue from "./EditVenue";
+import { Link } from "react-router-dom";
+import {
+  MapPin,
+  Users,
+  Wifi,
+  ParkingCircle,
+  Croissant,
+  PawPrint,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 
 export default function VenueDashCard({ venue, onDelete, onUpdate }) {
   const { remove, loading } = useDelete();
@@ -31,46 +41,49 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
 
   return (
     <>
-      <li className="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col md:flex-row">
-        <img
-          src={image}
-          alt={venue.name}
-          className="w-full md:w-64 h-48 object-cover"
-        />
-        <div className="p-4 flex-1">
-          <h3 className="text-lg font-bold">{venue.name}</h3>
-          <p className="text-gray-600">
-            {venue.location?.city}, {venue.location?.country}
-          </p>
-          <p className="mt-1">Pris: {venue.price} NOK</p>
-          <p>Kapasitet: {venue.maxGuests} gjester</p>
-          {venue.meta && (
-            <p className="text-sm text-gray-500 mt-1">
-              {venue.meta.wifi && "📶 Wifi "}
-              {venue.meta.parking && "🚗 Parkering "}
-              {venue.meta.breakfast && "🥐 Frokost "}
-              {venue.meta.pets && "🐾 Dyr tillatt"}
-            </p>
-          )}
-          <div className="mt-4 flex gap-2">
-            <button
-              onClick={handleDelete}
-              disabled={loading}
-              className={`text-white px-4 py-2 rounded ${
-                loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-500 hover:bg-red-600"
-              }`}
-            >
-              {loading ? "Sletter..." : "Slett"}
-            </button>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Rediger
-            </button>
+      <li className="group relative bg-white dark:bg-gray-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
+        <Link to={`/venues/${venue.id}`} className="block">
+          <img
+            src={image}
+            alt={venue.name}
+            className="w-full h-40 object-cover"
+          />
+          <div className="p-4">
+            <h3 className="text-md font-semibold truncate">{venue.name}</h3>
+            <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-300">
+              <MapPin className="w-4 h-4" />
+              <span>
+                {venue.location?.city}, {venue.location?.country}
+              </span>
+            </div>
+            <div className="text-sm mt-2 flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <span>💰 {venue.price} NOK</span>
+              <Users className="w-4 h-4" />
+              <span>{venue.maxGuests}</span>
+            </div>
+            <div className="text-xs mt-1 flex gap-2 text-gray-500 dark:text-gray-300 flex-wrap">
+              {venue.meta?.wifi && <Wifi className="w-4 h-4" />}
+              {venue.meta?.parking && <ParkingCircle className="w-4 h-4" />}
+              {venue.meta?.breakfast && <Croissant className="w-4 h-4" />}
+              {venue.meta?.pets && <PawPrint className="w-4 h-4" />}
+            </div>
           </div>
+        </Link>
+
+        <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-600 text-white p-1 rounded hover:bg-blue-700"
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleDelete}
+            disabled={loading}
+            className="bg-red-500 text-white p-1 rounded hover:bg-red-600 disabled:opacity-50"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       </li>
 

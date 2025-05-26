@@ -16,9 +16,9 @@ const VenueDetail = () => {
 
   const { user, setShowAuthModal, setAuthModalTab } = useAuth();
 
-  if (loading) return <p>Laster sted...</p>;
-  if (error) return <p>Noe gikk galt: {error.message}</p>;
-  if (!venue) return <p>Fant ikke sted</p>;
+  if (loading) return <p>Loading location...</p>;
+  if (error) return <p>Something went wrong: {error.message}</p>;
+  if (!venue) return <p>Could not find venue</p>;
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-8">
