@@ -10,18 +10,20 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
   const [formError, setFormError] = useState(null);
 
   const handleUpdate = async (updatedVenue) => {
+    // Validate input before updating
     const validationErrors = validateVenue(updatedVenue);
     if (Object.keys(validationErrors).length > 0) {
-      setFormError("Vennligst fyll ut alle nødvendige felter riktig.");
+      setFormError("Please fill out all required fields correctly.");
       return;
     }
 
     try {
+      // Send update to the API
       await put(`${API_HOLIDAZE.VENUES}/${venue.id}`, updatedVenue);
       onSuccess?.();
       onClose?.();
     } catch (err) {
-      setFormError("Feil ved oppdatering: " + (err.message || err));
+      setFormError("Update failed: " + (err.message || err));
     }
   };
 
@@ -30,7 +32,7 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
       <div className="flex items-center gap-2 mb-6">
         <PencilLine className="w-5 h-5 text-blue-500" />
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-          Rediger Venue
+          Edit Venue
         </h2>
       </div>
 
@@ -46,7 +48,7 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
         onClose={onClose}
         loading={loading}
         error={formError && { message: formError }}
-        submitText="Oppdater Venue"
+        submitText="Update Venue"
       />
     </div>
   );

@@ -9,9 +9,16 @@ import SearchBar from "../common/SearchBar";
 
 const ITEMS_PER_PAGE = 16;
 
+/**
+ * Builds a URL query string from a params object.
+ * Filters out empty, null, or undefined values.
+ *
+ * @param {Object} params - The query parameters.
+ * @returns {string} Query string starting with '?' or empty string.
+ */
 function buildQueryString(params) {
   const query = Object.entries(params)
-    .filter(([value]) => {
+    .filter(([, value]) => {
       if (typeof value === "boolean") return value === true;
       return value !== "" && value !== null && value !== undefined;
     })
@@ -23,6 +30,13 @@ function buildQueryString(params) {
   return query ? `?${query}` : "";
 }
 
+/**
+ * VenueGrid component displaying a searchable, sortable, and paginated grid of venues.
+ *
+ * Uses either default venue data or search results based on filters.
+ *
+ * @component
+ */
 const VenueGrid = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -81,8 +95,7 @@ const VenueGrid = () => {
 
         const response = await doFetch(url);
         setSearchResults(response.data);
-        const totalItems =
-          response.meta?.totalCount || response.data.length;
+        const totalItems = response.meta?.totalCount || response.data.length;
         setTotalSearchPages(Math.ceil(totalItems / ITEMS_PER_PAGE));
       } catch (err) {
         setSearchError(err);
@@ -94,17 +107,28 @@ const VenueGrid = () => {
     fetchSearch();
   }, [searchFilters, searchPage, sortOption]);
 
+  // Determine which data and state to use based on whether search filters are active
   const venues = searchFilters ? searchResults : defaultData;
   const isLoading = searchFilters ? searchLoading : loading;
   const isError = searchFilters ? searchError : error;
   const currentPage = searchFilters ? searchPage : page;
   const totalPagesToShow = searchFilters ? totalSearchPages : totalPages;
 
+  /**
+   * Handler for search submission; resets to page 1.
+   *
+   * @param {Object} filters - Search filters.
+   */
   const handleSearch = (filters) => {
     setSearchFilters(filters);
     setSearchPage(1);
   };
 
+  /**
+   * Handles pagination page change.
+   *
+   * @param {number} newPage - The new page number.
+   */
   const handlePageChange = (newPage) => {
     if (searchFilters) {
       setSearchPage(newPage);
@@ -114,6 +138,11 @@ const VenueGrid = () => {
     }
   };
 
+  /**
+   * Handles changes in sorting dropdown.
+   *
+   * @param {React.ChangeEvent<HTMLSelectElement>} e - The change event.
+   */
   const handleSortChange = (e) => {
     const value = e.target.value;
     let newSort, newOrder;
@@ -172,15 +201,14 @@ const VenueGrid = () => {
         </select>
       </div>
 
-  
       {isLoading && <p className="text-center">Loading Venues...</p>}
       {isError && (
         <p className="text-center text-red-500">
-          Something went wrong, try a new search or refresh the page.. {isError.message}
+          Something went wrong, try a new search or refresh the page..{" "}
+          {isError.message}
         </p>
       )}
 
- 
       {!isLoading && !isError && (
         <>
           {venues.length === 0 ? (

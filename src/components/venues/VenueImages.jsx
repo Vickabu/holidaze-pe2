@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 const VenueImages = ({ media = [] }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
@@ -14,16 +15,26 @@ const VenueImages = ({ media = [] }) => {
     setMainImageIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
   };
 
+  const hasMultipleImages = media.length > 1;
+
   return (
     <>
       <div className="relative w-full h-100">
-        <button
-          onClick={prevImage}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
-          aria-label="Last image"
-        >
-          ‹
-        </button>
+        {hasMultipleImages && (
+          <button
+  onClick={prevImage}
+  className="
+    absolute left-2 top-1/2 transform -translate-y-1/2 
+    bg-black/80 hover:bg-black/90
+    text-white rounded py-2
+    shadow-md hover:shadow-lg 
+    transition duration-300 ease-in-out
+  "
+  aria-label="Previous image"
+>
+  <HiChevronLeft className="w-8 h-8" aria-hidden="true" />
+</button>
+        )}
 
         <img
           src={media[mainImageIndex]?.url}
@@ -32,16 +43,24 @@ const VenueImages = ({ media = [] }) => {
           onClick={() => setIsModalOpen(true)}
         />
 
-        <button
-          onClick={nextImage}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded p-2 hover:bg-opacity-75 z-10"
-          aria-label="Next image"
-        >
-          ›
-        </button>
+        {hasMultipleImages && (
+          <button
+  onClick={nextImage}
+  className="
+    absolute right-2 top-1/2 transform -translate-y-1/2 
+    bg-black/80 hover:bg-black/90
+    text-white rounded py-2 
+    shadow-md hover:shadow-lg 
+    transition duration-300 ease-in-out
+  "
+  aria-label="Next image"
+>
+  <HiChevronRight className="w-8 h-8" aria-hidden="true" />
+</button>
+        )}
       </div>
 
-      {media.length > 1 && (
+      {hasMultipleImages && (
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Gallery</h2>
           <div className="flex gap-4">
@@ -64,19 +83,26 @@ const VenueImages = ({ media = [] }) => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6 bg-black/90 backdrop-blur-sm h-screen"
           onClick={() => setIsModalOpen(false)}
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prevImage();
-            }}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
-            aria-label="Last image"
-          >
-            ‹
-          </button>
+          {hasMultipleImages && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute left-10 top-1/2 transform -translate-y-1/2 
+    bg-white/70 hover:bg-white
+    rounded py-2 
+    shadow-md hover:shadow-lg 
+    transition duration-300 ease-in-out
+    "
+              aria-label="Previous image"
+            >
+              <HiChevronLeft className="w-8 h-8 text-black" aria-hidden="true" />
+            </button>
+          )}
 
           <img
             src={media[mainImageIndex]?.url}
@@ -85,16 +111,24 @@ const VenueImages = ({ media = [] }) => {
             onClick={(e) => e.stopPropagation()}
           />
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              nextImage();
-            }}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-60 rounded px-4 pb-2 text-4xl text-black"
-            aria-label="Next image"
-          >
-            ›
-          </button>
+          {hasMultipleImages && (
+            <button
+  onClick={(e) => {
+    e.stopPropagation();
+    nextImage();
+  }}
+  className="
+    absolute right-10 top-1/2 transform -translate-y-1/2 
+    bg-white/70 hover:bg-white
+    rounded py-2
+    shadow-md hover:shadow-lg 
+    transition duration-300 ease-in-out
+  "
+  aria-label="Next image"
+>
+  <HiChevronRight className="w-8 h-8 text-black" aria-hidden="true" />
+</button>
+          )}
 
           <button
             onClick={(e) => {

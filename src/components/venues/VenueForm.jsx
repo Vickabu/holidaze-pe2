@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { validateUrl } from "../../utils/validation";
 
+/**
+ * Form component for creating or editing a venue.
+ *
+ * @param {Object} props
+ * @param {Object} [props.initialValues={}] - Initial values for the form fields.
+ * @param {Function} props.onSubmit - Callback when the form is submitted with valid data.
+ * @param {Function} props.onClose - Callback to close the form/modal.
+ * @param {boolean} [props.loading=false] - Whether the form is currently submitting/loading.
+ * @param {Object|null} [props.error=null] - An error object to display form-level errors.
+ * @param {string} [props.submitText="Save"] - Text for the submit button.
+ */
 const VenueForm = ({
   initialValues = {},
   onSubmit,
@@ -19,7 +30,6 @@ const VenueForm = ({
     country: "",
   });
   const [media, setMedia] = useState([""]);
-
   const [mediaErrors, setMediaErrors] = useState([]);
 
   useEffect(() => {

@@ -5,6 +5,10 @@ import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
 import Modal from "../common/Modal";
 
+/**
+ * Dashboard component for managing user's venues.
+ * Allows viewing, pagination, and creation of venues.
+ */
 export default function VenueDashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

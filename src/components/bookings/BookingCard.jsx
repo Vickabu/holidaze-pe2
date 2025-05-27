@@ -4,6 +4,19 @@ import { confirmAndDelete } from "../../utils/confirmAndDelete";
 import { FaMapMarkerAlt, FaCalendarAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * BookingCard displays a single booking with venue details, dates, and number of guests.
+ * For upcoming bookings, it provides a "Cancel" button with confirmation.
+ * Clicking on the card navigates to the venue details page.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.booking - Booking object containing venue, dates, guests, and ID.
+ * @param {boolean} props.isUpcoming - Indicates whether the booking is in the future.
+ * @param {Function} props.onRefresh - Callback to refresh the booking list after cancellation.
+ *
+ * @returns {JSX.Element} The rendered booking card.
+ */
 
 export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   const venue = booking.venue;
@@ -16,7 +29,7 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
   const handleCancel = async (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const success = await confirmAndDelete({
       message: "Are you sure you want to cancel?",
       url: `${API_HOLIDAZE.BOOKINGS}/${booking.id}`,

@@ -15,14 +15,13 @@ export default function Profile() {
       const parsed = JSON.parse(userData);
       setCurrentUser(parsed);
 
-      // Set default tab for venue managers
       if (parsed.venueManager) {
         setActiveTab("venues");
       }
     }
   }, []);
 
-  if (!currentUser) return <p>Loading brukerdata...</p>;
+  if (!currentUser) return <p>Loading userdata...</p>;
 
   const isOwnProfile = !username || username === currentUser.name;
   if (!isOwnProfile) return <Navigate to="/profile" replace />;
@@ -33,7 +32,6 @@ export default function Profile() {
     <div className="p-6 max-w-5xl mx-auto space-y-8">
       <UserInfoCard />
 
-      {/* Tabs */}
       <div className="border-b border-gray-300 dark:border-gray-700 flex space-x-4">
         {isVenueManager && (
           <button
@@ -59,7 +57,6 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* Tab content */}
       <div className="mt-4">
         {activeTab === "venues" && isVenueManager && (
           <VenueDashboard user={currentUser} />

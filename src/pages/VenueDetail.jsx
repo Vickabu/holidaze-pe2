@@ -6,7 +6,7 @@ import VenueImages from "../components/venues/VenueImages.jsx";
 import VenueInfo from "../components/venues/VenueInfo.jsx";
 import VenueOwner from "../components/venues/VenueOwner.jsx";
 import VenueBookingForm from "../components/venues/VenueBookingForm.jsx";
-import { useAuth } from "../context/AuthContext"; // juster path
+import { useAuth } from "../context/AuthContext";
 
 const VenueDetail = () => {
   const { id } = useParams();
@@ -19,6 +19,9 @@ const VenueDetail = () => {
   if (loading) return <p>Loading location...</p>;
   if (error) return <p>Something went wrong: {error.message}</p>;
   if (!venue) return <p>Could not find venue</p>;
+
+  const isVenueManager = user && venue.owner && user.id === venue.owner.id;
+  const isUserLoggedIn = !!user;
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-8">
@@ -40,10 +43,15 @@ const VenueDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24 self-start">
-          {user ? (
-            <VenueBookingForm venue={venue} />
-          ) : (
-            <div className="flex flex-col items-center space-y-4">
+          {/* Booking form får vite om bruker er manager og innlogget */}
+          <VenueBookingForm
+            venue={venue}
+            isUserLoggedIn={isUserLoggedIn}
+            isVenueManager={isVenueManager}
+          />
+
+          {!isUserLoggedIn && (
+            <div className="flex flex-col items-center space-y-4 mt-6">
               <h1 className="font-bold text-2xl">Booking</h1>
               <p className="text-gray-700 dark:text-gray-300 text-center">
                 You need to be signed in to book this venue.
@@ -57,6 +65,15 @@ const VenueDetail = () => {
               >
                 Sign in to start booking
               </button>
+            </div>
+          )}
+
+          {isVenueManager && (
+            <div className="flex flex-col items-center space-y-4 mt-6">
+              <h1 className="font-bold text-2xl">Venue Manager</h1>
+              <p className="text-gray-700 dark:text-gray-300 text-center">
+                You are the venue manager for this venue.
+              </p>
             </div>
           )}
         </div>

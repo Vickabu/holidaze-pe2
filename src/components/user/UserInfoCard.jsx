@@ -3,6 +3,11 @@ import Modal from "../common/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Displays the user's profile information with option to edit it in a modal.
+ *
+ * @returns {JSX.Element} User profile card with edit modal.
+ */
 export default function UserInfoCard() {
   const [isEditing, setIsEditing] = useState(false);
   const { user, setUser } = useAuth();
@@ -18,11 +23,15 @@ export default function UserInfoCard() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded shadow-md overflow-hidden  mx-auto">
+    <div
+      className="bg-white dark:bg-gray-800 rounded shadow-md overflow-hidden mx-auto"
+      aria-label="User profile card"
+    >
       {user.banner?.url && (
         <div
           className="h-40 bg-cover bg-center"
           style={{ backgroundImage: `url(${user.banner.url})` }}
+          role="img"
           aria-label={user.banner.alt || "User banner"}
         />
       )}
@@ -49,12 +58,13 @@ export default function UserInfoCard() {
         <button
           onClick={() => setIsEditing(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition"
+          aria-haspopup="dialog"
         >
           Update profile
         </button>
       </div>
 
-      <Modal show={isEditing} onClose={handleClose}>
+      <Modal show={isEditing} onClose={handleClose} aria-label="Edit profile modal">
         <EditProfileForm user={user} onSuccess={handleSuccess} onClose={handleClose} />
       </Modal>
     </div>

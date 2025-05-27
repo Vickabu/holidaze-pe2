@@ -1,9 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Component to display venue owner information.
+ * Clicking navigates to the owner's profile or seller page depending on user.
+ *
+ * @param {Object} props
+ * @param {Object} props.owner - Owner details.
+ * @param {string} props.owner.name - Owner's name.
+ * @param {string} [props.owner.email] - Owner's email.
+ * @param {Object} [props.owner.avatar] - Owner's avatar image details.
+ * @param {string} props.owner.avatar.url - URL of the avatar image.
+ * @param {string} [props.owner.avatar.alt] - Alt text for the avatar image.
+ * @param {string} [props.owner.bio] - Owner biography or description.
+ */
 const VenueOwner = ({ owner }) => {
   const navigate = useNavigate();
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const isOwner = userInfo?.name === owner?.name;
 

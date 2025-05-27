@@ -1,9 +1,25 @@
 import { API_KEY } from "./constant";
 
+/**
+ * Retrieves authorization headers from local storage if an access token is present.
+ *
+ * @returns {Object} An object containing the Authorization header if a token exists.
+ */
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem("accessToken");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
+
+/**
+ * Performs a fetch request with default headers including API key and optional auth token.
+ * Automatically parses JSON responses if available, and throws parsed error responses.
+ *
+ * @param {string} url - The API endpoint to fetch.
+ * @param {Object} [options={}] - Optional fetch options (method, body, headers, etc.).
+ * @returns {Promise<Object>} The parsed JSON response, or an empty object if not JSON.
+ * @throws {Object} Throws parsed error response if the response is not OK (non-2xx).
+ */
 
 export const doFetch = async (url, options = {}) => {
   try {

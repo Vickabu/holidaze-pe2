@@ -3,7 +3,19 @@ import { handleLogin } from "../../api/auth/handleLogin";
 import { FaUser, FaHotel } from "react-icons/fa";
 import { validateLogin } from "../../utils/validation";
 
-
+/**
+ * LoginForm handles user authentication by email and password.
+ * Allows toggling between "guest" and "venue manager" roles before submitting.
+ * Performs client-side validation and calls `handleLogin` on submit.
+ *
+ * @component
+ * @param {Object} props
+ * @param {"guest" | "manager"} props.role - The currently selected user role.
+ * @param {Function} props.toggleRole - Function to switch user roles.
+ * @param {Function} props.onSuccess - Callback triggered when login is successful.
+ *
+ * @returns {React.ReactNode} A login form with role selection, validation, and error handling.
+ */
 
 export default function LoginForm({ role, toggleRole, onSuccess }) {
   const [email, setEmail] = React.useState("");
@@ -25,13 +37,13 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
     if (result.success) {
       onSuccess?.(result.user);
     } else {
-      setError(result.message || "Noe gikk galt.");
+      setError(result.message || "Something went wrong.");
     }
   };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-center">Logg inn</h2>
+      <h2 className="text-xl font-semibold text-center">Sign in</h2>
 
       <div className="flex justify-center">
         <div className="inline-flex border rounded p-1 bg-gray-100 dark:bg-gray-700">
@@ -62,7 +74,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
 
       <input
         type="email"
-        placeholder="E-post"
+        placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="w-full p-2 border rounded"
@@ -70,7 +82,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
       />
       <input
         type="password"
-        placeholder="Passord"
+        placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-2 border rounded"
@@ -83,7 +95,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
         type="submit"
         className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
       >
-        Logg inn
+        Sign in
       </button>
     </form>
   );

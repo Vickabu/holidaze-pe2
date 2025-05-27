@@ -16,6 +16,15 @@ import {
   Trash2,
 } from "lucide-react";
 
+/**
+ * Component representing a card for a venue in the dashboard.
+ * Displays venue info, allows editing and deleting.
+ *
+ * @param {Object} props
+ * @param {Object} props.venue - Venue data object.
+ * @param {Function} props.onDelete - Callback triggered after successful deletion.
+ * @param {Function} props.onUpdate - Callback triggered after successful update.
+ */
 export default function VenueDashCard({ venue, onDelete, onUpdate }) {
   const { remove, loading } = useDelete();
   const [isEditing, setIsEditing] = useState(false);
@@ -25,16 +34,19 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
     venue.media?.[0]?.url ||
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
+  /**
+   * Handles venue deletion with confirmation.
+   */
   const handleDelete = async () => {
     const success = await confirmAndDelete({
-      message: `Er du sikker på at du vil slette "${venue.name}"?`,
+      message: `Are you sure you want to delete "${venue.name}"?`,
       url: `${API_HOLIDAZE.VENUES}/${venue.id}`,
       accessToken,
       remove,
     });
 
     if (success) {
-      alert("Venue slettet.");
+      alert("Venue deleted.");
       onDelete?.();
     }
   };
