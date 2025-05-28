@@ -58,7 +58,7 @@ Holidaze is a platform where users can **log in as guests or venue managers**, *
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/holidaze-venue-manager.git
+   git clone https://github.com/your-username/Vickabu/holidaze-pe2.git
    cd holidaze-venue-manager
 
    ```
