@@ -24,7 +24,7 @@ function buildQueryString(params) {
     })
     .map(
       ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
     )
     .join("&");
   return query ? `?${query}` : "";
@@ -68,7 +68,7 @@ const VenueGrid = () => {
     {
       paginate: true,
       itemsPerPage: ITEMS_PER_PAGE,
-    }
+    },
   );
 
   useEffect(() => {
@@ -179,21 +179,21 @@ const VenueGrid = () => {
     sortOption.sort === "created" && sortOption.sortOrder === "desc"
       ? "newest"
       : sortOption.sort === "created" && sortOption.sortOrder === "asc"
-      ? "oldest"
-      : "name";
+        ? "oldest"
+        : "name";
 
   return (
     <div className="p-6">
       <SearchBar onSearch={handleSearch} />
 
       <div className="mx-auto mb-4">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+        <label className="block text-sm font-medium text-gray-700  mb-1">
           Sort order:
         </label>
         <select
           onChange={handleSortChange}
           value={selectedSortValue}
-          className="w-full sm:w-64 p-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow"
+          className="w-full sm:w-64 p-2 rounded-md border  bg-white  text-gray-900  shadow"
         >
           <option value="newest">Newest</option>
           <option value="oldest">Old-New</option>

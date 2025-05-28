@@ -32,7 +32,9 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
   const [showBookings, setShowBookings] = useState(false); // 👈 ny state
   const accessToken = localStorage.getItem("accessToken");
 
-  const image = venue.media?.[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
+  const image =
+    venue.media?.[0]?.url ||
+    "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
   const handleDelete = async () => {
     const success = await confirmAndDelete({
@@ -50,34 +52,40 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
 
   return (
     <>
-      <li className="group relative bg-white dark:bg-gray-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
+      <li className="group relative bg-white  rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
         <Link to={`/venues/${venue.id}`} className="block">
-          <img src={image} alt={venue.name} className="w-full h-40 object-cover" />
+          <img
+            src={image}
+            alt={venue.name}
+            className="w-full h-40 object-cover"
+          />
           <div className="p-4">
             <h3 className="text-md font-semibold truncate">{venue.name}</h3>
-            <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-300">
+            <div className="flex items-center gap-1 text-sm text-gray-500 ">
               <MapPin className="w-4 h-4" />
-              <span>{venue.location?.city}, {venue.location?.country}</span>
+              <span>
+                {venue.location?.city}, {venue.location?.country}
+              </span>
             </div>
-            <div className="text-sm mt-2 flex items-center gap-2 text-gray-600 dark:text-gray-300">
+            <div className="text-sm mt-2 flex items-center gap-2 text-gray-600 ">
               <span>💰 {venue.price} NOK</span>
               <Users className="w-4 h-4" />
               <span>{venue.maxGuests}</span>
             </div>
 
             <button
-  onClick={(e) => {
-    e.stopPropagation(); 
-    e.preventDefault(); 
-    setShowBookings(true);
-  }}
-  className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
->
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setShowBookings(true);
+              }}
+              className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
+            >
               <CalendarDays className="w-4 h-4" />
               {venue._count?.bookings || 0} bookings
             </button>
 
-            <div className="text-xs mt-1 flex gap-2 text-gray-500 dark:text-gray-300 flex-wrap">
+            <div className="text-xs mt-1 flex gap-2 text-gray-500  flex-wrap">
               {venue.meta?.wifi && <Wifi className="w-4 h-4" />}
               {venue.meta?.parking && <ParkingCircle className="w-4 h-4" />}
               {venue.meta?.breakfast && <Croissant className="w-4 h-4" />}
@@ -105,7 +113,11 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
 
       {/* Modal for Edit Venue */}
       <Modal show={isEditing} onClose={() => setIsEditing(false)}>
-        <EditVenue venue={venue} onClose={() => setIsEditing(false)} onSuccess={onUpdate} />
+        <EditVenue
+          venue={venue}
+          onClose={() => setIsEditing(false)}
+          onSuccess={onUpdate}
+        />
       </Modal>
 
       {/* ✅ Modal for Bookings */}
@@ -114,9 +126,15 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
         {venue.bookings?.length > 0 ? (
           <ul className="space-y-4">
             {venue.bookings.map((booking) => (
-              <li key={booking.id} className="flex items-center gap-4 border-b pb-2">
+              <li
+                key={booking.id}
+                className="flex items-center gap-4 border-b pb-2"
+              >
                 <img
-                  src={booking.customer.avatar?.url || "https://via.placeholder.com/40"}
+                  src={
+                    booking.customer.avatar?.url ||
+                    "https://via.placeholder.com/40"
+                  }
                   alt={booking.customer.avatar?.alt || "Customer avatar"}
                   className="w-10 h-10 rounded-full object-cover"
                 />

@@ -1,5 +1,11 @@
-import { FaTimes, FaBars, FaSignOutAlt, FaHome, FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import DarkModeToggle from "../common/DarkModeToggle";
+import {
+  FaTimes,
+  FaBars,
+  FaSignOutAlt,
+  FaHome,
+  FaSignInAlt,
+  FaUserPlus,
+} from "react-icons/fa";
 import AvatarMenu from "./AvatarMenu";
 
 /**
@@ -13,12 +19,18 @@ import AvatarMenu from "./AvatarMenu";
  * @param {function(boolean):void} props.setMenuOpen - Setter for the menu open state.
  * @returns {JSX.Element}
  */
-export default function MobileNav({ isLoggedIn, openModal, handleLogout, menuOpen, setMenuOpen }) {
+export default function MobileNav({
+  isLoggedIn,
+  openModal,
+  handleLogout,
+  menuOpen,
+  setMenuOpen,
+}) {
   return (
     <>
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden text-[#1F3B3C] dark:text-[#F4E9DC]"
+        className="md:hidden text-[#F4E9DC]"
         aria-label={menuOpen ? "Close menu" : "Open menu"}
         type="button"
       >
@@ -26,22 +38,22 @@ export default function MobileNav({ isLoggedIn, openModal, handleLogout, menuOpe
       </button>
 
       <div
-        className={`fixed top-0 right-0 w-2/3 h-screen bg-[#F4E9DC] dark:bg-[#1F3B3C] p-4 z-50 transition-transform duration-300 ${
+        className={`fixed top-0 right-0 w-2/3 h-screen bg-[#1F3B3C] p-4 z-50 transition-transform duration-300 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex justify-between items-center">
-          <span className="text-[#1F3B3C] dark:text-[#F4E9DC] text-xl font-bold">Menu</span>
+          <span className="text-[#F4E9DC] text-xl font-bold">Menu</span>
           <button
             onClick={() => setMenuOpen(false)}
             aria-label="Close menu"
             type="button"
           >
-            <FaTimes size={28} className="text-[#1F3B3C] dark:text-[#F4E9DC]" />
+            <FaTimes size={28} className="text-[#F4E9DC]" />
           </button>
         </div>
 
-        <ul className="flex flex-col mt-8 space-y-6 text-[#1F3B3C] dark:text-[#F4E9DC] font-semibold">
+        <ul className="flex flex-col mt-8 space-y-6 text-[#F4E9DC] font-semibold">
           <li>
             <a
               href="/"
@@ -58,9 +70,7 @@ export default function MobileNav({ isLoggedIn, openModal, handleLogout, menuOpe
               <li onClick={() => setMenuOpen(false)}>
                 <AvatarMenu />
               </li>
-              <li>
-                <DarkModeToggle />
-              </li>
+
               <li>
                 <button
                   onClick={handleLogout}
@@ -102,9 +112,6 @@ export default function MobileNav({ isLoggedIn, openModal, handleLogout, menuOpe
                   <FaUserPlus />
                   Register
                 </button>
-              </li>
-              <li>
-                <DarkModeToggle />
               </li>
             </>
           )}

@@ -24,12 +24,12 @@ export default function UserInfoCard() {
 
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded shadow-md overflow-hidden mx-auto"
+      className="bg-white rounded shadow-md overflow-hidden mx-auto"
       aria-label="User profile card"
     >
       {user.banner?.url && (
         <div
-          className="h-40 bg-cover bg-center"
+          className="h-80 bg-cover bg-center"
           style={{ backgroundImage: `url(${user.banner.url})` }}
           role="img"
           aria-label={user.banner.alt || "User banner"}
@@ -40,15 +40,15 @@ export default function UserInfoCard() {
         <img
           src={user.avatar?.url || "/default-avatar.png"}
           alt={user.avatar?.alt || "User avatar"}
-          className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 -mt-16"
+          className="w-24 h-24 rounded-full object-cover border-4 border-white -mt-16"
           style={{ zIndex: 10, position: "relative" }}
         />
 
         <div className="flex-1">
           <p className="text-xl font-semibold">{user.name}</p>
-          <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
-          {user.bio && <p className="mt-2 text-gray-700 dark:text-gray-400">{user.bio}</p>}
-          <p className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-400">
+          <p className="text-gray-600">{user.email}</p>
+          <p className="mt-2 text-gray-700 ">{user.bio}</p>
+          <p className="mt-2 text-sm font-medium text-blue-600 ">
             Role: {user.venueManager ? "Venue Manager" : "Customer"}
           </p>
         </div>
@@ -64,8 +64,16 @@ export default function UserInfoCard() {
         </button>
       </div>
 
-      <Modal show={isEditing} onClose={handleClose} aria-label="Edit profile modal">
-        <EditProfileForm user={user} onSuccess={handleSuccess} onClose={handleClose} />
+      <Modal
+        show={isEditing}
+        onClose={handleClose}
+        aria-label="Edit profile modal"
+      >
+        <EditProfileForm
+          user={user}
+          onSuccess={handleSuccess}
+          onClose={handleClose}
+        />
       </Modal>
     </div>
   );
