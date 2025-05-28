@@ -68,7 +68,7 @@ export default function Navbar() {
           <img
             src={"/Holidaze-logo.png"}
             alt="Holidaze logo"
-            className="w-32 cursor-pointer bg-[#F4E9DC] rounded"
+            className="w-32 h-auto cursor-pointer bg-[#F4E9DC] rounded"
             onClick={() => navigate("/")}
           />
 
