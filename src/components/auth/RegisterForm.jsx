@@ -5,16 +5,18 @@ import { validateRegister } from "../../utils/validation";
 
 /**
  * RegisterForm handles user registration by collecting name, email, and password.
- * Users can choose to register either as a guest or a venue manager.
- * The form includes validation and displays errors if registration fails.
+ * Allows users to register either as a guest or a venue manager.
+ * Performs client-side validation and displays errors if registration fails.
  *
  * @component
- * @param {Object} props
- * @param {"guest" | "manager"} props.role - The selected user role.
- * @param {Function} props.toggleRole - Function to toggle between user roles.
- * @param {Function} props.onSuccess - Callback function to run after successful registration.
  *
- * @returns {React.ReactNode} The registration form UI.
+ * @param {Object} props - Component props.
+ * @param {"guest" | "manager"} props.role - The currently selected user role.
+ * @param {Function} props.toggleRole - Function to switch user roles.
+ * @param {Function} props.onSuccess - Callback triggered after successful registration.
+ *
+ * @returns {React.ReactNode} A registration form with role selection buttons,
+ * inputs for name, email, and password, validation error display, and a submit button.
  */
 export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [name, setName] = React.useState("");

@@ -3,10 +3,10 @@ import { doFetch } from "../api/doFetch";
 
 /**
  * Builds a query string from given parameters.
- * Filters out empty, null, undefined or false boolean values.
+ * Filters out empty strings, null, undefined, or false boolean values.
  *
- * @param {Object} params - Key-value pairs to convert into query string.
- * @returns {string} Query string starting with '?' or empty string.
+ * @param {Object.<string, any>} params - Key-value pairs to convert into a query string.
+ * @returns {string} Query string starting with '?' or empty string if no valid params.
  */
 function buildQueryString(params) {
   const query = Object.entries(params)
@@ -24,20 +24,31 @@ function buildQueryString(params) {
 
 /**
  * Custom React hook to fetch data from an API endpoint.
- * Supports optional pagination.
+ * Supports optional local pagination of results.
  *
  * @param {string} baseUrl - The base API endpoint URL.
  * @param {Object} [config] - Optional configuration object.
- * @param {Object} [config.options={}] - Options (query params) for the request.
- * @param {boolean} [config.paginate=false] - Whether to paginate results locally.
+ * @param {Object.<string, any>} [config.query={}] - Query parameters to append to the URL.
+ * @param {Object} [config.fetchOptions={}] - Additional fetch options like headers, method, body etc.
+ * @param {boolean} [config.paginate=false] - Whether to paginate the fetched results locally.
  * @param {number} [config.itemsPerPage=10] - Number of items per page if paginating.
- * @returns {Object} An object containing data, loading state, error, pagination controls.
+ * @param {Array<any>} [config.dependencies=[]] - Additional dependencies to trigger refetching.
+ * @returns {{
+ *   data: Array<any>,          // The current page of data or all data if no pagination.
+ *   loading: boolean,          // True if fetching data.
+ *   error: any,                // Error object if request failed.
+ *   page: number,              // Current page number (1-based).
+ *   setPage: function,         // Setter function to change the current page.
+ *   nextPage: function,        // Function to go to the next page (max is totalPages).
+ *   prevPage: function,        // Function to go to the previous page (min is 1).
+ *   totalPages: number         // Total number of pages available (1 if no pagination).
+ * }}
  */
 const useFetch = (
   baseUrl,
   {
-    query = {}, // ← renamed from options
-    fetchOptions = {}, // ← new for headers etc.
+    query = {},
+    fetchOptions = {},
     paginate = false,
     itemsPerPage = 10,
     dependencies = [],

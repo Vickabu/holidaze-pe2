@@ -10,12 +10,16 @@ import {
 const DOTS = "...";
 
 /**
- * Generates an array representing the pagination range, including numbers and ellipsis.
+ * Pagination component for navigating between pages.
  *
- * @param {number} current - Current page number.
- * @param {number} total - Total number of pages.
- * @param {number} siblingCount - How many pages to show on each side of current.
- * @returns {(number|string)[]} Array of page numbers and dots (`"..."`).
+ * @component
+ *
+ * @param {Object} props - Component properties.
+ * @param {number} props.currentPage - The currently selected page number.
+ * @param {number} props.totalPages - The total number of pages available.
+ * @param {(page: number) => void} props.onPageChange - Callback invoked when the user selects a new page.
+ *
+ * @returns {React.ReactNode|null} Pagination UI or null if only one page exists.
  */
 function getPaginationRange(current, total, siblingCount = 1) {
   const totalPageNumbers = siblingCount * 2 + 5;
@@ -68,9 +72,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const baseBtn =
-    "flex items-center justify-center w-9 h-9 rounded-md border border-gray-300  bg-white  text-gray-700  hover:bg-blue-100 transition disabled:opacity-50 disabled:cursor-not-allowed";
+    "flex items-center justify-center w-9 h-9 rounded-md border border-gray-400 text-gray-700 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed";
 
-  const activeBtn = "bg-blue-500 text-white font-bold hover:bg-blue-600";
+  const activeBtn = "text-gray-800 font-bold hover:bg-gray-600";
 
   return (
     <div className="flex flex-wrap justify-center items-center gap-2 mt-8">
