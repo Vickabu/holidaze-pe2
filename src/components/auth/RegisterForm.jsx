@@ -3,8 +3,19 @@ import { FaUser, FaHotel } from "react-icons/fa";
 import { handleRegister } from "../../api/auth/handleRegister";
 import { validateRegister } from "../../utils/validation";
 
-
-
+/**
+ * RegisterForm handles user registration by collecting name, email, and password.
+ * Users can choose to register either as a guest or a venue manager.
+ * The form includes validation and displays errors if registration fails.
+ *
+ * @component
+ * @param {Object} props
+ * @param {"guest" | "manager"} props.role - The selected user role.
+ * @param {Function} props.toggleRole - Function to toggle between user roles.
+ * @param {Function} props.onSuccess - Callback function to run after successful registration.
+ *
+ * @returns {React.ReactNode} The registration form UI.
+ */
 export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -12,28 +23,26 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [error, setError] = React.useState("");
 
   const onSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+    e.preventDefault();
+    setError("");
 
-  const validationErrors = validateRegister({ name, email, password });
-  if (Object.keys(validationErrors).length > 0) {
-    const firstError = Object.values(validationErrors)[0];
-    setError(firstError);
-    return;
-  }
+    const validationErrors = validateRegister({ name, email, password });
+    if (Object.keys(validationErrors).length > 0) {
+      const firstError = Object.values(validationErrors)[0];
+      setError(firstError);
+      return;
+    }
 
-  const result = await handleRegister({ name, email, password, role });
-  if (result.success) {
-    onSuccess?.();  
-  } else {
-    setError(result.message || "Noe gikk galt under registreringen.");
-  }
-};
+    const result = await handleRegister({ name, email, password, role });
+    if (result.success) {
+      onSuccess?.();
+    } else {
+      setError(result.message || "Something went wrong during registration.");
+    }
+  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      {/* <h2 className="text-xl font-semibold text-center">Register an account at Holidaze</h2> */}
-
       <div className="flex justify-center">
         <div className="inline-flex border rounded p-1 bg-gray-100 dark:bg-gray-700">
           <button
@@ -50,7 +59,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
           <button
             type="button"
             onClick={() => toggleRole("manager")}
-            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+            className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 dark:text-gray-200"
@@ -65,7 +74,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
 
       <input
         type="text"
-        placeholder="Navn"
+        placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         className="w-full p-2 border rounded"
@@ -73,7 +82,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
       />
       <input
         type="email"
-        placeholder="E-post"
+        placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="w-full p-2 border rounded"
@@ -81,20 +90,18 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
       />
       <input
         type="password"
-        placeholder="Passord"
+        placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-2 border rounded"
         required
       />
 
-      
-
       <button
         type="submit"
         className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
       >
-        Registrer deg
+        Register
       </button>
     </form>
   );

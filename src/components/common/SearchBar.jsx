@@ -1,7 +1,17 @@
 import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
+
+/**
+ * SearchBar component for filtering locations based on user input and criteria.
+ *
+ * @component
+ * @param {Object} props
+ * @param {(params: Object) => void} props.onSearch - Callback triggered on search submit with all filter parameters.
+ */
 
 export default function SearchBar({ onSearch }) {
   const [input, setInput] = useState("");
+
   const [filters, setFilters] = useState({
     wifi: false,
     pets: false,
@@ -12,7 +22,10 @@ export default function SearchBar({ onSearch }) {
     dateTo: "",
   });
 
- 
+  /**
+   * Handles changes to both the main search input and filter fields.
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLSelectElement>} e
+   */
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +36,11 @@ export default function SearchBar({ onSearch }) {
     }
   };
 
+  /**
+   * Handles the form submission by passing the current input and filters to `onSearch`.
+   * @param {React.FormEvent<HTMLFormElement>} e
+   */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch({
@@ -32,78 +50,30 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-      <input
-        type="text"
-        name="input"
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Søk etter venue..."
-        className="border p-2 rounded w-full"
-      />
+    <form
+      onSubmit={handleSubmit}
+      className="mb-8 bg-[#F4E9DC] dark:bg-[#1F3B3C] rounded p-6 shadow-lg max-w-4xl mx-auto border border-gray-200 dark:border-gray-700"
+    >
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative flex-grow">
+          <FaSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none" />
+          <input
+            type="text"
+            name="input"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Search for destinations, accommodations..."
+            className="w-full rounded border border-gray-300 dark:border-gray-600 bg-white text-gray-900 pl-10 p-3 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition"
+          />
+        </div>
 
-      
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Søk
-      </button>
+        <button
+          type="submit"
+          className="bg-purple-700 hover:bg-purple-800 transition-transform transform hover:scale-105 text-white font-semibold py-3 px-8 rounded shadow-lg"
+        >
+          Search
+        </button>
+      </div>
     </form>
   );
 }
-{/* <div className="flex gap-4 flex-wrap">
-        {["wifi", "pets", "parking", "breakfast"].map((feature) => (
-          <label key={feature} className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              name={feature}
-              checked={filters[feature]}
-              onChange={handleCheckboxChange}
-            />
-            {feature.charAt(0).toUpperCase() + feature.slice(1)}
-          </label>
-        ))}
-      </div>
-
-      <div className="flex gap-4 items-center flex-wrap">
-        <label>
-          Gjester:
-          <input
-            type="number"
-            name="guests"
-            min="1"
-            value={filters.guests}
-            onChange={handleInputChange}
-            className="w-20 ml-2 p-1 border rounded"
-          />
-        </label>
-
-        <label>
-          Fra:
-          <input
-            type="date"
-            name="dateFrom"
-            value={filters.dateFrom}
-            onChange={handleInputChange}
-            className="ml-2 p-1 border rounded"
-          />
-        </label>
-
-        <label>
-          Til:
-          <input
-            type="date"
-            name="dateTo"
-            value={filters.dateTo}
-            onChange={handleInputChange}
-            className="ml-2 p-1 border rounded"
-          />
-        </label>
-      </div> */}
-
-      
- // const handleCheckboxChange = (e) => {
-  //   const { name, checked } = e.target;
-  //   setFilters((prev) => ({ ...prev, [name]: checked }));
-  // };

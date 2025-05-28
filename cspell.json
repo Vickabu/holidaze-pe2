@@ -1,6 +1,6 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["holidaze"],
+  "words": ["holidaze", "noroff", "Dashboard"],
   "ignorePaths": ["dist", "node_modules", ".gitignore"]
 }
