@@ -2,16 +2,19 @@ import useFetch from "../useFetch";
 import { API_HOLIDAZE } from "../../api/constant";
 
 /**
+ * @typedef {Object} UserVenuesResult
+ * @property {Array<Object>} venues - List of venues owned by the user.
+ * @property {boolean} loading - Whether the venues are currently being fetched.
+ * @property {Object|null} error - Error object if fetching failed, otherwise null.
+ */
+
+/**
  * Custom hook to fetch venues owned by the current user.
  *
- * @param {number} refreshKey - Dependency key to trigger re-fetching when updated.
- * @param {object} options - Optional settings.
- * @param {boolean} options.includeOwnerAndBookings - Whether to include owner and bookings.customer in query
- * @returns {{
- *   venues: Array,
- *   loading: boolean,
- *   error: object|null
- * }}
+ * @param {number} [refreshKey=0] - Dependency key to trigger re-fetching when updated.
+ * @param {Object} [options={}] - Optional settings.
+ * @param {boolean} [options.includeOwnerAndBookings=false] - Whether to include `_owner` and `_bookings` in the query.
+ * @returns {UserVenuesResult} An object containing the user's venues and fetch status.
  */
 export function useUserVenues(
   refreshKey = 0,

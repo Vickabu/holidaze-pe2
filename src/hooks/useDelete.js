@@ -6,7 +6,7 @@ import { doFetch } from "../api/doFetch";
  * Manages loading and error state during the request.
  *
  * @returns {{
- *   remove: (url: string, headers?: object) => Promise<any>,
+ *   remove: (url: string, headers?: { [key: string]: string }) => Promise<any>,
  *   loading: boolean,
  *   error: any
  * }}
@@ -20,7 +20,7 @@ export function useDelete() {
    * Perform a DELETE request to the given URL with optional headers.
    *
    * @param {string} url - The endpoint to send the DELETE request to.
-   * @param {object} [headers={}] - Optional headers for the request.
+   * @param {{ [key: string]: string }} [headers={}] - Optional headers for the request.
    * @returns {Promise<any>} - The response from the server.
    */
   const remove = async (url, headers = {}) => {

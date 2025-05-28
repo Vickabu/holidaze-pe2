@@ -4,9 +4,21 @@ import EditProfileForm from "./EditProfileForm";
 import { useAuth } from "../../context/AuthContext";
 
 /**
- * Displays the user's profile information with option to edit it in a modal.
+ * UserInfoCard component displays the authenticated user's profile details,
+ * including their banner image, avatar, name, email, bio, and role.
+ * It also allows the user to edit their profile via a modal form.
  *
- * @returns {JSX.Element} User profile card with edit modal.
+ * @component
+ *
+ * @returns {JSX.Element} A styled card displaying user information with an "Update profile" button.
+ *
+ * @example
+ * // Renders user profile card with edit functionality:
+ * <UserInfoCard />
+ *
+ * @remarks
+ * This component uses `useAuth` from context to retrieve and update user data,
+ * and includes a modal that renders the `EditProfileForm`.
  */
 export default function UserInfoCard() {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,12 +36,12 @@ export default function UserInfoCard() {
 
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded shadow-md overflow-hidden mx-auto"
+      className="bg-white rounded shadow-md overflow-hidden mx-auto"
       aria-label="User profile card"
     >
       {user.banner?.url && (
         <div
-          className="h-40 bg-cover bg-center"
+          className="md:h-80 h-42 bg-cover bg-center"
           style={{ backgroundImage: `url(${user.banner.url})` }}
           role="img"
           aria-label={user.banner.alt || "User banner"}
@@ -40,16 +52,16 @@ export default function UserInfoCard() {
         <img
           src={user.avatar?.url || "/default-avatar.png"}
           alt={user.avatar?.alt || "User avatar"}
-          className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 -mt-16"
+          className="w-24 h-24 rounded-full object-cover border-2 border-white -mt-28"
           style={{ zIndex: 10, position: "relative" }}
         />
 
         <div className="flex-1">
-          <p className="text-xl font-semibold">{user.name}</p>
-          <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
-          {user.bio && <p className="mt-2 text-gray-700 dark:text-gray-400">{user.bio}</p>}
-          <p className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-400">
-            Role: {user.venueManager ? "Venue Manager" : "Customer"}
+          <p className="text-xl font-bold">{user.name}</p>
+          <p className="text-gray-600">{user.email}</p>
+          <p className="mt-2 text-gray-700 text-lg">{user.bio}</p>
+          <p className="mt-2 text-sm font-medium text-[#bg-[#1F3B3C]] ">
+            {user.venueManager ? "Venue Manager" : "Customer"}
           </p>
         </div>
       </div>
@@ -57,15 +69,23 @@ export default function UserInfoCard() {
       <div className="p-6 pt-0 flex justify-end">
         <button
           onClick={() => setIsEditing(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition"
+          className="hover:bg-[#2b4a4b] bg-[#1F3B3C] hover:shadow-md text-white px-5 py-2 rounded transition"
           aria-haspopup="dialog"
         >
           Update profile
         </button>
       </div>
 
-      <Modal show={isEditing} onClose={handleClose} aria-label="Edit profile modal">
-        <EditProfileForm user={user} onSuccess={handleSuccess} onClose={handleClose} />
+      <Modal
+        show={isEditing}
+        onClose={handleClose}
+        aria-label="Edit profile modal"
+      >
+        <EditProfileForm
+          user={user}
+          onSuccess={handleSuccess}
+          onClose={handleClose}
+        />
       </Modal>
     </div>
   );

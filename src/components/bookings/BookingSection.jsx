@@ -25,21 +25,33 @@ import Pagination from "../common/Pagination";
  *   />
  * )
  */
-export default function BookingSection({ title, bookings, page, setPage, isUpcoming, onRefresh }) {
+export default function BookingSection({
+  title,
+  bookings,
+  page,
+  setPage,
+  isUpcoming,
+  onRefresh,
+}) {
   const itemsPerPage = 6;
   const pageCount = Math.ceil(bookings.length / itemsPerPage);
 
-  const paginated = bookings.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const paginated = bookings.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage,
+  );
 
   return (
-    <section className="bg-white dark:bg-gray-900 rounded shadow-md p-6">
-      <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 dark:border-gray-700 pb-2">
+    <section className="bg-white  rounded shadow-md p-6">
+      <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300  pb-2">
         {title}
       </h2>
 
       {bookings.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-400 italic">
-          {isUpcoming ? "You don't have any upcoming bookings yet." : "You have no past bookings."}
+        <p className="text-center text-gray-500  italic">
+          {isUpcoming
+            ? "You don't have any upcoming bookings yet."
+            : "You have no past bookings."}
         </p>
       ) : (
         <>

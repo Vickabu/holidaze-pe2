@@ -21,9 +21,11 @@ import { useAuth } from "../context/AuthContext";
 
 const VenueDetail = () => {
   const { id } = useParams();
-  const { data: venue, loading, error } = useFetch(
-    `${API_HOLIDAZE.VENUES}/${id}?_owner=true&_bookings=true`
-  );
+  const {
+    data: venue,
+    loading,
+    error,
+  } = useFetch(`${API_HOLIDAZE.VENUES}/${id}?_owner=true&_bookings=true`);
 
   const { user, setShowAuthModal, setAuthModalTab } = useAuth();
 
@@ -31,10 +33,7 @@ const VenueDetail = () => {
   if (error) return <p>Something went wrong: {error.message}</p>;
   if (!venue) return <p>Could not find venue</p>;
 
-  const isVenueManager =
-  user &&
-  venue.owner &&
-  user.name === venue.owner.name;
+  const isVenueManager = user && venue.owner && user.name === venue.owner.name;
   const isUserLoggedIn = !!user;
 
   return (
@@ -66,7 +65,7 @@ const VenueDetail = () => {
           {!isUserLoggedIn && (
             <div className="flex flex-col items-center space-y-4 mt-6">
               <h1 className="font-bold text-2xl">Booking</h1>
-              <p className="text-gray-700 dark:text-gray-300 text-center">
+              <p className="text-gray-700 text-center">
                 You need to be signed in to book this venue.
               </p>
               <button
@@ -80,7 +79,6 @@ const VenueDetail = () => {
               </button>
             </div>
           )}
-
         </div>
       </div>
     </div>

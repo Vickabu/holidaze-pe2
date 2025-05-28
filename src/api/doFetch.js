@@ -3,7 +3,7 @@ import { API_KEY } from "./constant";
 /**
  * Retrieves authorization headers from local storage if an access token is present.
  *
- * @returns {Object} An object containing the Authorization header if a token exists.
+ * @returns {{ [key: string]: string }} An object containing the Authorization header if a token exists, otherwise an empty object.
  */
 
 const getAuthHeaders = () => {
@@ -17,8 +17,8 @@ const getAuthHeaders = () => {
  *
  * @param {string} url - The API endpoint to fetch.
  * @param {Object} [options={}] - Optional fetch options (method, body, headers, etc.).
- * @returns {Promise<Object>} The parsed JSON response, or an empty object if not JSON.
- * @throws {Object} Throws parsed error response if the response is not OK (non-2xx).
+ * @returns {Promise<Object>} The parsed JSON response, or an empty object if the response has no JSON body.
+ * @throws {Object} Parsed error response from the API if the response status is not OK (non-2xx).
  */
 
 export const doFetch = async (url, options = {}) => {

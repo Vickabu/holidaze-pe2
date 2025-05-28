@@ -1,13 +1,16 @@
 import { HiOutlineX } from "react-icons/hi";
 
 /**
- * A reusable modal dialog component.
+ * A reusable modal dialog component that displays content overlayed on the screen.
  *
  * @component
- * @param {Object} props
- * @param {boolean} props.show - Determines whether the modal is visible.
- * @param {Function} props.onClose - Function to call when the modal is requested to close.
- * @param {React.ReactNode} props.children - Content to render inside the modal.
+ *
+ * @param {Object} props - Component props.
+ * @param {boolean} props.show - Whether the modal is visible.
+ * @param {Function} props.onClose - Callback function invoked when the modal should close.
+ * @param {React.ReactNode} props.children - The content to render inside the modal.
+ *
+ * @returns {React.ReactNode|null} The modal JSX if visible, otherwise null.
  *
  * @example
  * <Modal show={isOpen} onClose={() => setIsOpen(false)}>
@@ -24,10 +27,10 @@ export default function Modal({ show, onClose, children }) {
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6">
+      <div className="relative bg-[#F4E9DC]  text-gray-900  rounded shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white text-2xl"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700  text-2xl"
           aria-label="Close modal"
         >
           <HiOutlineX />

@@ -5,16 +5,18 @@ import { validateRegister } from "../../utils/validation";
 
 /**
  * RegisterForm handles user registration by collecting name, email, and password.
- * Users can choose to register either as a guest or a venue manager.
- * The form includes validation and displays errors if registration fails.
+ * Allows users to register either as a guest or a venue manager.
+ * Performs client-side validation and displays errors if registration fails.
  *
  * @component
- * @param {Object} props
- * @param {"guest" | "manager"} props.role - The selected user role.
- * @param {Function} props.toggleRole - Function to toggle between user roles.
- * @param {Function} props.onSuccess - Callback function to run after successful registration.
  *
- * @returns {React.ReactNode} The registration form UI.
+ * @param {Object} props - Component props.
+ * @param {"guest" | "manager"} props.role - The currently selected user role.
+ * @param {Function} props.toggleRole - Function to switch user roles.
+ * @param {Function} props.onSuccess - Callback triggered after successful registration.
+ *
+ * @returns {React.ReactNode} A registration form with role selection buttons,
+ * inputs for name, email, and password, validation error display, and a submit button.
  */
 export default function RegisterForm({ role, toggleRole, onSuccess }) {
   const [name, setName] = React.useState("");
@@ -44,14 +46,12 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="flex justify-center">
-        <div className="inline-flex border rounded p-1 bg-gray-100 dark:bg-gray-700">
+        <div className="inline-flex border rounded p-1 bg-gray-100">
           <button
             type="button"
             onClick={() => toggleRole("guest")}
             className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
-              role === "guest"
-                ? "bg-blue-500 text-white"
-                : "text-gray-700 dark:text-gray-200"
+              role === "guest" ? "bg-blue-500 text-white" : "text-gray-700 "
             }`}
           >
             <FaUser /> Guest
@@ -60,9 +60,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
             type="button"
             onClick={() => toggleRole("manager")}
             className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
-              role === "manager"
-                ? "bg-blue-500 text-white"
-                : "text-gray-700 dark:text-gray-200"
+              role === "manager" ? "bg-blue-500 text-white" : "text-gray-700 "
             }`}
           >
             <FaHotel /> Venue Manager

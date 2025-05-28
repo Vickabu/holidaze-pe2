@@ -8,19 +8,12 @@ import React from "react";
  * @returns {JSX.Element}
  */
 const VenueInfo = ({ venue }) => {
-  const {
-    description,
-    price,
-    rating,
-    maxGuests,
-    location,
-    meta,
-  } = venue;
+  const { description, price, rating, maxGuests, location, meta } = venue;
 
   const fullAddress = `${location.address}, ${location.zip} ${location.city}, ${location.country}`;
 
   return (
-    <div className="text-gray-800 dark:text-gray-200">
+    <div className="text-gray-800 ">
       <p className="text-base leading-relaxed">{description}</p>
 
       <div className="mt-4 grid grid-cols-2 gap-4 text-sm font-semibold">
@@ -37,11 +30,14 @@ const VenueInfo = ({ venue }) => {
         </div>
         <div>
           <p>
-            <span className="font-semibold">Address:</span><br />
-            {location.address}, {location.zip} {location.city}, {location.country}
+            <span className="font-semibold">Address:</span>
+            <br />
+            {location.address}, {location.zip} {location.city},{" "}
+            {location.country}
           </p>
           <p>
-            <span className="font-semibold">Continent:</span> {location.continent}
+            <span className="font-semibold">Continent:</span>{" "}
+            {location.continent}
           </p>
 
           {location.address && (

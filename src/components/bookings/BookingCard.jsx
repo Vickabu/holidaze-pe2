@@ -52,7 +52,7 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   return (
     <li
       onClick={goToVenue}
-      className="cursor-pointer bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
+      className="cursor-pointer bg-white rounded shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
     >
       <img
         src={image}
@@ -61,28 +61,30 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
       />
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">
             {venue?.name || "Unknown Location"}
           </h3>
           {venue?.location?.city && (
-            <p className="flex items-center text-gray-600 dark:text-gray-400 mb-2">
+            <p className="flex items-center text-gray-600 mb-2">
               <FaMapMarkerAlt className="mr-2 text-red-500" />
               {venue.location.city}, {venue.location.country}
             </p>
           )}
-          <p className="flex items-center text-gray-700 dark:text-gray-300 mb-1">
+          <p className="flex items-center text-gray-700 mb-1">
             <FaCalendarAlt className="mr-2 text-blue-500" />
             <span>
-              <strong>From:</strong> {new Date(booking.dateFrom).toLocaleDateString()}
+              <strong>From:</strong>{" "}
+              {new Date(booking.dateFrom).toLocaleDateString()}
             </span>
           </p>
-          <p className="flex items-center text-gray-700 dark:text-gray-300 mb-1">
+          <p className="flex items-center text-gray-700 mb-1">
             <FaCalendarAlt className="mr-2 text-blue-500" />
             <span>
-              <strong>To:</strong> {new Date(booking.dateTo).toLocaleDateString()}
+              <strong>To:</strong>{" "}
+              {new Date(booking.dateTo).toLocaleDateString()}
             </span>
           </p>
-          <p className="flex items-center text-gray-700 dark:text-gray-300">
+          <p className="flex items-center text-gray-700">
             <FaUser className="mr-2 text-green-500" />
             Guests: {booking.guests}
           </p>

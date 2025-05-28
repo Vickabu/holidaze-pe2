@@ -34,7 +34,7 @@ const VenueBookingForm = ({ venue, isUserLoggedIn, isVenueManager }) => {
 
   const isDateBooked = (date) => {
     return bookedIntervals.some(({ start, end }) =>
-      isWithinInterval(date, { start, end })
+      isWithinInterval(date, { start, end }),
     );
   };
 
@@ -150,7 +150,7 @@ const VenueBookingForm = ({ venue, isUserLoggedIn, isVenueManager }) => {
       {isUserLoggedIn && isVenueManager && (
         <div className="flex flex-col items-center space-y-4 mt-6">
           <h1 className="font-bold text-2xl">Venue Manager</h1>
-          <p className="text-gray-700 dark:text-gray-300 text-center">
+          <p className="text-gray-700 text-center">
             You are the venue manager for this venue.
           </p>
         </div>
