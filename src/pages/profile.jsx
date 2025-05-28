@@ -59,8 +59,8 @@ export default function Profile() {
 
       <div className="mt-4">
         {activeTab === "venues" && isVenueManager && (
-          <VenueDashboard user={currentUser} />
-        )}
+  <VenueDashboard user={currentUser} includeOwnerAndBookings />
+)}
         {activeTab === "bookings" && (
           <BookingDashboard user={currentUser} />
         )}

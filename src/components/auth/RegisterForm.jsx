@@ -59,7 +59,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
           <button
             type="button"
             onClick={() => toggleRole("manager")}
-            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+            className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 dark:text-gray-200"

@@ -41,10 +41,7 @@ export default function BookingDashboard() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10 mt-6">
-      <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 border-b-4 border-indigo-600 pb-3">
-        Your Bookings
-      </h1>
+    <div className="w-full mx-auto space-y-10 mt-6">
 
       <BookingSection
         title="Upcoming Bookings"

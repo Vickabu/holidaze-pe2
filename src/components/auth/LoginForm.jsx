@@ -43,8 +43,6 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-center">Sign in</h2>
-
       <div className="flex justify-center">
         <div className="inline-flex border rounded p-1 bg-gray-100 dark:bg-gray-700">
           <button
@@ -61,7 +59,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
           <button
             type="button"
             onClick={() => toggleRole("manager")}
-            className={`px-4 py-1 rounded-full transition-all flex items-center gap-2 ${
+            className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
               role === "manager"
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 dark:text-gray-200"

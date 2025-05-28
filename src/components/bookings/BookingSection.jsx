@@ -32,7 +32,7 @@ export default function BookingSection({ title, bookings, page, setPage, isUpcom
   const paginated = bookings.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <section className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
+    <section className="bg-white dark:bg-gray-900 rounded shadow-md p-6">
       <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300 dark:border-gray-700 pb-2">
         {title}
       </h2>

@@ -5,17 +5,16 @@ import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
 import Modal from "../common/Modal";
 
-/**
- * Dashboard component for managing user's venues.
- * Allows viewing, pagination, and creation of venues.
- */
-export default function VenueDashboard() {
+export default function VenueDashboard({ includeOwnerAndBookings = false }) {
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const itemsPerPage = 12;
 
-  const { venues = [], loading, error } = useUserVenues(refreshKey);
+  const { venues = [], loading, error } = useUserVenues(refreshKey, {
+    includeOwnerAndBookings,
+  });
+
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   const pageCount = Math.ceil(venues.length / itemsPerPage);
@@ -35,6 +34,7 @@ export default function VenueDashboard() {
           + Create New Venue
         </button>
       </div>
+      
 
       {loading ? (
         <p>Loading venues...</p>
@@ -75,6 +75,7 @@ export default function VenueDashboard() {
           onCreate={triggerRefresh}
         />
       </Modal>
+      
     </div>
   );
 }

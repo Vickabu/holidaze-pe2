@@ -5,7 +5,22 @@ import { API_HOLIDAZE } from "../../api/constant";
 import { usePost } from "../../hooks/usePost";
 import { isWithinInterval, parseISO, eachDayOfInterval } from "date-fns";
 
-const VenueBookingForm = ({ venue }) => {
+/**
+ * VenueBookingForm Component
+ *
+ * Handles booking interactions for a specific venue.
+ * Shows a date picker with booked dates disabled, validates date range,
+ * submits the booking request, and gives user feedback.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.venue - The venue object, including existing bookings.
+ * @param {boolean} props.isUserLoggedIn - Indicates if the user is logged in.
+ * @param {boolean} props.isVenueManager - Indicates if the logged-in user is the manager of this venue.
+ * @returns {JSX.Element}
+ */
+
+const VenueBookingForm = ({ venue, isUserLoggedIn, isVenueManager }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [guests, setGuests] = useState(1);
   const [bookingMessage, setBookingMessage] = useState(null);
@@ -43,9 +58,9 @@ const VenueBookingForm = ({ venue }) => {
     } else {
       setBookingMessage({
         type: "error",
-        text: "Selected dates include days that are already booked. Please choose another period.",
+        text: "Selected dates include booked days. Please choose a different period.",
       });
-      setDateRange([update[0], null]); 
+      setDateRange([update[0], null]);
     }
   };
 
@@ -64,7 +79,7 @@ const VenueBookingForm = ({ venue }) => {
     if (!isRangeAvailable(dateRange)) {
       setBookingMessage({
         type: "error",
-        text: "Selected dates include days that are already booked. Please choose another period.",
+        text: "Selected dates include booked days.",
       });
       return;
     }
@@ -91,44 +106,55 @@ const VenueBookingForm = ({ venue }) => {
     <div className="bg-white border rounded-lg p-4 shadow mt-6">
       <h2 className="text-xl font-semibold mb-4">Book this venue</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-medium mb-1">Select booking period</label>
-          <div className="border rounded p-3">
-            <DatePicker
-              selectsRange
-              startDate={dateRange[0]}
-              endDate={dateRange[1]}
-              onChange={handleDateChange}
-              minDate={new Date()}
-              filterDate={(date) => !isDateBooked(date)}
-              dateFormat="yyyy-MM-dd"
-              inline
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Guests</label>
-          <input
-            type="number"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-            min="1"
-            max={venue.maxGuests}
-            required
-            className="w-full border p-2 rounded"
+      <div>
+        <label className="block font-medium mb-1">Select booking period</label>
+        <div className="border rounded p-3">
+          <DatePicker
+            selectsRange
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={handleDateChange}
+            minDate={new Date()}
+            filterDate={(date) => !isDateBooked(date)}
+            dateFormat="yyyy-MM-dd"
+            inline
           />
         </div>
+      </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? "Booking..." : "Book Now"}
-        </button>
-      </form>
+      {isUserLoggedIn && !isVenueManager && (
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          <div>
+            <label className="block font-medium mb-1">Guests</label>
+            <input
+              type="number"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              min="1"
+              max={venue.maxGuests}
+              required
+              className="w-full border p-2 rounded"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          >
+            {loading ? "Booking..." : "Book Now"}
+          </button>
+        </form>
+      )}
+
+      {isUserLoggedIn && isVenueManager && (
+        <div className="flex flex-col items-center space-y-4 mt-6">
+          <h1 className="font-bold text-2xl">Venue Manager</h1>
+          <p className="text-gray-700 dark:text-gray-300 text-center">
+            You are the venue manager for this venue.
+          </p>
+        </div>
+      )}
 
       {bookingMessage && (
         <p

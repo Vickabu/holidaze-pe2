@@ -52,7 +52,7 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   return (
     <li
       onClick={goToVenue}
-      className="cursor-pointer bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
+      className="cursor-pointer bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
     >
       <img
         src={image}
@@ -92,7 +92,7 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
           <button
             onClick={handleCancel}
             disabled={loading}
-            className={`mt-6 px-5 py-2 rounded-lg text-white font-semibold transition-colors duration-200 ${
+            className={`mt-6 py-2 rounded max-w-1/2 text-white font-semibold transition-colors duration-200 ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"

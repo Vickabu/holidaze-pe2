@@ -35,7 +35,13 @@ function buildQueryString(params) {
  */
 const useFetch = (
   baseUrl,
-  { options = {}, paginate = false, itemsPerPage = 10 } = {},
+  {
+    query = {}, // ← renamed from options
+    fetchOptions = {}, // ← new for headers etc.
+    paginate = false,
+    itemsPerPage = 10,
+    dependencies = [],
+  } = {},
 ) => {
   const [rawData, setRawData] = useState([]);
   const [data, setData] = useState([]);
@@ -45,7 +51,9 @@ const useFetch = (
   const fetchedOnce = useRef(false);
 
   const totalPages = paginate ? Math.ceil(rawData.length / itemsPerPage) : 1;
-  const optionsKey = JSON.stringify(options);
+
+  const queryKey = JSON.stringify(query);
+  const fetchOptionsKey = JSON.stringify(fetchOptions);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,11 +63,11 @@ const useFetch = (
       setError(null);
 
       try {
-        const parsedOptions = JSON.parse(optionsKey);
-        const queryString = buildQueryString(parsedOptions);
+        const parsedQuery = JSON.parse(queryKey);
+        const queryString = buildQueryString(parsedQuery);
         const url = `${baseUrl}${queryString}`;
 
-        const response = await doFetch(url);
+        const response = await doFetch(url, fetchOptions);
         const fullData = response.data || response;
 
         if (paginate) {
@@ -78,7 +86,7 @@ const useFetch = (
 
     fetchedOnce.current = false;
     fetchData();
-  }, [baseUrl, optionsKey, paginate]);
+  }, [baseUrl, queryKey, fetchOptionsKey, paginate, ...dependencies]);
 
   useEffect(() => {
     if (paginate) {

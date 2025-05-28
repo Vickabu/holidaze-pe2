@@ -8,6 +8,17 @@ import VenueOwner from "../components/venues/VenueOwner.jsx";
 import VenueBookingForm from "../components/venues/VenueBookingForm.jsx";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * VenueDetail Component
+ *
+ * This component displays detailed information about a single venue.
+ * It fetches the venue by ID, including owner and booking data.
+ * It conditionally renders booking options depending on user login and manager status.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
 const VenueDetail = () => {
   const { id } = useParams();
   const { data: venue, loading, error } = useFetch(
@@ -20,12 +31,15 @@ const VenueDetail = () => {
   if (error) return <p>Something went wrong: {error.message}</p>;
   if (!venue) return <p>Could not find venue</p>;
 
-  const isVenueManager = user && venue.owner && user.id === venue.owner.id;
+  const isVenueManager =
+  user &&
+  venue.owner &&
+  user.name === venue.owner.name;
   const isUserLoggedIn = !!user;
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-8">
-      <h1 className="text-5xl font-extrabold mb-6 text-blue-700 border-b-4 border-blue-300 pb-2">
+      <h1 className="text-5xl font-extrabold mb-6 text-black border-b-4 border-black pb-2">
         {venue.name}
       </h1>
 
@@ -43,7 +57,6 @@ const VenueDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24 self-start">
-          {/* Booking form får vite om bruker er manager og innlogget */}
           <VenueBookingForm
             venue={venue}
             isUserLoggedIn={isUserLoggedIn}
@@ -68,14 +81,6 @@ const VenueDetail = () => {
             </div>
           )}
 
-          {isVenueManager && (
-            <div className="flex flex-col items-center space-y-4 mt-6">
-              <h1 className="font-bold text-2xl">Venue Manager</h1>
-              <p className="text-gray-700 dark:text-gray-300 text-center">
-                You are the venue manager for this venue.
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>
