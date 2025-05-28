@@ -38,11 +38,13 @@ const VenueForm = ({
       setDescription(initialValues.description || "");
       setPrice(initialValues.price?.toString() || "");
       setMaxGuests(initialValues.maxGuests?.toString() || "");
-      setLocation(initialValues.location || { address: "", city: "", country: "" });
+      setLocation(
+        initialValues.location || { address: "", city: "", country: "" },
+      );
       setMedia(
         initialValues.media?.length > 0
           ? initialValues.media.map((m) => m.url || m)
-          : [""]
+          : [""],
       );
     }
   }, [initialValues]);
@@ -72,7 +74,7 @@ const VenueForm = ({
     e.preventDefault();
 
     const errors = media.map((url) =>
-      url.trim() === "" ? null : validateUrl(url.trim()) ? null : "Invalid URL"
+      url.trim() === "" ? null : validateUrl(url.trim()) ? null : "Invalid URL",
     );
     setMediaErrors(errors);
 
@@ -103,7 +105,7 @@ const VenueForm = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -113,7 +115,7 @@ const VenueForm = ({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -124,7 +126,7 @@ const VenueForm = ({
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -135,7 +137,7 @@ const VenueForm = ({
           value={maxGuests}
           onChange={(e) => setMaxGuests(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -144,8 +146,10 @@ const VenueForm = ({
         <input
           type="text"
           value={location.address}
-          onChange={(e) => setLocation({ ...location, address: e.target.value })}
-          className="w-full p-2 border border-gray-300 rounded-md"
+          onChange={(e) =>
+            setLocation({ ...location, address: e.target.value })
+          }
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -155,7 +159,7 @@ const VenueForm = ({
           type="text"
           value={location.city}
           onChange={(e) => setLocation({ ...location, city: e.target.value })}
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -164,8 +168,10 @@ const VenueForm = ({
         <input
           type="text"
           value={location.country}
-          onChange={(e) => setLocation({ ...location, country: e.target.value })}
-          className="w-full p-2 border border-gray-300 rounded-md"
+          onChange={(e) =>
+            setLocation({ ...location, country: e.target.value })
+          }
+          className="w-full p-2 border border-gray-300 rounded bg-white"
         />
       </div>
 
@@ -178,7 +184,7 @@ const VenueForm = ({
               value={image}
               onChange={(e) => handleMediaChange(index, e.target.value)}
               placeholder={`Image URL ${index + 1}`}
-              className={`w-full p-2 border rounded-md ${
+              className={`w-full p-2 border rounded bg-white ${
                 mediaErrors[index] ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -191,9 +197,9 @@ const VenueForm = ({
           <button
             type="button"
             onClick={addMediaField}
-            className="text-sm text-blue-500 hover:underline"
+            className="text-md text-black hover:underline font-bold"
           >
-            Add more images
+            + Add more images
           </button>
         )}
       </div>
@@ -201,7 +207,7 @@ const VenueForm = ({
       {media.some((url) => url.trim() !== "") && (
         <div className="mt-4">
           <h3 className="font-semibold">Image Preview:</h3>
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2 space-x-2">
             {media
               .filter((url) => url.trim() !== "")
               .map((image, index) => (
@@ -220,14 +226,14 @@ const VenueForm = ({
         <button
           type="button"
           onClick={onClose}
-          className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md"
+          className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded border"
         >
           Close
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 disabled:opacity-50"
+          className="px-4 py-2 text-sm text-white bg-[#1F3B3C] hover:bg-[#274546] rounded disabled:opacity-50"
         >
           {loading ? "Loading..." : submitText}
         </button>

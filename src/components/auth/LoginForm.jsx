@@ -72,7 +72,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-white"
         required
       />
       <input
@@ -80,7 +80,7 @@ export default function LoginForm({ role, toggleRole, onSuccess }) {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-white"
         required
       />
 

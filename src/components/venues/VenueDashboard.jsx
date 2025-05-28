@@ -5,6 +5,16 @@ import Pagination from "../common/Pagination";
 import CreateVenue from "./CreateVenue";
 import Modal from "../common/Modal";
 
+/**
+ * Dashboard component displaying a paginated list of the user's venues.
+ * Allows creating new venues via a modal and refreshes list on create/update/delete.
+ *
+ * @param {Object} props
+ * @param {boolean} [props.includeOwnerAndBookings=false] - Whether to include owner and booking info when fetching venues.
+ *
+ * @returns {JSX.Element} Venue dashboard UI.
+ */
+
 export default function VenueDashboard({ includeOwnerAndBookings = false }) {
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,12 +38,12 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
   );
 
   return (
-    <div className="bg-blue-50 p-4 rounded-lg shadow">
+    <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Venues</h2>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
+          className="bg-[#1F3B3C] hover:bg-[#274546] text-white py-2 px-4 rounded transition"
         >
           + Create New Venue
         </button>
@@ -52,7 +62,7 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
         </p>
       ) : (
         <>
-          <ul className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
             {paginatedVenues.map((venue) => (
               <VenueDashCard
                 key={venue.id}

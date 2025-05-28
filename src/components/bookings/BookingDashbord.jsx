@@ -25,7 +25,9 @@ export default function BookingDashboard() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p className="text-gray-500 text-lg animate-pulse">Loading bookings...</p>
+        <p className="text-gray-500 text-lg animate-pulse">
+          Loading bookings...
+        </p>
       </div>
     );
   }
@@ -34,15 +36,15 @@ export default function BookingDashboard() {
     return (
       <div className="max-w-xl mx-auto p-6 bg-red-100 text-red-700 rounded-lg shadow-md">
         <p className="font-semibold text-center">
-          Could not fetch bookings: {error.errors?.[0]?.message || error.message}
+          Could not fetch bookings:{" "}
+          {error.errors?.[0]?.message || error.message}
         </p>
       </div>
     );
   }
 
   return (
-    <div className="w-full mx-auto space-y-10 mt-6">
-
+    <div className="w-full mx-auto space-y-10 mt-6 ">
       <BookingSection
         title="Upcoming Bookings"
         bookings={upcoming}

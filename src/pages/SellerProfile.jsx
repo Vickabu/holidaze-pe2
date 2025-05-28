@@ -6,9 +6,11 @@ import { API_HOLIDAZE } from "../api/constant";
 const SellerPublicProfile = () => {
   const { username } = useParams();
 
-  const { data: user, loading, error } = useFetch(
-    `${API_HOLIDAZE.PROFILES}/${username}?_venues=true`
-  );
+  const {
+    data: user,
+    loading,
+    error,
+  } = useFetch(`${API_HOLIDAZE.PROFILES}/${username}?_venues=true`);
 
   if (loading) return <p>Loading profile...</p>;
   if (error) return <p>Could not fetch profile..: {error.message}</p>;
@@ -35,11 +37,15 @@ const SellerPublicProfile = () => {
           {user.venues.map((venue) => (
             <div key={venue.id} className="bg-gray-100 p-4 rounded shadow">
               <h3 className="text-lg font-bold">{venue.name}</h3>
-              <p className="text-gray-700">{venue.location.city}, {venue.location.country}</p>
-              <p className="text-sm text-gray-500">Price per night: ${venue.price}</p>
+              <p className="text-gray-700">
+                {venue.location.city}, {venue.location.country}
+              </p>
+              <p className="text-sm text-gray-500">
+                Price per night: ${venue.price}
+              </p>
               <a
                 href={`/venues/${venue.id}`}
-                className="text-blue-500 hover:underline text-sm mt-2 inline-block"
+                className="text-[#1F3B3C] hover:underline text-sm mt-2 inline-block"
               >
                 See more details
               </a>

@@ -51,7 +51,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
             type="button"
             onClick={() => toggleRole("guest")}
             className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
-              role === "guest" ? "bg-blue-500 text-white" : "text-gray-700 "
+              role === "guest" ? "bg-[#1F3B3C] text-white" : "text-gray-700 "
             }`}
           >
             <FaUser /> Guest
@@ -60,7 +60,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
             type="button"
             onClick={() => toggleRole("manager")}
             className={`px-4 py-1 rounded transition-all flex items-center gap-2 ${
-              role === "manager" ? "bg-blue-500 text-white" : "text-gray-700 "
+              role === "manager" ? "bg-[#1F3B3C] text-white" : "text-gray-700 "
             }`}
           >
             <FaHotel /> Venue Manager
@@ -75,7 +75,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-white"
         required
       />
       <input
@@ -83,7 +83,7 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-white"
         required
       />
       <input
@@ -91,13 +91,13 @@ export default function RegisterForm({ role, toggleRole, onSuccess }) {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-white"
         required
       />
 
       <button
         type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition-all"
+        className="w-full bg-[#1F3B3C] hover:bg-[#274546] text-white p-2 rounded transition-all"
       >
         Register
       </button>

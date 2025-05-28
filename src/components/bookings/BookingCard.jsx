@@ -3,6 +3,7 @@ import { useDelete } from "../../hooks/useDelete";
 import { confirmAndDelete } from "../../utils/confirmAndDelete";
 import { FaMapMarkerAlt, FaCalendarAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 /**
  * BookingCard displays a single booking with venue details, dates, and number of guests.
@@ -35,10 +36,16 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
       url: `${API_HOLIDAZE.BOOKINGS}/${booking.id}`,
       accessToken,
       remove,
+      onConfirm: async (msg) => {
+        return window.confirm(msg);
+      },
+      onError: (errorMessage) => {
+        toast.error(errorMessage);
+      },
     });
 
     if (success) {
-      alert("Booking canceled!");
+      toast.success("Booking canceled!");
       onRefresh();
     }
   };
@@ -52,12 +59,12 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   return (
     <li
       onClick={goToVenue}
-      className="cursor-pointer bg-white rounded shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
+      className="cursor-pointer bg-[#f8f8f8] rounded shadow-md flex flex-col transition-transform duration-300  hover:shadow-xl"
     >
       <img
         src={image}
         alt={venue?.name}
-        className="w-full md:w-64 h-48 object-cover"
+        className="w-full h-40 object-cover rounded-t"
       />
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
@@ -66,26 +73,26 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
           </h3>
           {venue?.location?.city && (
             <p className="flex items-center text-gray-600 mb-2">
-              <FaMapMarkerAlt className="mr-2 text-red-500" />
+              <FaMapMarkerAlt className="mr-2 " />
               {venue.location.city}, {venue.location.country}
             </p>
           )}
           <p className="flex items-center text-gray-700 mb-1">
-            <FaCalendarAlt className="mr-2 text-blue-500" />
+            <FaCalendarAlt className="mr-2 " />
             <span>
               <strong>From:</strong>{" "}
               {new Date(booking.dateFrom).toLocaleDateString()}
             </span>
           </p>
           <p className="flex items-center text-gray-700 mb-1">
-            <FaCalendarAlt className="mr-2 text-blue-500" />
+            <FaCalendarAlt className="mr-2" />
             <span>
               <strong>To:</strong>{" "}
               {new Date(booking.dateTo).toLocaleDateString()}
             </span>
           </p>
           <p className="flex items-center text-gray-700">
-            <FaUser className="mr-2 text-green-500" />
+            <FaUser className="mr-2 " />
             Guests: {booking.guests}
           </p>
         </div>
@@ -94,10 +101,10 @@ export default function BookingCard({ booking, isUpcoming, onRefresh }) {
           <button
             onClick={handleCancel}
             disabled={loading}
-            className={`mt-6 py-2 rounded max-w-1/2 text-white font-semibold transition-colors duration-200 ${
+            className={`mt-6 py-2 rounded text-white font-semibold transition-colors duration-200 ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
+                : "bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-400"
             }`}
           >
             {loading ? "Cancelling..." : "Cancel"}
