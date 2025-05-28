@@ -5,10 +5,28 @@ import { validateVenue } from "../../utils/validation";
 import VenueForm from "./VenueForm";
 import { PencilLine } from "lucide-react";
 
+/**
+ * Component for editing an existing venue.
+ *
+ * @param {Object} props
+ * @param {Object} props.venue - Venue object to be edited.
+ * @param {Function} props.onClose - Callback to close the edit form/modal.
+ * @param {Function} props.onSuccess - Callback triggered after successful update.
+ *
+ * @returns {JSX.Element} Edit venue form UI.
+ */
+
 export default function EditVenue({ venue, onClose, onSuccess }) {
   const { put, loading } = usePut();
   const [formError, setFormError] = useState(null);
 
+  /**
+   * Handles the submission of the updated venue data.
+   * Validates data before sending PUT request.
+   * Sets error state if validation or update fails.
+   *
+   * @param {Object} updatedVenue - The updated venue data from the form.
+   */
   const handleUpdate = async (updatedVenue) => {
     const validationErrors = validateVenue(updatedVenue);
     if (Object.keys(validationErrors).length > 0) {
@@ -26,9 +44,9 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
   };
 
   return (
-    <div className="bg-white  p-6 rounded-2xl shadow-lg w-full max-w-2xl mx-auto">
+    <div className="p-6 w-full max-w-2xl mx-auto">
       <div className="flex items-center gap-2 mb-6">
-        <PencilLine className="w-5 h-5 text-blue-500" />
+        <PencilLine className="w-5 h-5 text-[#1F3B3C]" />
         <h2 className="text-2xl font-semibold text-gray-800 ">Edit Venue</h2>
       </div>
 

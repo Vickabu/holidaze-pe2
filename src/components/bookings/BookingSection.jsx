@@ -42,8 +42,8 @@ export default function BookingSection({
   );
 
   return (
-    <section className="bg-white  rounded shadow-md p-6">
-      <h2 className="text-2xl font-semibold mb-4 border-b border-gray-300  pb-2">
+    <section className=" p-6">
+      <h2 className="text-2xl font-semibold mb-4 border-b border-gray-400  pb-2">
         {title}
       </h2>
 
@@ -55,7 +55,7 @@ export default function BookingSection({
         </p>
       ) : (
         <>
-          <ul className="space-y-6 mb-6">
+          <ul className="grid gap-6 mb-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {paginated.map((booking) => (
               <BookingCard
                 key={booking.id}

@@ -1,12 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Component to display a summary card for a venue.
+ * Shows image, name, description, price, rating, location, and meta features.
+ *
+ * @param {Object} props
+ * @param {Object} props.venue - Venue object containing data to display.
+ * @param {string} props.venue.id - Unique ID of the venue.
+ * @param {string} props.venue.name - Name of the venue.
+ * @param {string} props.venue.description - Description text of the venue.
+ * @param {Array} props.venue.media - Array of media objects (with url and alt).
+ * @param {number} props.venue.price - Price for the venue.
+ * @param {number} props.venue.rating - Average rating of the venue.
+ * @param {Object} props.venue.location - Location object with city and country.
+ * @param {Object} props.venue.meta - Meta information about the venue (wifi, parking, etc).
+ *
+ * @returns {JSX.Element} Venue card UI.
+ */
+
 const VenueCard = ({ venue }) => {
   const { id, name, description, media, price, rating, location, meta } = venue;
 
   return (
     <Link to={`/venues/${id}`} className="block">
-      <div className="bg-[#f8f8f8]  text-gray-900  border-gray-200 rounded shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
+      <div className="bg-[#f8f8f8]  text-gray-900  border-gray-200 rounded shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow ">
         <img
           src={
             media[0]?.url ||

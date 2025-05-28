@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
+/**
+ * Displays a gallery of venue images with navigation arrows and a modal for enlarged viewing.
+ *
+ * @param {Object} props
+ * @param {Array<{url: string, alt?: string}>} [props.media=[]] - Array of image objects with URL and optional alt text.
+ *
+ * @returns {JSX.Element|null} Image gallery component or null if no images provided.
+ */
+
 const VenueImages = ({ media = [] }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,7 +81,7 @@ const VenueImages = ({ media = [] }) => {
                 onClick={() => setMainImageIndex(index)}
                 className={`w-24 h-16 object-cover rounded cursor-pointer border-2 transition duration-200 ${
                   index === mainImageIndex
-                    ? "border-blue-500 scale-110"
+                    ? "border-[#1F3B3C] scale-110"
                     : "border-transparent hover:border-gray-300"
                 }`}
               />
@@ -93,11 +102,11 @@ const VenueImages = ({ media = [] }) => {
                 prevImage();
               }}
               className="absolute left-10 top-1/2 transform -translate-y-1/2 
-    bg-white/70 hover:bg-white
-    rounded py-2 
-    shadow-md hover:shadow-lg 
-    transition duration-300 ease-in-out
-    "
+              bg-white/70 hover:bg-white
+              rounded py-2 
+              shadow-md hover:shadow-lg 
+              transition duration-300 ease-in-out
+              "
               aria-label="Previous image"
             >
               <HiChevronLeft
@@ -121,12 +130,12 @@ const VenueImages = ({ media = [] }) => {
                 nextImage();
               }}
               className="
-    absolute right-10 top-1/2 transform -translate-y-1/2 
-    bg-white/70 hover:bg-white
-    rounded py-2
-    shadow-md hover:shadow-lg 
-    transition duration-300 ease-in-out
-  "
+                  absolute right-10 top-1/2 transform -translate-y-1/2 
+                  bg-white/70 hover:bg-white
+                  rounded py-2
+                  shadow-md hover:shadow-lg 
+                  transition duration-300 ease-in-out
+                "
               aria-label="Next image"
             >
               <HiChevronRight

@@ -40,7 +40,7 @@ export default function Footer() {
           <img
             src={"/Holidaze-logo.png"}
             alt="Holidaze logo"
-            className="w-32 cursor-pointer bg-[#F4E9DC] rounded"
+            className="w-32 cursor-pointer bg-[#F4E9DC] rounded md:mb-0 mb-4"
             onClick={() => navigate("/")}
           />
 

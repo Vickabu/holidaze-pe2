@@ -103,7 +103,7 @@ export default function Navbar() {
             }}
             className={`p-2 ${
               authModalTab === "login"
-                ? "border-b-2 border-blue-500 font-bold"
+                ? "border-b-2 border-[#1F3B3C] font-bold"
                 : ""
             }`}
           >
@@ -116,7 +116,7 @@ export default function Navbar() {
             }}
             className={`p-2 ${
               authModalTab === "register"
-                ? "border-b-2 border-blue-500 font-bold"
+                ? "border-b-2 border-[#1F3B3C] font-bold"
                 : ""
             }`}
           >

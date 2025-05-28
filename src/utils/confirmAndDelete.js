@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 /**
  * Prompts user for confirmation and attempts to delete a resource via the provided `remove` function.
  *
@@ -19,7 +21,7 @@ export async function confirmAndDelete({ message, url, accessToken, remove }) {
     });
     return true;
   } catch (err) {
-    alert(
+    toast.error(
       "Error deleting item: " +
         (err.errors?.[0]?.message || err.message || "Unknown error"),
     );

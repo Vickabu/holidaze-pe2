@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePut } from "../../hooks/usePut";
 import { API_HOLIDAZE } from "../../api/constant";
 import { useAuth } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 /**
  * Form component for editing the user's profile.
@@ -57,10 +58,15 @@ export default function EditProfileForm({ onSuccess, onClose }) {
       setUser(updatedUser);
       localStorage.setItem("userInfo", JSON.stringify(updatedUser));
 
+      toast.success("Profile updated!");
+
       if (onSuccess) onSuccess(updatedUser);
       if (onClose) onClose();
     } catch (err) {
-      alert("Update profile failed: " + (err.message || err));
+      toast.error(
+        "Update failed: " +
+          (err.errors?.[0]?.message || err.message || "Unknown error"),
+      );
     }
   };
 
@@ -87,7 +93,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Avatar URL"
           value={avatarUrl}
           onChange={(e) => setAvatarUrl(e.target.value)}
-          className="w-full p-3 rounded border border-gray-300  bg-gray-50 text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded border border-gray-300  bg-white text-gray-900  focus:outline-none focus:ring-2 focus:ring-[#1F3B3C] transition"
         />
       </div>
 
@@ -104,7 +110,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Avatar Alt Text"
           value={avatarAlt}
           onChange={(e) => setAvatarAlt(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-white  text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1F3B3C] transition"
         />
       </div>
 
@@ -121,7 +127,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Banner URL"
           value={bannerUrl}
           onChange={(e) => setBannerUrl(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-[#1F3B3C] transition"
         />
       </div>
 
@@ -138,7 +144,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Banner Alt Text"
           value={bannerAlt}
           onChange={(e) => setBannerAlt(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
@@ -155,7 +161,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           maxLength={160}
-          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
+          className="w-full p-3 rounded-md border border-gray-300  bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
           rows={4}
         />
       </div>
@@ -180,7 +186,7 @@ export default function EditProfileForm({ onSuccess, onClose }) {
         </button>
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 disabled:opacity-50"
+          className="bg-[#1F3B3C] hover:bg-[#274546] text-white px-6 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 disabled:opacity-50"
           disabled={loading}
           aria-busy={loading}
         >

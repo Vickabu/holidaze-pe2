@@ -32,7 +32,7 @@ export default function CreateVenue({ onClose, onCreate }) {
   };
 
   return (
-    <div className="p-2 max-w-lg w-full">
+    <div className="p-6 max-w-lg w-full">
       <h2 className="text-xl font-semibold mb-4">Add Venue</h2>
       <VenueForm
         initialValues={{}}
