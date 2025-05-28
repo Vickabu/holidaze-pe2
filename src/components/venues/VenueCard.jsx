@@ -6,16 +6,16 @@ const VenueCard = ({ venue }) => {
 
   return (
     <Link to={`/venues/${id}`} className="block">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
+      <div className="bg-[#f8f8f8] dark:border-gray-600 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 rounded-lg shadow-md p-4 w-full h-full  hover:shadow-lg transition-shadow">
         <img
           src={media[0]?.url || "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg"}
           alt={media[0]?.alt || "Venue Image"}
           className="w-full h-48 object-cover rounded-lg mb-4"
         />
-        <h3 className="text-xl font-semibold text-gray-900 break-words">{name}</h3>
-        <p className="text-gray-700 mt-2 break-words line-clamp-3">{description}</p>
-        <p className="text-gray-900 font-semibold mt-2">Price: ${price}</p>
-        <p className="text-yellow-500 mt-1">
+        <h3 className="text-xl font-semibold dark:text-gray-100 break-words">{name}</h3>
+        <p className="text-gray-700 dark:text-gray-200  mt-2 break-words line-clamp-3">{description}</p>
+        <p className="text-gray-900 dark:text-gray-100 font-semibold mt-2">Price: ${price}</p>
+        <p className="text-gray-900 dark:text-gray-100 mt-1">
           <span className="font-semibold">Rating:</span> {rating} ⭐
         </p>
         <p className="text-gray-500 mt-1">

@@ -7,40 +7,57 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-const range = (start, end) =>
-  Array.from({ length: end - start + 1 }, (_, i) => start + i);
-
 const DOTS = "...";
 
+/**
+ * Generates an array representing the pagination range, including numbers and ellipsis.
+ *
+ * @param {number} current - Current page number.
+ * @param {number} total - Total number of pages.
+ * @param {number} siblingCount - How many pages to show on each side of current.
+ * @returns {(number|string)[]} Array of page numbers and dots (`"..."`).
+ */
 function getPaginationRange(current, total, siblingCount = 1) {
   const totalPageNumbers = siblingCount * 2 + 5;
 
   if (total <= totalPageNumbers) {
-    return range(1, total);
+    return Array.from({ length: total }, (_, i) => i + 1);
   }
 
   const leftSiblingIndex = Math.max(current - siblingCount, 1);
   const rightSiblingIndex = Math.min(current + siblingCount, total);
-
   const shouldShowLeftDots = leftSiblingIndex > 2;
   const shouldShowRightDots = rightSiblingIndex < total - 1;
 
-  const firstPageIndex = 1;
-  const lastPageIndex = total;
-
   if (!shouldShowLeftDots && shouldShowRightDots) {
-    const leftRange = range(1, 3 + 2 * siblingCount);
+    const leftRange = Array.from({ length: 3 + 2 * siblingCount }, (_, i) => i + 1);
     return [...leftRange, DOTS, total];
   }
 
   if (shouldShowLeftDots && !shouldShowRightDots) {
-    const rightRange = range(total - (2 * siblingCount + 2), total);
-    return [firstPageIndex, DOTS, ...rightRange];
+    const rightRange = Array.from(
+      { length: 3 + 2 * siblingCount },
+      (_, i) => total - (3 + 2 * siblingCount) + 1 + i
+    );
+    return [1, DOTS, ...rightRange];
   }
 
-  const middleRange = range(leftSiblingIndex, rightSiblingIndex);
-  return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+  const middleRange = Array.from(
+    { length: rightSiblingIndex - leftSiblingIndex + 1 },
+    (_, i) => leftSiblingIndex + i
+  );
+  return [1, DOTS, ...middleRange, DOTS, total];
 }
+
+/**
+ * Pagination component to navigate through pages.
+ *
+ * @component
+ * @param {Object} props
+ * @param {number} props.currentPage - Currently selected page.
+ * @param {number} props.totalPages - Total number of available pages.
+ * @param {function} props.onPageChange - Callback triggered when the page changes.
+ */
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const paginationRange = getPaginationRange(currentPage, totalPages);
@@ -59,13 +76,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
         className={baseBtn}
+        aria-label="First page"
       >
         <ChevronsLeft className="w-4 h-4" />
       </button>
+
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={baseBtn}
+        aria-label="Previous page"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -83,6 +103,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             key={idx}
             onClick={() => onPageChange(page)}
             className={`${baseBtn} ${page === currentPage ? activeBtn : ""}`}
+            aria-label={`Page ${page}`}
           >
             {page}
           </button>
@@ -93,13 +114,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={baseBtn}
+        aria-label="Next page"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
+
       <button
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
         className={baseBtn}
+        aria-label="Last page"
       >
         <ChevronsRight className="w-4 h-4" />
       </button>

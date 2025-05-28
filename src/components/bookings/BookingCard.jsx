@@ -1,55 +1,104 @@
 import { API_HOLIDAZE } from "../../api/constant";
 import { useDelete } from "../../hooks/useDelete";
 import { confirmAndDelete } from "../../utils/confirmAndDelete";
+import { FaMapMarkerAlt, FaCalendarAlt, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * BookingCard displays a single booking with venue details, dates, and number of guests.
+ * For upcoming bookings, it provides a "Cancel" button with confirmation.
+ * Clicking on the card navigates to the venue details page.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.booking - Booking object containing venue, dates, guests, and ID.
+ * @param {boolean} props.isUpcoming - Indicates whether the booking is in the future.
+ * @param {Function} props.onRefresh - Callback to refresh the booking list after cancellation.
+ *
+ * @returns {JSX.Element} The rendered booking card.
+ */
 
 export default function BookingCard({ booking, isUpcoming, onRefresh }) {
   const venue = booking.venue;
   const accessToken = localStorage.getItem("accessToken");
   const { remove, loading } = useDelete();
+  const navigate = useNavigate();
 
   const image =
     venue?.media?.[0]?.url ||
     "https://cdn.pixabay.com/photo/2022/09/06/14/40/beach-7436794_1280.jpg";
 
-  const handleCancel = async () => {
+  const handleCancel = async (e) => {
+    e.stopPropagation();
     const success = await confirmAndDelete({
-      message: "Er du sikker på at du vil avbestille?",
+      message: "Are you sure you want to cancel?",
       url: `${API_HOLIDAZE.BOOKINGS}/${booking.id}`,
       accessToken,
       remove,
     });
 
     if (success) {
-      alert("Booking avbestilt!");
+      alert("Booking canceled!");
       onRefresh();
     }
   };
 
+  const goToVenue = () => {
+    if (venue?.id) {
+      navigate(`/venues/${venue.id}`);
+    }
+  };
+
   return (
-    <li className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
-      <img src={image} alt={venue?.name} className="w-full md:w-64 h-48 object-cover" />
-      <div className="p-4 flex-1">
-        <h3 className="text-lg font-bold">{venue?.name || "Ukjent sted"}</h3>
-        {venue?.location?.city && (
-          <p className="text-gray-600">
-            {venue.location.city}, {venue.location.country}
+    <li
+      onClick={goToVenue}
+      className="cursor-pointer bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden flex flex-col md:flex-row transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
+    >
+      <img
+        src={image}
+        alt={venue?.name}
+        className="w-full md:w-64 h-48 object-cover"
+      />
+      <div className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
+            {venue?.name || "Unknown Location"}
+          </h3>
+          {venue?.location?.city && (
+            <p className="flex items-center text-gray-600 dark:text-gray-400 mb-2">
+              <FaMapMarkerAlt className="mr-2 text-red-500" />
+              {venue.location.city}, {venue.location.country}
+            </p>
+          )}
+          <p className="flex items-center text-gray-700 dark:text-gray-300 mb-1">
+            <FaCalendarAlt className="mr-2 text-blue-500" />
+            <span>
+              <strong>From:</strong> {new Date(booking.dateFrom).toLocaleDateString()}
+            </span>
           </p>
-        )}
-        <p className="mt-2">
-          <strong>Fra:</strong> {new Date(booking.dateFrom).toLocaleDateString()}
-          <br />
-          <strong>Til:</strong> {new Date(booking.dateTo).toLocaleDateString()}
-        </p>
-        <p className="mt-1">Gjester: {booking.guests}</p>
+          <p className="flex items-center text-gray-700 dark:text-gray-300 mb-1">
+            <FaCalendarAlt className="mr-2 text-blue-500" />
+            <span>
+              <strong>To:</strong> {new Date(booking.dateTo).toLocaleDateString()}
+            </span>
+          </p>
+          <p className="flex items-center text-gray-700 dark:text-gray-300">
+            <FaUser className="mr-2 text-green-500" />
+            Guests: {booking.guests}
+          </p>
+        </div>
+
         {isUpcoming && (
           <button
             onClick={handleCancel}
             disabled={loading}
-            className={`mt-4 inline-block px-4 py-2 rounded text-white ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-600"
+            className={`mt-6 py-2 rounded max-w-1/2 text-white font-semibold transition-colors duration-200 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
             }`}
           >
-            {loading ? "Avbestiller..." : "Avbestill"}
+            {loading ? "Cancelling..." : "Cancel"}
           </button>
         )}
       </div>

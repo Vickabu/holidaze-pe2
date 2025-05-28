@@ -1,16 +1,38 @@
+const STORAGE_KEYS = {
+  token: "accessToken",
+  login: "isLoggedIn",
+  user: "userInfo",
+};
+
+/**
+ * Saves user data to localStorage.
+ * @param {Object} data
+ */
 export function saveUserToStorage(data) {
+  if (!data || typeof data !== "object") return;
+
   const { accessToken, name, email, bio, avatar, banner, venueManager } = data;
 
-  localStorage.setItem("accessToken", accessToken);
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem(
-    "userInfo",
-    JSON.stringify({ name, email, bio, avatar, banner, venueManager }),
-  );
+  if (accessToken) {
+    localStorage.setItem(STORAGE_KEYS.token, accessToken);
+    localStorage.setItem(STORAGE_KEYS.login, "true");
+
+    const userInfo = {
+      name,
+      email,
+      bio,
+      avatar,
+      banner,
+      venueManager,
+    };
+
+    localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(userInfo));
+  }
 }
 
+/**
+ * Clears all user-related data from localStorage.
+ */
 export function clearUserFromStorage() {
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("userInfo");
+  Object.values(STORAGE_KEYS).forEach((key) => localStorage.removeItem(key));
 }

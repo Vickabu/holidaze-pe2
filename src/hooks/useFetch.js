@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { doFetch } from "../api/doFetch";
 
+/**
+ * Builds a query string from given parameters.
+ * Filters out empty, null, undefined or false boolean values.
+ *
+ * @param {Object} params - Key-value pairs to convert into query string.
+ * @returns {string} Query string starting with '?' or empty string.
+ */
 function buildQueryString(params) {
   const query = Object.entries(params)
-    .filter(([value]) => {
+    .filter(([, value]) => {
       if (typeof value === "boolean") return value === true;
       return value !== "" && value !== null && value !== undefined;
     })
@@ -15,9 +22,26 @@ function buildQueryString(params) {
   return query ? `?${query}` : "";
 }
 
+/**
+ * Custom React hook to fetch data from an API endpoint.
+ * Supports optional pagination.
+ *
+ * @param {string} baseUrl - The base API endpoint URL.
+ * @param {Object} [config] - Optional configuration object.
+ * @param {Object} [config.options={}] - Options (query params) for the request.
+ * @param {boolean} [config.paginate=false] - Whether to paginate results locally.
+ * @param {number} [config.itemsPerPage=10] - Number of items per page if paginating.
+ * @returns {Object} An object containing data, loading state, error, pagination controls.
+ */
 const useFetch = (
   baseUrl,
-  { options = {}, paginate = false, itemsPerPage = 10 } = {},
+  {
+    query = {}, // ← renamed from options
+    fetchOptions = {}, // ← new for headers etc.
+    paginate = false,
+    itemsPerPage = 10,
+    dependencies = [],
+  } = {},
 ) => {
   const [rawData, setRawData] = useState([]);
   const [data, setData] = useState([]);
@@ -28,7 +52,8 @@ const useFetch = (
 
   const totalPages = paginate ? Math.ceil(rawData.length / itemsPerPage) : 1;
 
-  const optionsKey = JSON.stringify(options);
+  const queryKey = JSON.stringify(query);
+  const fetchOptionsKey = JSON.stringify(fetchOptions);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +63,11 @@ const useFetch = (
       setError(null);
 
       try {
-        const queryString = buildQueryString(options);
+        const parsedQuery = JSON.parse(queryKey);
+        const queryString = buildQueryString(parsedQuery);
         const url = `${baseUrl}${queryString}`;
 
-        const response = await doFetch(url);
+        const response = await doFetch(url, fetchOptions);
         const fullData = response.data || response;
 
         if (paginate) {
@@ -58,9 +84,9 @@ const useFetch = (
       }
     };
 
-    fetchedOnce.current = false; // Trigger re-fetch if options change
+    fetchedOnce.current = false;
     fetchData();
-  }, [baseUrl, optionsKey, paginate]);
+  }, [baseUrl, queryKey, fetchOptionsKey, paginate, ...dependencies]);
 
   useEffect(() => {
     if (paginate) {

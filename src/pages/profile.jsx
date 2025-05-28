@@ -7,35 +7,64 @@ import UserInfoCard from "../components/user/UserInfoCard";
 export default function Profile() {
   const { username } = useParams(); 
   const [currentUser, setCurrentUser] = useState(null);
+  const [activeTab, setActiveTab] = useState("bookings");
 
   useEffect(() => {
     const userData = localStorage.getItem("userInfo");
     if (userData) {
-      setCurrentUser(JSON.parse(userData));
+      const parsed = JSON.parse(userData);
+      setCurrentUser(parsed);
+
+      if (parsed.venueManager) {
+        setActiveTab("venues");
+      }
     }
   }, []);
 
-  if (!currentUser) return <p>Laster brukerdata...</p>;
+  if (!currentUser) return <p>Loading userdata...</p>;
 
   const isOwnProfile = !username || username === currentUser.name;
-  const profileUser = currentUser; 
+  if (!isOwnProfile) return <Navigate to="/profile" replace />;
 
-
-  if (!isOwnProfile) {
-    return <Navigate to="/profile" replace />;
-  }
+  const isVenueManager = currentUser.venueManager;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Profil</h1>
-
+    <div className="p-6 max-w-5xl mx-auto space-y-8">
       <UserInfoCard />
 
-      {profileUser.venueManager ? (
-        <VenueDashboard user={profileUser} />
-      ) : (
-        <BookingDashboard user={profileUser} />
-      )}
+      <div className="border-b border-gray-300 dark:border-gray-700 flex space-x-4">
+        {isVenueManager && (
+          <button
+            onClick={() => setActiveTab("venues")}
+            className={`pb-2 font-medium ${
+              activeTab === "venues"
+                ? "border-b-2 border-blue-600 text-blue-600"
+                : "text-gray-600 dark:text-gray-400 hover:text-blue-500"
+            }`}
+          >
+            My Venues
+          </button>
+        )}
+        <button
+          onClick={() => setActiveTab("bookings")}
+          className={`pb-2 font-medium ${
+            activeTab === "bookings"
+              ? "border-b-2 border-blue-600 text-blue-600"
+              : "text-gray-600 dark:text-gray-400 hover:text-blue-500"
+          }`}
+        >
+          My Bookings
+        </button>
+      </div>
+
+      <div className="mt-4">
+        {activeTab === "venues" && isVenueManager && (
+  <VenueDashboard user={currentUser} includeOwnerAndBookings />
+)}
+        {activeTab === "bookings" && (
+          <BookingDashboard user={currentUser} />
+        )}
+      </div>
     </div>
   );
 }
