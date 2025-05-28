@@ -44,18 +44,18 @@ const VenueDetail = () => {
 
       <VenueImages media={venue.media} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded shadow-md p-6">
             <VenueInfo venue={venue} />
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded shadow-md p-6">
             <VenueOwner owner={venue.owner} />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24 self-start">
+        <div className="bg-white rounded shadow-lg p-6 sticky top-24 self-start w-full max-w-md">
           <VenueBookingForm
             venue={venue}
             isUserLoggedIn={isUserLoggedIn}
@@ -73,7 +73,7 @@ const VenueDetail = () => {
                   setAuthModalTab("login");
                   setShowAuthModal(true);
                 }}
-                className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                className="px-6 py-3  text-white rounded bg-[#1F3B3C] hover:bg-[#274546] transition"
               >
                 Sign in to start booking
               </button>

@@ -103,12 +103,12 @@ const VenueBookingForm = ({ venue, isUserLoggedIn, isVenueManager }) => {
   };
 
   return (
-    <div className="bg-white border rounded-lg p-4 shadow mt-6">
+    <div className="bg-white border rounded p-4 shadow  text-center">
       <h2 className="text-xl font-semibold mb-4">Book this venue</h2>
 
-      <div>
+      <div className="mx-auto">
         <label className="block font-medium mb-1">Select booking period</label>
-        <div className="border rounded p-3">
+        <div className="mx-auto border rounded p-3 w-fit">
           <DatePicker
             selectsRange
             startDate={dateRange[0]}
@@ -140,7 +140,7 @@ const VenueBookingForm = ({ venue, isUserLoggedIn, isVenueManager }) => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            className="w-full text-white px-4 py-2 rounded bg-[#1F3B3C] hover:bg-[#274546] disabled:opacity-50"
           >
             {loading ? "Booking..." : "Book Now"}
           </button>

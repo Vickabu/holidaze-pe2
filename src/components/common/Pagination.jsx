@@ -72,7 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const baseBtn =
-    "flex items-center justify-center w-9 h-9 rounded-md border border-gray-400 text-gray-700 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed";
+    "flex items-center justify-center w-9 h-9 rounded-md border border-gray-400 text-gray-700 hover:bg-gray-100 bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed";
 
   const activeBtn = "text-gray-800 font-bold hover:bg-gray-600";
 

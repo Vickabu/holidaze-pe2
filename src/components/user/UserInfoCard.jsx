@@ -36,7 +36,7 @@ export default function UserInfoCard() {
 
   return (
     <div
-      className="bg-white rounded shadow-md overflow-hidden mx-auto"
+      className="bg-[#f8f8f8] rounded shadow-md overflow-hidden mx-auto"
       aria-label="User profile card"
     >
       {user.banner?.url && (

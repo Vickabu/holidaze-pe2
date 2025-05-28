@@ -16,6 +16,8 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
+import { FaCoins } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 /**
  * Component representing a card for a venue in the dashboard.
@@ -45,14 +47,14 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
     });
 
     if (success) {
-      alert("Venue deleted.");
+      toast.success("Venue deleted.");
       onDelete?.();
     }
   };
 
   return (
     <>
-      <li className="group relative bg-white  rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
+      <li className="group relative bg-[#f8f8f8] rounded shadow-sm overflow-hidden hover:shadow-md transition">
         <Link to={`/venues/${venue.id}`} className="block">
           <img
             src={image}
@@ -68,7 +70,10 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
               </span>
             </div>
             <div className="text-sm mt-2 flex items-center gap-2 text-gray-600 ">
-              <span>💰 {venue.price} NOK</span>
+              <span className="flex items-center gap-1">
+                <FaCoins className="inline w-4 h-4" />
+                {venue.price}$
+              </span>
               <Users className="w-4 h-4" />
               <span>{venue.maxGuests}</span>
             </div>
@@ -79,7 +84,7 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
                 e.preventDefault();
                 setShowBookings(true);
               }}
-              className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
+              className="mt-2 text-sm text-black hover:underline flex items-center gap-1"
             >
               <CalendarDays className="w-4 h-4" />
               {venue._count?.bookings || 0} bookings
@@ -111,7 +116,6 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
         </div>
       </li>
 
-      {/* Modal for Edit Venue */}
       <Modal show={isEditing} onClose={() => setIsEditing(false)}>
         <EditVenue
           venue={venue}
@@ -120,7 +124,6 @@ export default function VenueDashCard({ venue, onDelete, onUpdate }) {
         />
       </Modal>
 
-      {/* ✅ Modal for Bookings */}
       <Modal show={showBookings} onClose={() => setShowBookings(false)}>
         <h2 className="text-xl font-semibold mb-4">{venue.name} – Bookings</h2>
         {venue.bookings?.length > 0 ? (
