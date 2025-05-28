@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 /**
- * SearchBar component for filtering locations based on user input and criteria.
+ * SearchBar component for entering a search query and applying filters.
  *
  * @component
- * @param {Object} props
- * @param {(params: Object) => void} props.onSearch - Callback triggered on search submit with all filter parameters.
+ *
+ * @param {Object} props - Component props.
+ * @param {(params: Object) => void} props.onSearch - Callback triggered on form submission,
+ *   receiving an object with search query (`q`) and filter parameters.
+ *
+ * @returns {React.ReactNode} The search bar form UI.
  */
 
 export default function SearchBar({ onSearch }) {
@@ -63,13 +67,13 @@ export default function SearchBar({ onSearch }) {
             value={input}
             onChange={handleInputChange}
             placeholder="Search for destinations, accommodations..."
-            className="w-full rounded border border-gray-300  bg-white text-gray-900 pl-10 p-3 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-purple-500 transition"
+            className="w-full rounded   bg-white text-gray-900 pl-10 p-3 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-purple-500 transition"
           />
         </div>
 
         <button
           type="submit"
-          className="bg-purple-700 hover:bg-purple-800 transition-transform transform hover:scale-105 text-white font-semibold py-3 px-8 rounded shadow-lg"
+          className="bg-violet-900 hover:bg-violet-950 transition-transform transform hover:scale-105 text-white font-semibold py-3 px-8 rounded shadow-lg"
         >
           Search
         </button>

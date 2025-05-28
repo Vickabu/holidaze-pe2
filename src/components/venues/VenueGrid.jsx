@@ -107,7 +107,6 @@ const VenueGrid = () => {
     fetchSearch();
   }, [searchFilters, searchPage, sortOption]);
 
-  // Determine which data and state to use based on whether search filters are active
   const venues = searchFilters ? searchResults : defaultData;
   const isLoading = searchFilters ? searchLoading : loading;
   const isError = searchFilters ? searchError : error;
@@ -215,7 +214,7 @@ const VenueGrid = () => {
             <p className="text-center">No search results</p>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {venues.map((venue) => (
                   <VenueCard key={venue.id} venue={venue} />
                 ))}

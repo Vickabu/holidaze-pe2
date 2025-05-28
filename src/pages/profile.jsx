@@ -38,8 +38,8 @@ export default function Profile() {
             onClick={() => setActiveTab("venues")}
             className={`pb-2 font-medium ${
               activeTab === "venues"
-                ? "border-b-2 border-blue-600 text-blue-600"
-                : "text-gray-600  hover:text-blue-500"
+                ? "border-b-2 text-black"
+                : "text-gray-600  hover:text-black"
             }`}
           >
             My Venues
@@ -49,8 +49,8 @@ export default function Profile() {
           onClick={() => setActiveTab("bookings")}
           className={`pb-2 font-medium ${
             activeTab === "bookings"
-              ? "border-b-2 border-blue-600 text-blue-600"
-              : "text-gray-600  hover:text-blue-500"
+              ? "border-b-2 text-black"
+              : "text-gray-600  hover:text-black"
           }`}
         >
           My Bookings

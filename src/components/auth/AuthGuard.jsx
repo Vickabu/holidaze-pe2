@@ -4,12 +4,18 @@ import { useEffect, useState } from "react";
 /**
  * AuthGuard is a wrapper component that ensures the user is authenticated
  * before rendering protected content. If the user is not logged in,
- * it triggers the login modal and shows an access restriction message.
+ * it triggers the login modal and displays an access restriction message.
+ *
+ * It uses a local state flag (`hasPromptedLogin`) to prevent reopening
+ * the modal multiple times during the same render cycle.
  *
  * @component
- * @param {Object} props
- * @param {React.ReactNode} props.children - The content to render if the user is authenticated.
- * @returns {React.ReactNode} Either the child components, a loading placeholder, or a login prompt.
+ *
+ * @param {Object} props - Component props.
+ * @param {React.ReactNode} props.children - The content to render only if the user is authenticated.
+ *
+ * @returns {React.ReactNode} - Returns either the child components (if authenticated),
+ * a loading placeholder (null), or an authentication prompt message with buttons.
  */
 export default function AuthGuard({ children }) {
   const { user, isLoading, setShowAuthModal, setAuthModalTab } = useAuth();
@@ -19,20 +25,23 @@ export default function AuthGuard({ children }) {
     if (!isLoading && !user && !hasPromptedLogin) {
       setAuthModalTab("login");
       setShowAuthModal(true);
-      setHasPromptedLogin(true); 
+      setHasPromptedLogin(true);
     }
   }, [isLoading, user, hasPromptedLogin, setAuthModalTab, setShowAuthModal]);
 
   if (isLoading) {
-    return null; 
+    return null;
   }
 
   if (!user) {
     return (
       <div className="p-6 max-w-md mx-auto mt-12 text-center bg-white border border-gray-200 rounded-xl shadow-sm">
-        <h2 className="text-2xl font-bold text-gray-800 mb-3">Authentication Required</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          Authentication Required
+        </h2>
         <p className="text-sm text-gray-600">
-          You need to be logged in to access this page. Please sign in using the authentication modal, or return to the previous page.
+          You need to be logged in to access this page. Please sign in using the
+          authentication modal, or return to the previous page.
         </p>
 
         <div className="mt-6 flex justify-center gap-4">
