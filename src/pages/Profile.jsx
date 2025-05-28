@@ -6,6 +6,7 @@ import UserInfoCard from "../components/user/UserInfoCard";
 
 export default function Profile() {
   const { username } = useParams();
+
   const [currentUser, setCurrentUser] = useState(null);
   const [activeTab, setActiveTab] = useState("bookings");
 
@@ -33,13 +34,16 @@ export default function Profile() {
       <UserInfoCard />
 
       <div className="border-b border-gray-300  flex space-x-4">
+
         {isVenueManager && (
           <button
             onClick={() => setActiveTab("venues")}
             className={`pb-2 font-medium ${
               activeTab === "venues"
+
                 ? "border-b-2 text-black"
                 : "text-gray-600  hover:text-black"
+
             }`}
           >
             My Venues
@@ -49,8 +53,10 @@ export default function Profile() {
           onClick={() => setActiveTab("bookings")}
           className={`pb-2 font-medium ${
             activeTab === "bookings"
+
               ? "border-b-2 text-black"
               : "text-gray-600  hover:text-black"
+
           }`}
         >
           My Bookings
@@ -62,6 +68,7 @@ export default function Profile() {
           <VenueDashboard user={currentUser} includeOwnerAndBookings />
         )}
         {activeTab === "bookings" && <BookingDashboard user={currentUser} />}
+
       </div>
     </div>
   );
