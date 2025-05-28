@@ -72,7 +72,7 @@ const VenueImages = ({ media = [] }) => {
       {hasMultipleImages && (
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Gallery</h2>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             {media.map((img, index) => (
               <img
                 key={index}
