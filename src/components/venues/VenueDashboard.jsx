@@ -11,7 +11,11 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const itemsPerPage = 12;
 
-  const { venues = [], loading, error } = useUserVenues(refreshKey, {
+  const {
+    venues = [],
+    loading,
+    error,
+  } = useUserVenues(refreshKey, {
     includeOwnerAndBookings,
   });
 
@@ -20,11 +24,11 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
   const pageCount = Math.ceil(venues.length / itemsPerPage);
   const paginatedVenues = venues.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   return (
-    <div className="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg shadow">
+    <div className="bg-blue-50 p-4 rounded-lg shadow">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Venues</h2>
         <button
@@ -34,7 +38,6 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
           + Create New Venue
         </button>
       </div>
-      
 
       {loading ? (
         <p>Loading venues...</p>
@@ -43,8 +46,9 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
           Failed to load venues: {error.errors?.[0]?.message || error.message}
         </p>
       ) : venues.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300 italic">
-          You have no venues yet. Click the button above to create your first one!
+        <p className="text-gray-600 italic">
+          You have no venues yet. Click the button above to create your first
+          one!
         </p>
       ) : (
         <>
@@ -75,7 +79,6 @@ export default function VenueDashboard({ includeOwnerAndBookings = false }) {
           onCreate={triggerRefresh}
         />
       </Modal>
-      
     </div>
   );
 }

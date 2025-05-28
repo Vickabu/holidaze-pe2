@@ -67,17 +67,17 @@ export default function EditProfileForm({ onSuccess, onClose }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto space-y-6 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg"
+      className="w-full mx-auto space-y-6 p-6 rounded shadow-lg"
       aria-label="Edit profile form"
     >
-      <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-700 pb-2 mb-4 text-gray-900 dark:text-gray-100">
+      <h2 className="text-2xl font-semibold border-b border-gray-300 pb-2 mb-4 text-gray-900">
         Edit Profile
       </h2>
 
       <div>
         <label
           htmlFor="avatarUrl"
-          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium mb-1 text-gray-700"
         >
           Avatar URL
         </label>
@@ -87,14 +87,14 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Avatar URL"
           value={avatarUrl}
           onChange={(e) => setAvatarUrl(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded border border-gray-300  bg-gray-50 text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
       <div>
         <label
           htmlFor="avatarAlt"
-          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium mb-1 text-gray-700 "
         >
           Avatar Alt Text
         </label>
@@ -104,14 +104,14 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Avatar Alt Text"
           value={avatarAlt}
           onChange={(e) => setAvatarAlt(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
       <div>
         <label
           htmlFor="bannerUrl"
-          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium mb-1 text-gray-700 "
         >
           Banner URL
         </label>
@@ -121,14 +121,14 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Banner URL"
           value={bannerUrl}
           onChange={(e) => setBannerUrl(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
       <div>
         <label
           htmlFor="bannerAlt"
-          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium mb-1 text-gray-700 "
         >
           Banner Alt Text
         </label>
@@ -138,14 +138,14 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           placeholder="Banner Alt Text"
           value={bannerAlt}
           onChange={(e) => setBannerAlt(e.target.value)}
-          className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
       <div>
         <label
           htmlFor="bio"
-          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium mb-1 text-gray-700 "
         >
           Bio (max 160 characters)
         </label>
@@ -155,14 +155,14 @@ export default function EditProfileForm({ onSuccess, onClose }) {
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           maxLength={160}
-          className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
+          className="w-full p-3 rounded-md border border-gray-300  bg-gray-50  text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
           rows={4}
         />
       </div>
 
       {error && (
         <p
-          className="text-red-500 text-sm bg-red-100 dark:bg-red-900 p-2 rounded-md border border-red-400 dark:border-red-700"
+          className="text-red-500 text-sm bg-red-100 p-2 rounded-md border border-red-400 "
           role="alert"
         >
           {error}

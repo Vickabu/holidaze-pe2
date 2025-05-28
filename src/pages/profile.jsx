@@ -5,7 +5,7 @@ import BookingDashboard from "../components/bookings/BookingDashbord";
 import UserInfoCard from "../components/user/UserInfoCard";
 
 export default function Profile() {
-  const { username } = useParams(); 
+  const { username } = useParams();
   const [currentUser, setCurrentUser] = useState(null);
   const [activeTab, setActiveTab] = useState("bookings");
 
@@ -32,14 +32,14 @@ export default function Profile() {
     <div className="p-6 max-w-5xl mx-auto space-y-8">
       <UserInfoCard />
 
-      <div className="border-b border-gray-300 dark:border-gray-700 flex space-x-4">
+      <div className="border-b border-gray-300  flex space-x-4">
         {isVenueManager && (
           <button
             onClick={() => setActiveTab("venues")}
             className={`pb-2 font-medium ${
               activeTab === "venues"
                 ? "border-b-2 border-blue-600 text-blue-600"
-                : "text-gray-600 dark:text-gray-400 hover:text-blue-500"
+                : "text-gray-600  hover:text-blue-500"
             }`}
           >
             My Venues
@@ -50,7 +50,7 @@ export default function Profile() {
           className={`pb-2 font-medium ${
             activeTab === "bookings"
               ? "border-b-2 border-blue-600 text-blue-600"
-              : "text-gray-600 dark:text-gray-400 hover:text-blue-500"
+              : "text-gray-600  hover:text-blue-500"
           }`}
         >
           My Bookings
@@ -59,11 +59,9 @@ export default function Profile() {
 
       <div className="mt-4">
         {activeTab === "venues" && isVenueManager && (
-  <VenueDashboard user={currentUser} includeOwnerAndBookings />
-)}
-        {activeTab === "bookings" && (
-          <BookingDashboard user={currentUser} />
+          <VenueDashboard user={currentUser} includeOwnerAndBookings />
         )}
+        {activeTab === "bookings" && <BookingDashboard user={currentUser} />}
       </div>
     </div>
   );

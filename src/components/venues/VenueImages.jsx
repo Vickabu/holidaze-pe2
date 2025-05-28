@@ -22,18 +22,18 @@ const VenueImages = ({ media = [] }) => {
       <div className="relative w-full h-100">
         {hasMultipleImages && (
           <button
-  onClick={prevImage}
-  className="
-    absolute left-2 top-1/2 transform -translate-y-1/2 
-    bg-black/80 hover:bg-black/90
-    text-white rounded py-2
-    shadow-md hover:shadow-lg 
-    transition duration-300 ease-in-out
-  "
-  aria-label="Previous image"
->
-  <HiChevronLeft className="w-8 h-8" aria-hidden="true" />
-</button>
+            onClick={prevImage}
+            className="
+            absolute left-2 top-1/2 transform -translate-y-1/2 
+            bg-black/80 hover:bg-black/90
+            text-white rounded py-2
+            shadow-md hover:shadow-lg 
+            transition duration-300 ease-in-out
+          "
+            aria-label="Previous image"
+          >
+            <HiChevronLeft className="w-8 h-8" aria-hidden="true" />
+          </button>
         )}
 
         <img
@@ -45,18 +45,18 @@ const VenueImages = ({ media = [] }) => {
 
         {hasMultipleImages && (
           <button
-  onClick={nextImage}
-  className="
-    absolute right-2 top-1/2 transform -translate-y-1/2 
-    bg-black/80 hover:bg-black/90
-    text-white rounded py-2 
-    shadow-md hover:shadow-lg 
-    transition duration-300 ease-in-out
-  "
-  aria-label="Next image"
->
-  <HiChevronRight className="w-8 h-8" aria-hidden="true" />
-</button>
+            onClick={nextImage}
+            className="
+            absolute right-2 top-1/2 transform -translate-y-1/2 
+            bg-black/80 hover:bg-black/90
+            text-white rounded py-2 
+            shadow-md hover:shadow-lg 
+            transition duration-300 ease-in-out
+          "
+            aria-label="Next image"
+          >
+            <HiChevronRight className="w-8 h-8" aria-hidden="true" />
+          </button>
         )}
       </div>
 
@@ -100,7 +100,10 @@ const VenueImages = ({ media = [] }) => {
     "
               aria-label="Previous image"
             >
-              <HiChevronLeft className="w-8 h-8 text-black" aria-hidden="true" />
+              <HiChevronLeft
+                className="w-8 h-8 text-black"
+                aria-hidden="true"
+              />
             </button>
           )}
 
@@ -113,21 +116,24 @@ const VenueImages = ({ media = [] }) => {
 
           {hasMultipleImages && (
             <button
-  onClick={(e) => {
-    e.stopPropagation();
-    nextImage();
-  }}
-  className="
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="
     absolute right-10 top-1/2 transform -translate-y-1/2 
     bg-white/70 hover:bg-white
     rounded py-2
     shadow-md hover:shadow-lg 
     transition duration-300 ease-in-out
   "
-  aria-label="Next image"
->
-  <HiChevronRight className="w-8 h-8 text-black" aria-hidden="true" />
-</button>
+              aria-label="Next image"
+            >
+              <HiChevronRight
+                className="w-8 h-8 text-black"
+                aria-hidden="true"
+              />
+            </button>
           )}
 
           <button

@@ -1,17 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: "class",
-  safelist: [
-    "bg-primaryGreen",
-    "dark:bg-primaryGreenDark",
-    "text-beigeLight",
-    "dark:text-beigeLightDark",
-    "text-primaryGreen",
-    "dark:text-primaryGreenDark",
-    "bg-beigeLight",
-    "dark:bg-beigeLightDark",
-  ],
+  safelist: [],
   theme: {
     extend: {
       keyframes: {

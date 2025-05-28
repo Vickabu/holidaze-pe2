@@ -1,5 +1,4 @@
 import { FaSignInAlt, FaUserPlus, FaSignOutAlt } from "react-icons/fa";
-import DarkModeToggle from "../common/DarkModeToggle";
 import AvatarMenu from "./AvatarMenu";
 
 /**
@@ -13,7 +12,7 @@ import AvatarMenu from "./AvatarMenu";
  */
 export default function DesktopNav({ isLoggedIn, openModal, handleLogout }) {
   return (
-    <div className="hidden md:flex items-center gap-6 text-[#1F3B3C] dark:text-[#F4E9DC]">
+    <div className="hidden md:flex items-center gap-6 text-[#1F3B3C] ">
       {isLoggedIn ? (
         <>
           <AvatarMenu />
@@ -31,7 +30,7 @@ export default function DesktopNav({ isLoggedIn, openModal, handleLogout }) {
         <>
           <button
             onClick={() => openModal("login")}
-            className="text-2xl text-[#1F3B3C] dark:text-[#F4E9DC]"
+            className="text-2xl text-white "
             aria-label="Open login modal"
             type="button"
           >
@@ -39,7 +38,7 @@ export default function DesktopNav({ isLoggedIn, openModal, handleLogout }) {
           </button>
           <button
             onClick={() => openModal("register")}
-            className="text-2xl text-[#1F3B3C] dark:text-[#F4E9DC]"
+            className="text-2xl text-white "
             aria-label="Open register modal"
             type="button"
           >
@@ -47,7 +46,6 @@ export default function DesktopNav({ isLoggedIn, openModal, handleLogout }) {
           </button>
         </>
       )}
-      <DarkModeToggle />
     </div>
   );
 }

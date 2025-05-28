@@ -14,7 +14,7 @@ import Footer from "./Footer";
 
 function MainLayout() {
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-[#101920] text-[#1F3B3C] dark:text-[#F4E9DC]">
+    <div className="flex flex-col min-h-screen bg-white text-[#1F3B3C]">
       <Navbar />
       <main className="flex-grow">
         <Outlet />

@@ -18,7 +18,15 @@ import { useAuthToggle } from "../../hooks/useAuthToggle";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, login, logout, showAuthModal, setShowAuthModal, authModalTab, setAuthModalTab } = useAuth();
+  const {
+    user,
+    login,
+    logout,
+    showAuthModal,
+    setShowAuthModal,
+    authModalTab,
+    setAuthModalTab,
+  } = useAuth();
   const isLoggedIn = !!user;
   const { switchTab, role, toggleRole } = useAuthToggle();
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -53,16 +61,14 @@ export default function Navbar() {
     <>
       <nav
         className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#F4E9DC]/70 dark:bg-[#1F3B3C]/80 shadow-md backdrop-blur"
-            : "bg-[#F4E9DC] dark:bg-[#1F3B3C]"
+          scrolled ? "bg-[#1F3B3C]/80 shadow-md backdrop-blur" : "bg-[#1F3B3C]"
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
           <img
             src={"/Holidaze-logo.png"}
             alt="Holidaze logo"
-            className="w-32 cursor-pointer dark:bg-[#F4E9DC] rounded"
+            className="w-32 cursor-pointer bg-[#F4E9DC] rounded"
             onClick={() => navigate("/")}
           />
 
@@ -96,7 +102,9 @@ export default function Navbar() {
               setAuthModalTab("login");
             }}
             className={`p-2 ${
-              authModalTab === "login" ? "border-b-2 border-blue-500 font-bold" : ""
+              authModalTab === "login"
+                ? "border-b-2 border-blue-500 font-bold"
+                : ""
             }`}
           >
             Login
@@ -107,7 +115,9 @@ export default function Navbar() {
               setAuthModalTab("register");
             }}
             className={`p-2 ${
-              authModalTab === "register" ? "border-b-2 border-blue-500 font-bold" : ""
+              authModalTab === "register"
+                ? "border-b-2 border-blue-500 font-bold"
+                : ""
             }`}
           >
             Register
@@ -137,7 +147,8 @@ export default function Navbar() {
             />
             {registrationSuccess && (
               <p className="mt-4 text-green-600 text-center">
-                Your account has been successfully created. Please log in to get started.
+                Your account has been successfully created. Please log in to get
+                started.
               </p>
             )}
           </>

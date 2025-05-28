@@ -10,7 +10,6 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
   const [formError, setFormError] = useState(null);
 
   const handleUpdate = async (updatedVenue) => {
-    // Validate input before updating
     const validationErrors = validateVenue(updatedVenue);
     if (Object.keys(validationErrors).length > 0) {
       setFormError("Please fill out all required fields correctly.");
@@ -18,7 +17,6 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
     }
 
     try {
-      // Send update to the API
       await put(`${API_HOLIDAZE.VENUES}/${venue.id}`, updatedVenue);
       onSuccess?.();
       onClose?.();
@@ -28,12 +26,10 @@ export default function EditVenue({ venue, onClose, onSuccess }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg w-full max-w-2xl mx-auto">
+    <div className="bg-white  p-6 rounded-2xl shadow-lg w-full max-w-2xl mx-auto">
       <div className="flex items-center gap-2 mb-6">
         <PencilLine className="w-5 h-5 text-blue-500" />
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-          Edit Venue
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-800 ">Edit Venue</h2>
       </div>
 
       {formError && (

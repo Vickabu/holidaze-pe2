@@ -29,9 +29,9 @@ export default function AvatarMenu() {
       <img
         src={user.avatar?.url}
         alt={user.name}
-        className="w-10 h-10 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+        className="w-10 h-10 rounded-full object-cover border border-gray-300 "
       />
-      <span className="text-l font-bold">{user.name}</span>
+      <span className="text-l font-bold text-white">{user.name}</span>
     </div>
   );
 }
