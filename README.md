@@ -1,4 +1,4 @@
-# Holidaze Venue Manager
+# Holidaze
 
 A modern React application for discovering, managing, and booking venues. Built for both hosts and guests, with full venue management and booking capabilities.
 
